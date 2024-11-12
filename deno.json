@@ -8,7 +8,9 @@
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
-    "db:create_migration": "./tasks/create_migration.sh ./database/migrations"
+    "db:create_migration": "./tasks/create_migration.sh ./database/migrations",
+    "db:migrate": "deno run --allow-env --allow-read --allow-ffi ./tasks/migrate_all.ts",
+    "db:rollback": "deno run --allow-env --allow-read --allow-ffi ./tasks/rollback.ts"
   },
   "lint": {
     "rules": {
