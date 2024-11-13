@@ -9,9 +9,10 @@ import "$std/dotenv/load.ts";
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
-import { db } from "./database/db.ts";
+import { getConnection } from "./database/db.ts";
 
 function sigIntHandler() {
+  const { db } = getConnection();
   console.log("Received SIGINT, cleaning up");
   Deno.removeSignalListener("SIGINT", sigIntHandler);
   console.log("Closing DB...");
