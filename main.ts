@@ -9,14 +9,14 @@ import "$std/dotenv/load.ts";
 import { start } from "$fresh/server.ts";
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
-import { db } from './database/db.ts';
+import { db } from "./database/db.ts";
 
 function sigIntHandler() {
-  console.log('Received SIGINT, cleaning up');
+  console.log("Received SIGINT, cleaning up");
   Deno.removeSignalListener("SIGINT", sigIntHandler);
-  console.log('Closing DB...');
+  console.log("Closing DB...");
   db.close();
-  console.log('Closed DB successfully!');
+  console.log("Closed DB successfully!");
   Deno.exit(0);
 }
 
