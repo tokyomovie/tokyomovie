@@ -15,3 +15,6 @@ node_modules/
 
 # editor
 .vim
+
+# various development resources
+resources/

@@ -9,8 +9,8 @@
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
     "db:create_migration": "./tasks/create_migration.sh ./database/migrations",
-    "db:migrate": "deno run --allow-env --allow-read --allow-ffi ./tasks/migrate_all.ts",
-    "db:rollback": "deno run --allow-env --allow-read --allow-ffi ./tasks/rollback.ts"
+    "db:migrate": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/migrate_all.ts",
+    "db:rollback": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/rollback.ts"
   },
   "lint": {
     "rules": {
@@ -26,6 +26,7 @@
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "@db/sqlite": "jsr:@db/sqlite@^0.12.0",
+    "bcrypt": "https://deno.land/x/bcrypt@v0.4.1/",
     "preact": "https://esm.sh/preact@10.22.0",
     "preact/": "https://esm.sh/preact@10.22.0/",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
