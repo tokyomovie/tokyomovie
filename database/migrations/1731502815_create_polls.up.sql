@@ -1,0 +1,36 @@
+CREATE TABLE IF NOT EXISTS polls (
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL DEFAULT '',
+  description TEXT NOT NULL DEFAULT '',
+  active INTEGER NOT NULL DEFAULT 0,
+  createdAt datetime default current_timestamp,
+  endsAt datetime
+);
+
+CREATE TABLE IF NOT EXISTS poll_movies (
+  pollId INTEGER NOT NULL,
+  movieId INTEGER NOT NULL,
+  FOREIGN KEY (pollId) REFERENCES polls (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY (movieId) REFERENCES movies (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  UNIQUE(pollId, movieId)
+);
+
+CREATE TABLE IF NOT EXISTS votes (
+  userId INTEGER NOT NULL,
+  movieId INTEGER NOT NULL,
+  pollId INTEGER NOT NULL,
+  FOREIGN KEY (userId) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY (movieId) REFERENCES movies (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY (pollId) REFERENCES polls (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  UNIQUE(userId, movieId, pollId)
+);

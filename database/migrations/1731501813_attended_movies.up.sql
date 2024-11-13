@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS attended_movies (
+  userId INTEGER NOT NULL,
+  movieId INTEGER NOT NULL,
+  FOREIGN KEY (userId) REFERENCES users (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY (movieId) REFERENCES movies (id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  UNIQUE(userId, movieId)
+);

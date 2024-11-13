@@ -1,5 +1,7 @@
 CREATE TABLE IF NOT EXISTS movies (
-  id TEXT PRIMARY KEY,
-  name TEXT NOT NULL,
-  path TEXT
+  id INTEGER PRIMARY KEY,
+  name TEXT NOT NULL UNIQUE,
+  description TEXT,
+  url TEXT,
+  icon TEXT
 );
