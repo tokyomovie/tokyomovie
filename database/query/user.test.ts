@@ -7,17 +7,15 @@ Deno.test("database operations", async (t) => {
   using connection = getConnection();
   const { db } = connection;
   let user: User;
-  await t.step("insert user", async () => {
-    user = await createUser(db, {
+  await t.step("insert user", () => {
+    user = createUser(db, {
       name: 'foo',
       email: 'foo@fooland.com',
       role: 'admin',
-      password: 'password',
+      passwordHash: 'password',
     });
 
     expect(user.id).toBeTruthy()
-    // @ts-ignore yeahhhhh
-    expect(user.password).toBeUndefined();
     // @ts-ignore yeahhhhh
     expect(user.passwordHash).toBeUndefined();
   });
