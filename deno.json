@@ -11,6 +11,7 @@
     "update": "deno run -A -r https://fresh.deno.dev/update .",
     "db:migration:create": "./tasks/create_migration.sh ./database/migrations",
     "db:migration": "deno run --allow-env --allow-read --allow-write --allow-ffi ./tasks/migrations.ts",
+    "db:addAdmin": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/addAdmin.ts",
     "format": "deno fmt ./"
   },
   "lint": {
