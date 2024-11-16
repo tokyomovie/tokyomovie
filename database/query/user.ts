@@ -36,8 +36,11 @@ export function findUserByEmail(db: Database, email: string): null | User {
 }
 
 export function deleteUser(db: Database, id: number): number {
-  return db.exec(`
+  return db.exec(
+    `
     DELETE FROM users
     WHERE id = ?
-  `, id);
+  `,
+    id,
+  );
 }

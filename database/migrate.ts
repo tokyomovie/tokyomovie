@@ -13,11 +13,50 @@ type Migration = {
   createdAt: string;
 };
 
+// UTILS
 async function fileToString(path: string): Promise<string> {
   const decoder = new TextDecoder("utf-8");
   const data = await Deno.readFile(path);
 
   return decoder.decode(data);
+}
+
+// MIGRATIONS TABLE QUERY
+function tableExists(db: Database, tableName: string) {
+  return db.sql`
+    SELECT name FROM sqlite_master 
+    WHERE type='${tableName}' AND name='{${tableName}}';
+  `.length !== 0;
+}
+
+function getMigration(db: Database, name: string): Migration | null {
+  const stmt = db.prepare(`
+    SELECT name, created_at FROM ${MIGRATIONS_TABLE}
+    WHERE name = ?
+    LIMIT 1
+  `);
+  const [migration] = stmt.all<MigrationRecord>(name)
+    .map(({ name, created_at }) => ({ name, createdAt: created_at }));
+
+  return migration ?? null;
+}
+
+function getMigrations(db: Database): Migration[] {
+  const stmt = db.prepare(`
+    SELECT name, created_at FROM ${MIGRATIONS_TABLE}
+  `);
+  const rows = stmt.all<MigrationRecord>();
+
+  return rows.map(({ name, created_at }) => ({ name, createdAt: created_at }));
+}
+
+function createMigrationsTable(db: Database) {
+  return db.exec(`
+    CREATE TABLE IF NOT EXISTS ${MIGRATIONS_TABLE} (
+      name TEXT PRIMARY KEY,
+      created_at TEXT NOT NULL
+    );
+  `);
 }
 
 function createMigration(db: Database, { name, createdAt }: Migration) {
@@ -35,15 +74,7 @@ function deleteMigration(db: Database, name: string) {
   `);
 }
 
-function getMigrations(db: Database): Migration[] {
-  const stmt = db.prepare(`
-    SELECT name, created_at FROM ${MIGRATIONS_TABLE}
-  `);
-  const rows = stmt.all<MigrationRecord>();
-
-  return rows.map(({ name, created_at }) => ({ name, createdAt: created_at }));
-}
-
+// MIGRATIONS SINGLE
 function runMigrationUp(db: Database, sql: string, name: string) {
   const runTransaction = db.transaction(() => {
     db.exec(sql);
@@ -69,6 +100,7 @@ function runMigrationDown(db: Database, sql: string, name: string) {
   runTransaction();
 }
 
+// IO
 async function getMigrationsToRun(
   db: Database,
 ): Promise<{ sql: string; name: string }[]> {
@@ -97,50 +129,67 @@ async function getMigrationsToRun(
   return migrationsToRun;
 }
 
-function tableExists(db: Database, tableName: string) {
-  return db.sql`
-    SELECT name FROM sqlite_master 
-    WHERE type='${tableName}' AND name='{${tableName}}';
-  `.length !== 0;
+async function rollbackFromName(db: Database, name: string) {
+  const sql = await fileToString(
+    `${MIGRATIONS_PATH}/${name}.down.sql`,
+  );
+  if (!sql) {
+    console.error("Could not find migration file for :", name);
+    return;
+  }
+
+  console.log(`Rolling back ${name}`);
+  runMigrationDown(db, sql, name);
 }
 
-function createMigrationsTable(db: Database) {
-  return db.exec(`
-    CREATE TABLE IF NOT EXISTS ${MIGRATIONS_TABLE} (
-      name TEXT PRIMARY KEY,
-      created_at TEXT NOT NULL
-    );
-  `);
-}
-
-export async function rollback(db: Database) {
-  const migrations = getMigrations(db);
-  const lastMigration = migrations[migrations.length - 1];
+export async function rollbackOne(db: Database) {
+  const [lastMigration] = getMigrations(db).reverse();
 
   if (!lastMigration) {
+    console.log("No migration to rollback.");
+    return;
+  }
+
+  await rollbackFromName(db, lastMigration.name);
+}
+
+export async function rollbackAll(db: Database) {
+  const migrations = getMigrations(db).reverse();
+
+  if (!migrations.length) {
+    console.log("No migrations to run.");
+    return;
+  }
+
+  for (const migration of migrations) {
+    await rollbackFromName(db, migration.name);
+  }
+}
+
+export async function migrateOne(db: Database) {
+  if (!tableExists(db, MIGRATIONS_TABLE)) {
+    createMigrationsTable(db);
+  }
+  const [migrationToRun] = await getMigrationsToRun(db);
+  if (!migrationToRun) {
     console.log("No migration to run.");
     return;
   }
 
-  const sql = await fileToString(
-    `${MIGRATIONS_PATH}/${lastMigration.name}.down.sql`,
-  );
-  if (!sql) {
-    console.error("Could not find migration file for :", lastMigration.name);
-    return;
-  }
-
-  console.log(`Rolling back ${lastMigration.name}`);
-  runMigrationDown(db, sql, lastMigration.name);
+  console.log(`Found migration to run.`);
+  console.log(`Running migration: ${migrationToRun.name}`);
+  runMigrationUp(db, migrationToRun.sql, migrationToRun.name);
+  console.log(`Successfully migrated.`);
 }
 
-export async function runMigrationsIfNecessary(db: Database) {
+export async function migrateAll(db: Database) {
   if (!tableExists(db, MIGRATIONS_TABLE)) {
     createMigrationsTable(db);
   }
 
   const migrationsToRun = await getMigrationsToRun(db);
   if (!migrationsToRun.length) {
+    console.log("No migrations to run.");
     return;
   }
 
