@@ -22,7 +22,7 @@ export function findUsers(db: Database, opts = {
   `);
   const rows = stmt.all<User>(opts.limit, opts.offset);
 
-  return rows
+  return rows;
 }
 
 export function createUser(db: Database, user: UserCreate): User {
