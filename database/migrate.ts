@@ -29,18 +29,6 @@ function tableExists(db: Database, tableName: string) {
   `.length !== 0;
 }
 
-function getMigration(db: Database, name: string): Migration | null {
-  const stmt = db.prepare(`
-    SELECT name, created_at FROM ${MIGRATIONS_TABLE}
-    WHERE name = ?
-    LIMIT 1
-  `);
-  const [migration] = stmt.all<MigrationRecord>(name)
-    .map(({ name, created_at }) => ({ name, createdAt: created_at }));
-
-  return migration ?? null;
-}
-
 function getMigrations(db: Database): Migration[] {
   const stmt = db.prepare(`
     SELECT name, created_at FROM ${MIGRATIONS_TABLE}

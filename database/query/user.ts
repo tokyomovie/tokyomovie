@@ -12,6 +12,19 @@ export type User = {
 
 export type UserCreate = Omit<User, "id">;
 
+export function findUsers(db: Database, opts = {
+  limit: 10,
+  offset: 0,
+}): User[] {
+  const stmt = db.prepare(`
+    SELECT * FROM users
+    LIMIT ? OFFSET ?
+  `);
+  const rows = stmt.all<User>(opts.limit, opts.offset);
+
+  return rows
+}
+
 export function createUser(db: Database, user: UserCreate): User {
   const stmt = db.prepare(`
     INSERT INTO users
