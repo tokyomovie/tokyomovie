@@ -1,16 +1,6 @@
 import { load } from "@std/dotenv";
 import * as migrate from "../database/migrate.ts";
 
-async function runRollbackOne() {
-  const { getConnection } = await import("../database/db.ts");
-  using connection = getConnection();
-  await migrate.rollbackOne(connection.db);
-}
-async function runRollbackAll() {
-  const { getConnection } = await import("../database/db.ts");
-  using connection = getConnection();
-  await migrate.rollbackAll(connection.db);
-}
 async function runMigrateOne() {
   const { getConnection } = await import("../database/db.ts");
   using connection = getConnection();
@@ -21,8 +11,28 @@ async function runMigrateAll() {
   using connection = getConnection();
   await migrate.migrateAll(connection.db);
 }
+async function runRollbackOne() {
+  const { getConnection } = await import("../database/db.ts");
+  using connection = getConnection();
+  await migrate.rollbackOne(connection.db);
+}
+async function runRollbackAll() {
+  const { getConnection } = await import("../database/db.ts");
+  using connection = getConnection();
+  await migrate.rollbackAll(connection.db);
+}
 
 const migrationCmds = [
+  {
+    name: "Migrate everything",
+    fn: runMigrateAll,
+    dangerous: false,
+  },
+  {
+    name: "Migrate next migration",
+    fn: runMigrateOne,
+    dangerous: false,
+  },
   {
     name: "Rollback last migration",
     fn: runRollbackOne,
@@ -32,16 +42,6 @@ const migrationCmds = [
     name: "Rollback all migrations",
     fn: runRollbackAll,
     dangerous: true,
-  },
-  {
-    name: "Migrate next migration",
-    fn: runMigrateOne,
-    dangerous: false,
-  },
-  {
-    name: "Migrate everything",
-    fn: runMigrateAll,
-    dangerous: false,
   },
 ];
 
