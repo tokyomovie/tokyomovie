@@ -3,9 +3,9 @@ import Button from "../../islands/Button.tsx";
 
 export default function Layout({ Component }: PageProps) {
   return (
-    <div data-name="user-layout" class="flex flex-col">
+    <div data-name="user-layout" class="size-full flex flex-col">
       {/* make a sick header */}
-      <div class="h-8">
+      <div class="h-16 flex items-center">
         <form action="/user/logout" method="POST">
           <Button type="submit">Logout</Button>
         </form>
