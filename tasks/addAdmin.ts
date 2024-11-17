@@ -10,8 +10,12 @@ const userData = {
   role: "admin" as user.Role,
 };
 
+console.log("*************************");
+console.log("This will setup an admin.");
+console.log("*************************");
+
 while (!confirmed) {
-  userData.name = prompt("Enter name: ") ?? "";
+  userData.name = prompt("Enter fullname: ") ?? "";
   userData.email = prompt("Enter email: ") ?? "";
   userData.passwordHash = prompt("Enter password: ") ?? "";
   confirmed = confirm(`Going to created a user with:

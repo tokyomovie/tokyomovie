@@ -9,8 +9,10 @@
     "build": "deno run -A dev.ts build",
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
+    "setup": "./tasks/setup.sh",
     "db:migration:create": "./tasks/create_migration.sh ./database/migrations",
     "db:migration": "deno run --allow-env --allow-read --allow-write --allow-ffi ./tasks/migrations.ts",
+    "db:migrateAll": "deno run --allow-env --allow-read --allow-write --allow-ffi ./tasks/migrateAll.ts",
     "db:addAdmin": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/addAdmin.ts",
     "format": "deno fmt ./"
   },
