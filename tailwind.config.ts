@@ -6,8 +6,8 @@ export default {
   ],
   theme: {
     colors: {
-      success: 'green',
-      error: 'red',
+      success: "green",
+      error: "red",
     },
   },
 } satisfies Config;

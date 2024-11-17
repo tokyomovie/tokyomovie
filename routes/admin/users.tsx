@@ -28,8 +28,8 @@ export const handler: Handlers = {
     // Add email to list.
     try {
       // TODO: validation solution
-      if (Object.values(user).some(v => !v)) {
-        throw Error(`invalid user`)
+      if (Object.values(user).some((v) => !v)) {
+        throw Error(`invalid user`);
       }
 
       createUser(connection.db, user);
