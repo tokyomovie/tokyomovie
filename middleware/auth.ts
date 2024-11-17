@@ -14,19 +14,20 @@ export async function authMiddleware({
   ctx: FreshContext<RequestState>;
 }) {
   const url = new URL(req.url);
+  if (url.pathname.match(/.+\.\w+$/)) {
+    return await ctx.next();
+  }
+
   const isProtected = PROTECTED_ROUTES.some((route) =>
     url.pathname.startsWith(route)
   );
   const cookies = getCookies(req.headers);
   const encodedSession = cookies.auth;
 
-  const resp = await ctx.next();
-
-  // setCookie(resp.headers, { name: 'auth', value: 'test' })
   if (isProtected && !encodedSession) {
     return new Response("", {
       status: 303,
-      headers: { Location: "/" },
+      headers: { Location: "/login" },
     });
   }
 
@@ -37,11 +38,21 @@ export async function authMiddleware({
     const user = findUserById(connection.db, session.userId);
 
     if (isProtected && !user) {
-      return new Response(null, { headers: resp.headers, status: 303 });
+      return new Response(null, {
+        headers: { Location: "/login" },
+        status: 303,
+      });
     }
 
     ctx.state.user = user;
+
+    if (user && url.pathname.startsWith("/login")) {
+      return new Response("", {
+        status: 303,
+        headers: { Location: "/user" },
+      });
+    }
   }
 
-  return resp;
+  return await ctx.next();
 }

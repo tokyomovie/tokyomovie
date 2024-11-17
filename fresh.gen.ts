@@ -11,9 +11,12 @@ import * as $admin_middleware from "./routes/admin/_middleware.ts";
 import * as $admin_index from "./routes/admin/index.tsx";
 import * as $admin_users from "./routes/admin/users.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
-import * as $greet_name_ from "./routes/greet/[name].tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
+import * as $user_layout from "./routes/user/_layout.tsx";
+import * as $user_event from "./routes/user/event.tsx";
+import * as $user_index from "./routes/user/index.tsx";
+import * as $user_logout from "./routes/user/logout.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $form_InputField from "./islands/form/InputField.tsx";
@@ -32,9 +35,12 @@ const manifest = {
     "./routes/admin/index.tsx": $admin_index,
     "./routes/admin/users.tsx": $admin_users,
     "./routes/api/joke.ts": $api_joke,
-    "./routes/greet/[name].tsx": $greet_name_,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
+    "./routes/user/_layout.tsx": $user_layout,
+    "./routes/user/event.tsx": $user_event,
+    "./routes/user/index.tsx": $user_index,
+    "./routes/user/logout.tsx": $user_logout,
   },
   islands: {
     "./islands/Button.tsx": $Button,

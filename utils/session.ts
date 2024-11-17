@@ -23,7 +23,7 @@ const key = await crypto.subtle.importKey(
   true,
   ["encrypt", "decrypt"],
 );
-const iv = crypto.getRandomValues(new Uint8Array(16));
+const iv = new Uint8Array(16);
 
 export async function encodeSession(session: Session): Promise<string> {
   if (!session.userId) {

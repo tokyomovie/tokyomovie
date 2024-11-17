@@ -1,4 +1,4 @@
-import { Handlers, PageProps } from "$fresh/server.ts";
+import { FreshContext, PageProps } from "$fresh/server.ts";
 import { setCookie } from "$std/http/cookie.ts";
 import { getConnection } from "../database/db.ts";
 import { findUserByEmail } from "../database/query/user.ts";
@@ -13,8 +13,8 @@ const loginSchema = z.object({
   password: z.string().min(1),
 });
 
-export const handler: Handlers = {
-  async POST(req, ctx) {
+export const handler = {
+  async POST(req: Request, ctx: FreshContext) {
     using connection = getConnection();
 
     const form = await req.formData();
@@ -39,13 +39,15 @@ export const handler: Handlers = {
         throw new Error("invalid login");
       }
 
-      // TODO: redirect to real top page
       const headers = new Headers();
       setCookie(headers, {
         name: "auth",
         value: await encodeSession({ userId: user.id }),
+        sameSite: "Strict",
+        httpOnly: true,
+        maxAge: 1000 * 60 * 60 * 24,
       });
-      headers.set("location", `/greet/${encodeURIComponent(user.name)}`);
+      headers.set("location", `/user`);
       return new Response(null, {
         status: 303, // See Other
         headers,
@@ -79,12 +81,12 @@ export default function Login(props: PageProps<LoginProps>) {
             <InputField
               type="email"
               name="email"
-              error={validationError?.fieldErrors?.email?.join(', ')}
+              error={validationError?.fieldErrors?.email?.join(", ")}
             />
             <InputField
               type="password"
               name="password"
-              error={validationError?.fieldErrors?.password?.join(', ')}
+              error={validationError?.fieldErrors?.password?.join(", ")}
             />
             <div>
               <Button type="submit">
