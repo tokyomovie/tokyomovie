@@ -1,11 +1,10 @@
-# Fresh project
+# Description
 
-Your new Fresh project is ready to go. You can follow the Fresh "Getting
-Started" guide here: https://fresh.deno.dev/docs/getting-started
+Tokyo Movie time!
 
-### Usage
+## Developing
 
-Make sure to install Deno: https://deno.land/manual/getting_started/installation
+### Environment Setup
 
 Then start the project:
 
@@ -14,3 +13,9 @@ deno task start
 ```
 
 This will watch the project directory and restart as necessary.
+
+### Stack
+
+- [runtime - deno](https://deno.land/)
+- [framework - fresh](https://fresh.deno.dev)
+- [styling - tailwindcss](https://tailwindcss.com)
