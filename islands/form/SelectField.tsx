@@ -1,7 +1,8 @@
 export default function SelectField(
-  { name, options }: {
+  { name, options, error }: {
     name: string;
     options: { value: string; label: string }[];
+    error?: string;
   },
 ) {
   return (
@@ -12,6 +13,7 @@ export default function SelectField(
           <option value={value}>{label}</option>
         ))}
       </select>
+      {error && <p class="text-error">{error}</p>}
     </div>
   );
 }
