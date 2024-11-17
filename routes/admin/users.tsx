@@ -1,11 +1,25 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
+import { USER_ROLE } from "../../constants/user.ts";
 import { getConnection } from "../../database/db.ts";
 import { Role } from "../../database/query/user.ts";
 import { createUser, findUsers, User } from "../../database/query/user.ts";
+import Button from "../../islands/Button.tsx";
+import { InputField, SelectField } from "../../islands/form/mod.ts";
 import { hashPassword } from "../../utils/auth.ts";
+import { z } from "zod";
+
+const createUserSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  password: z.string().min(8).regex(
+    /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/,
+    "must contain a number and a symbol",
+  ),
+  role: z.enum(USER_ROLE),
+});
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     using connection = getConnection();
     const users = findUsers(connection.db);
     return await ctx.render({ users });
@@ -18,22 +32,31 @@ export const handler: Handlers = {
     const email = form.get("email")?.toString() || "";
     const password = form.get("password")?.toString() || "";
     const role = form.get("role")?.toString() as Role;
-    const user = {
+
+    const parsed = await createUserSchema.safeParseAsync({
       name,
       email,
-      passwordHash: await hashPassword(password),
+      password,
       role,
-    };
+    });
+    if (!parsed.success) {
+      return ctx.render({
+        flash: {
+          message: parsed.error.toString(),
+          type: "error",
+        },
+      });
+    }
 
-    // Add email to list.
     try {
-      // TODO: validation solution
-      if (Object.values(user).some((v) => !v)) {
-        throw Error(`invalid user`);
-      }
-
+      const { data } = parsed;
+      const user = {
+        ...data,
+        passwordHash: await hashPassword(data.password),
+      };
       createUser(connection.db, user);
       const users = findUsers(connection.db);
+
       return ctx.render({
         flash: {
           message: `User successfully created`,
@@ -53,40 +76,12 @@ export const handler: Handlers = {
   },
 };
 
-function InputField(
-  { name, type, value }: { name: string; type: string; value?: string },
-) {
-  return (
-    <div class="flex gap-2">
-      <label>{name}</label>
-      <input class="border" type={type} name={name} value={value} />
-    </div>
-  );
-}
+type UsersProps = {
+  users?: User[];
+  flash?: { message: string; type: string };
+};
 
-function SelectField(
-  { name, options }: {
-    name: string;
-    options: { value: string; label: string }[];
-  },
-) {
-  return (
-    <div class="flex gap-2">
-      <label>{name}</label>
-      <select name={name}>
-        {options.map(({ value, label }) => (
-          <option value={value}>{label}</option>
-        ))}
-      </select>
-    </div>
-  );
-}
-
-export default function Users(
-  props: PageProps<
-    { users?: User[]; flash?: { message: string; type: string } }
-  >,
-) {
+export default function Users(props: PageProps<UsersProps>) {
   const { users, flash } = props.data;
   return (
     <div class="flex flex-col gap-8 p-4">
@@ -106,9 +101,9 @@ export default function Users(
             ]}
           />
           <div>
-            <button class="py-2 px-4 border rounded" type="submit">
+            <Button type="submit">
               Create User
-            </button>
+            </Button>
           </div>
         </div>
       </form>
