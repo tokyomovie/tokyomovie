@@ -18,3 +18,5 @@ node_modules/
 
 # various development resources
 resources/
+
+.vscode/

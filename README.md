@@ -6,13 +6,26 @@ Tokyo Movie time!
 
 ### Environment Setup
 
-Then start the project:
+Setup your local sqlite database. This project is configured to look to `resources/dev.db`
 
 ```
-deno task start
+mkdir resources
+sqlite3 resources/dev.db
 ```
 
-This will watch the project directory and restart as necessary.
+Next, perform database migrations and setup an admin user for yourself
+
+```
+deno task setup
+```
+
+Run the local dev server
+
+```
+deno task dev
+```
+
+Visit http://localhost:8000/login to log in with your user
 
 ### Stack
 
