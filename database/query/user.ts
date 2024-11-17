@@ -37,6 +37,17 @@ export function createUser(db: Database, user: UserCreate): User {
   return created;
 }
 
+export function findUserById(db: Database, id: number): null | User {
+  const stmt = db.prepare(`
+    SELECT * FROM users
+    WHERE id = ?
+    LIMIT 1
+  `);
+  const [user] = stmt.all<User>(id);
+
+  return user ?? null;
+}
+
 export function findUserByEmail(db: Database, email: string): null | User {
   const stmt = db.prepare(`
     SELECT * FROM users
