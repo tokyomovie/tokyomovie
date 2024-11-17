@@ -6,7 +6,8 @@ Tokyo Movie time!
 
 ### Environment Setup
 
-Setup your local sqlite database. This project is configured to look to `resources/dev.db`
+Setup your local sqlite database. This project is configured to look to
+`resources/dev.db`
 
 ```
 mkdir resources
