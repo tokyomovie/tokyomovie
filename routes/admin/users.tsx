@@ -54,6 +54,8 @@ export const handler: Handlers = {
         ...data,
         passwordHash: await hashPassword(data.password),
       };
+      // @ts-ignore because
+      delete user.password
       createUser(connection.db, user);
       const users = findUsers(connection.db);
 
