@@ -6,21 +6,17 @@ Tokyo Movie time!
 
 ### Environment Setup
 
-Setup your local sqlite database. This project is configured to look to
-`resources/dev.db`
+Make sure you have the `deno` runtime [setup](https://docs.deno.com/runtime/). Make sure you have `sqlite3` command line tools installed, if you're on a mac this can be done through `brew`, if you're on linux it's probably pre-installed.
 
-```
-mkdir resources
-sqlite3 resources/dev.db
-```
-
-Next, perform database migrations and setup an admin user for yourself
+Set up your dev environment with
 
 ```
 deno task setup
 ```
 
-Run the local dev server
+If this is your first time running the setup script, please follow the prompts to make an admin user.
+
+Run the local dev server with
 
 ```
 deno task dev
