@@ -9,6 +9,7 @@ export type Event = {
   path?: string;
   url?: string;
   createdAt: string;
+  eventStartsAt: string;
   eventEndsAt: string;
   movie?: Movie;
 };
@@ -21,6 +22,7 @@ export function findEvents(db: Database, opts = {
 }): Event[] {
   const stmt = db.prepare(`
     SELECT * FROM events
+    ORDER BY eventStartsAt ASC
     LIMIT ? OFFSET ?
   `);
   const rows = stmt.all<Event>(opts.limit, opts.offset);
@@ -61,8 +63,8 @@ export function findUsersAttendingEvent(db: Database, eventId: number): User[] {
 export function createEvent(db: Database, event: EventCreate): Event {
   const stmt = db.prepare(`
     INSERT INTO events
-      (name, movieId, path, url, eventEndsAt)
-    VALUES (:name, :movieId, :path, :url, :eventEndsAt)
+      (name, movieId, path, url, eventStartsAt, eventEndsAt)
+    VALUES (:name, :movieId, :path, :url, :eventStartsAt, :eventEndsAt)
     RETURNING *
   `);
   const [created] = stmt.all<Event>(event);

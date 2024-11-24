@@ -72,12 +72,12 @@ type LoginProps = {
 export default function Login(props: PageProps<LoginProps>) {
   const { flash, validationError } = props.data || {};
   return (
-    <div class="test px-4 py-8 mx-auto bg-[#86efac]">
+    <div class="test px-4 py-8 mx-auto bg-[#86efac] size-full">
       <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
         {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
         <form method="post">
           <h2 class="text-xl font-bold">Login</h2>
-          <div class="flex flex-col text-xs">
+          <div class="flex flex-col text-xs gap-2">
             <InputField
               label="email:"
               type="email"
@@ -85,12 +85,12 @@ export default function Login(props: PageProps<LoginProps>) {
               error={validationError?.fieldErrors?.email?.join(", ")}
             />
             <InputField
-              label="passwords:"
+              label="password:"
               type="password"
               name="password"
               error={validationError?.fieldErrors?.password?.join(", ")}
             />
-            <div>
+            <div class="flex gap-2 flex-col">
               <Button type="submit">
                 Login
               </Button>

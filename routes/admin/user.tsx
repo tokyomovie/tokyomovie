@@ -90,12 +90,13 @@ export default function Users(props: PageProps<UsersProps>) {
       <h1 class="text-xl font-bold">Users Admin</h1>
       {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
       <form method="post">
-        <h2 class="text-xl font-bold">Create a User</h2>
-        <div class="flex flex-col text-xs">
-          <InputField type="text" name="name" />
-          <InputField type="email" name="email" />
-          <InputField type="password" name="password" />
+        <div class="flex flex-col text-xs gap-4">
+          <h2 class="text-lg font-bold">Create a User</h2>
+          <InputField label="Name" type="text" name="name" />
+          <InputField label="E-mail" type="email" name="email" />
+          <InputField label="Password" type="password" name="password" />
           <SelectField
+            label="Role"
             name="role"
             options={[
               { label: "User", value: "user" },

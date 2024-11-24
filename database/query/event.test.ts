@@ -47,6 +47,7 @@ Deno.test("database operations", async (t) => {
       movieId: movie.id,
       path: "/path",
       url: "https://imdb.com/path",
+      eventStartsAt: new Date().toISOString(),
       eventEndsAt: new Date().toISOString(),
     });
 
@@ -73,6 +74,13 @@ Deno.test("database operations", async (t) => {
 
     const users = findUsersAttendingEvent(db, event.id);
     expect(users).toHaveLength(2);
+  });
+
+  await t.step("remove user from a event", () => {
+    expect(removeUserFromEvent(db, { eventId: event.id, userId: user1.id })).toBe(1);
+
+    const users = findUsersAttendingEvent(db, event.id);
+    expect(users).toHaveLength(1);
   });
 
   await t.step("delete event", () => {
