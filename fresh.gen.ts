@@ -8,8 +8,9 @@ import * as $_layout from "./routes/_layout.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $admin_layout from "./routes/admin/_layout.tsx";
 import * as $admin_middleware from "./routes/admin/_middleware.ts";
+import * as $admin_event from "./routes/admin/event.tsx";
 import * as $admin_index from "./routes/admin/index.tsx";
-import * as $admin_users from "./routes/admin/users.tsx";
+import * as $admin_user from "./routes/admin/user.tsx";
 import * as $all_components from "./routes/all-components.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
 import * as $index from "./routes/index.tsx";
@@ -38,8 +39,9 @@ const manifest = {
     "./routes/_middleware.ts": $_middleware,
     "./routes/admin/_layout.tsx": $admin_layout,
     "./routes/admin/_middleware.ts": $admin_middleware,
+    "./routes/admin/event.tsx": $admin_event,
     "./routes/admin/index.tsx": $admin_index,
-    "./routes/admin/users.tsx": $admin_users,
+    "./routes/admin/user.tsx": $admin_user,
     "./routes/all-components.tsx": $all_components,
     "./routes/api/joke.ts": $api_joke,
     "./routes/index.tsx": $index,

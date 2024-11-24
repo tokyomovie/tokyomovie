@@ -1,32 +1,21 @@
 import { Handlers } from "$fresh/server.ts";
 
 export const handler: Handlers = {
-  async GET(req, ctx) {
+  async GET(_req, ctx) {
     return await ctx.render();
-  },
-  async POST(req, ctx) {
-    const form = await req.formData();
-    const email = form.get("email")?.toString();
-
-    // Add email to list.
-
-    // Redirect user to thank you page.
-    const headers = new Headers();
-    headers.set("location", "/thanks-for-subscribing");
-    return new Response(null, {
-      status: 303, // See Other
-      headers,
-    });
   },
 };
 
 export default function Admin() {
   return (
     <>
-      <form method="post">
-        <input type="email" name="email" value="" />
-        <button type="submit">Subscribe</button>
-      </form>
+      <h1 class="text-xl font-bold py-4">Admin</h1>
+      <nav class="p-2 border rounded">
+        <ul>
+          <li><a href="/admin/event">Events</a></li>
+          <li><a href="/admin/user">Users</a></li>
+        </ul>
+      </nav>
     </>
   );
 }
