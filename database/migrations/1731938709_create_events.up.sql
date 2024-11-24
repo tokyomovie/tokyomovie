@@ -5,9 +5,10 @@ CREATE TABLE IF NOT EXISTS events (
   path TEXT,
   url TEXT,
   -- a datetime for when the event starts
-  createdAt datetime NOT NULL default current_timestamp,
+  eventStartsAt datetime NOT NULL default current_timestamp,
   -- a datetime for when the event ends
   eventEndsAt datetime NOT NULL default current_timestamp,
+  createdAt datetime NOT NULL default current_timestamp,
 
   FOREIGN KEY (movieId) REFERENCES movies (id)
     ON UPDATE CASCADE
