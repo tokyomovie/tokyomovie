@@ -16,7 +16,7 @@ export default function LabelGroup(props: LabelGroupProps) {
           )}
         </label>
       </div>
-      {helperText && <div class="text-foregroundBack">{helperText}</div>}
+      {helperText && <div class="text-foreground-back">{helperText}</div>}
     </div>
   )
 }

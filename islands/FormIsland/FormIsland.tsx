@@ -4,6 +4,7 @@ import Button from '../Button.tsx'
 import SelectField from '../form/SelectField.tsx'
 import InputField from '../form/InputField.tsx'
 import CheckboxField from '../form/CheckboxField.tsx'
+import Stars from '../stars/Stars.tsx'
 
 const EXAMPLE_FORM_ID = 'example-form'
 
@@ -65,6 +66,7 @@ export default function FormIsland() {
         button
       </Button>
       <p class="text-success">this was a successful action you took!</p>
+      <Stars />
     </form>
   )
 }

@@ -23,7 +23,7 @@ export default function CheckboxField(props: CheckboxFieldProps) {
           </label>
         </div>
       </div>
-      {helperText && <div class="text-foregroundBack mt-2">{helperText}</div>}
+      {helperText && <div class="text-foreground-back mt-2">{helperText}</div>}
       {error && <p class="text-error">{error}</p>}
     </div>
   )
