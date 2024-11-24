@@ -9,9 +9,11 @@ export default {
         error: 'rgb(255 241 0)',
         gray: 'rgba(57 64 75)',
         background: 'rgb(24 5 39)',
+        'background-low': 'rgb(89 32 111)',
         foreground: 'white',
         'foreground-back': '#cebfcc',
         primary: '#39c1ce',
+        highlight: 'rgb(177 255 247)',
         secondary: '#23929e',
       },
       boxShadow: {

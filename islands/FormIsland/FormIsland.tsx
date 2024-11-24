@@ -1,10 +1,11 @@
-import { useSignal } from '@preact/signals'
+import { useSignal, useSignalEffect } from '@preact/signals'
 import { SelectProps } from '../../components/Select.tsx'
 import Button from '../Button.tsx'
 import SelectField from '../form/SelectField.tsx'
 import InputField from '../form/InputField.tsx'
 import CheckboxField from '../form/CheckboxField.tsx'
 import Stars from '../stars/Stars.tsx'
+import Divider from '../../components/Divider.tsx'
 
 const EXAMPLE_FORM_ID = 'example-form'
 
@@ -21,6 +22,10 @@ const exampleSelectData: SelectProps = {
 
 export default function FormIsland() {
   const invalid = useSignal(false)
+  const showStars = useSignal(false)
+  useSignalEffect(() => {
+    showStars.value = false
+  })
   return (
     <form
       className="max-w-lg m-8"
@@ -65,8 +70,21 @@ export default function FormIsland() {
       >
         button
       </Button>
+      <Divider />
       <p class="text-success">this was a successful action you took!</p>
-      <Stars />
+      <Divider />
+      <Button
+        onClick={() => {
+          showStars.value = true
+          setTimeout(() => {
+            showStars.value = false
+          }, 1000)
+        }}
+      >
+        be a star
+      </Button>
+      {showStars.value && <Stars number={100} spin />}
+      <Stars number={100} spin />
     </form>
   )
 }
