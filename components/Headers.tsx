@@ -8,7 +8,9 @@ export default function Header() {
         </h1>
         <div class="animate-spin w-3">⭐</div>
       </div>
-      <div class="text-foreground">〜〜〜 a night with the staaaars 〜〜〜</div>
+      <div class="text-foreground">
+        〜〜〜 an evening with the staaaars 〜〜〜
+      </div>
     </header>
   )
 }
