@@ -79,11 +79,13 @@ export default function Login(props: PageProps<LoginProps>) {
           <h2 class="text-xl font-bold">Login</h2>
           <div class="flex flex-col text-xs">
             <InputField
+              label="email:"
               type="email"
               name="email"
               error={validationError?.fieldErrors?.email?.join(", ")}
             />
             <InputField
+              label="passwords:"
               type="password"
               name="password"
               error={validationError?.fieldErrors?.password?.join(", ")}

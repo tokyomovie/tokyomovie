@@ -10,6 +10,7 @@ import * as $admin_layout from "./routes/admin/_layout.tsx";
 import * as $admin_middleware from "./routes/admin/_middleware.ts";
 import * as $admin_index from "./routes/admin/index.tsx";
 import * as $admin_users from "./routes/admin/users.tsx";
+import * as $all_components from "./routes/all-components.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
@@ -19,9 +20,14 @@ import * as $user_index from "./routes/user/index.tsx";
 import * as $user_logout from "./routes/user/logout.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
+import * as $FormIsland_FormIsland from "./islands/FormIsland/FormIsland.tsx";
+import * as $form_CheckboxField from "./islands/form/CheckboxField.tsx";
 import * as $form_InputField from "./islands/form/InputField.tsx";
+import * as $form_LabelGroup from "./islands/form/LabelGroup.tsx";
 import * as $form_SelectField from "./islands/form/SelectField.tsx";
 import * as $form_mod from "./islands/form/mod.ts";
+import * as $stars_Star from "./islands/stars/Star.tsx";
+import * as $stars_Stars from "./islands/stars/Stars.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -34,6 +40,7 @@ const manifest = {
     "./routes/admin/_middleware.ts": $admin_middleware,
     "./routes/admin/index.tsx": $admin_index,
     "./routes/admin/users.tsx": $admin_users,
+    "./routes/all-components.tsx": $all_components,
     "./routes/api/joke.ts": $api_joke,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
@@ -45,9 +52,14 @@ const manifest = {
   islands: {
     "./islands/Button.tsx": $Button,
     "./islands/Counter.tsx": $Counter,
+    "./islands/FormIsland/FormIsland.tsx": $FormIsland_FormIsland,
+    "./islands/form/CheckboxField.tsx": $form_CheckboxField,
     "./islands/form/InputField.tsx": $form_InputField,
+    "./islands/form/LabelGroup.tsx": $form_LabelGroup,
     "./islands/form/SelectField.tsx": $form_SelectField,
     "./islands/form/mod.ts": $form_mod,
+    "./islands/stars/Star.tsx": $stars_Star,
+    "./islands/stars/Stars.tsx": $stars_Stars,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;
