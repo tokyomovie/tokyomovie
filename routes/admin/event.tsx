@@ -1,43 +1,45 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { USER_ROLE } from "../../constants/user.ts";
 import { getConnection } from "../../database/db.ts";
-import { Role } from "../../database/query/user.ts";
-import { createUser, findUsers, User } from "../../database/query/user.ts";
+import { createEvent, findEvents, Event } from "../../database/query/event.ts";
+import { Movie, findMovies } from "../../database/query/movie.ts";
 import Button from "../../islands/Button.tsx";
 import { InputField, SelectField } from "../../islands/form/mod.ts";
-import { hashPassword } from "../../utils/auth.ts";
 import { z } from "zod";
 
-const createUserSchema = z.object({
+const createEventSchema = z.object({
   name: z.string().min(1),
-  email: z.string().email(),
-  password: z.string().min(8).regex(
-    /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/,
-    "must contain a number and a symbol",
-  ),
-  role: z.enum(USER_ROLE),
+  path: z.string(),
+  url: z.string(),
+  movieId: z.number(),
+  eventStartsAt: z.string().min(1),
+  eventEndsAt: z.string().min(1),
 });
 
 export const handler: Handlers = {
   async GET(_req, ctx) {
     using connection = getConnection();
-    const users = findUsers(connection.db);
-    return await ctx.render({ users });
+    const movies = findMovies(connection.db);
+    const events = findEvents(connection.db);
+    return await ctx.render({ events, movies });
   },
   async POST(req, ctx) {
     using connection = getConnection();
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
-    const email = form.get("email")?.toString() || "";
-    const password = form.get("password")?.toString() || "";
-    const role = form.get("role")?.toString() as Role;
+    const path = form.get("path")?.toString() || "";
+    const url = form.get("url")?.toString() || "";
+    const movieId = parseInt(form.get("movieId")?.toString() || "") || 0;
+    const eventStartsAt = form.get("eventStartsAt")?.toString() || "";
+    const eventEndsAt = form.get("eventEndsAt")?.toString() || "";
 
-    const parsed = await createUserSchema.safeParseAsync({
+    const parsed = await createEventSchema.safeParseAsync({
       name,
-      email,
-      password,
-      role,
+      path,
+      url,
+      movieId,
+      eventStartsAt,
+      eventEndsAt,
     });
     if (!parsed.success) {
       return ctx.render({
@@ -50,27 +52,21 @@ export const handler: Handlers = {
 
     try {
       const { data } = parsed;
-      const user = {
-        ...data,
-        passwordHash: await hashPassword(data.password),
-      };
-      // @ts-ignore because
-      delete user.password;
-      createUser(connection.db, user);
-      const users = findUsers(connection.db);
+      createEvent(connection.db, data);
+      const events = findEvents(connection.db);
 
       return ctx.render({
         flash: {
-          message: `User successfully created`,
+          message: `Event successfully created`,
           type: "success",
         },
-        users,
+        events,
       });
     } catch (e) {
       console.error(e);
       return ctx.render({
         flash: {
-          message: `Error creating user`,
+          message: `Error creating event`,
           type: "error",
         },
       });
@@ -78,44 +74,46 @@ export const handler: Handlers = {
   },
 };
 
-type UsersProps = {
-  users?: User[];
+type EventsProps = {
+  events?: Event[];
+  movies?: Movie[];
   flash?: { message: string; type: string };
 };
 
-export default function Users(props: PageProps<UsersProps>) {
-  const { users, flash } = props.data;
+export default function Events(props: PageProps<EventsProps>) {
+  const { events, movies, flash } = props.data;
   return (
     <div class="flex flex-col gap-8 p-4">
-      <h1 class="text-xl font-bold">Users Admin</h1>
+      <h1 class="text-xl font-bold">Events Admin</h1>
       {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
       <form method="post">
-        <h2 class="text-xl font-bold">Create a User</h2>
-        <div class="flex flex-col text-xs">
-          <InputField type="text" name="name" />
-          <InputField type="email" name="email" />
-          <InputField type="password" name="password" />
+        <div class="flex flex-col text-xs gap-4">
+          <h2 class="text-lg font-bold">Create an Event</h2>
+          <InputField label="Event Name" type="text" name="name" required />
+          <InputField label="Relative Path to Event" type="text" name="path" helperText="A path to the static event page within tokyomovie.group"/>
+          <InputField label="Absolute URL" type="text" name="url" helperText="A URL to the event page that is outside of tokyomovie.group" />
           <SelectField
-            name="role"
-            options={[
-              { label: "User", value: "user" },
-              { label: "Admin", value: "admin" },
-            ]}
+            name="movieId"
+            label="Movie"
+            options={movies?.map((m) => ({ value: m.id.toString(), label: m.name })) ?? []}
+    required
           />
+          <InputField label="Event Starts At" type="datetime-local" min={new Date().toISOString()} name="eventStartsAt" required />
+          <InputField label="Event Ends At" type="datetime-local" min={new Date().toISOString()} name="eventEndsAt" required />
           <div>
             <Button type="submit">
-              Create User
+              Create Event
             </Button>
           </div>
         </div>
       </form>
 
       <div>
-        <h2 class="text-xl font-bold">Users</h2>
+        <h2 class="text-xl font-bold">Events</h2>
         <ul>
-          {users?.map(({ name, email }) => (
+          {events?.map(({ id, name, eventStartsAt }, i) => (
             <li>
-              {name} - <a href={`mailto:${email}`}>{email}</a>
+              {id}. {name} @{eventStartsAt} 
             </li>
           ))}
         </ul>

@@ -22,6 +22,7 @@ export function findEvents(db: Database, opts = {
 }): Event[] {
   const stmt = db.prepare(`
     SELECT * FROM events
+    ORDER BY eventStartsAt ASC
     LIMIT ? OFFSET ?
   `);
   const rows = stmt.all<Event>(opts.limit, opts.offset);
