@@ -17,7 +17,7 @@ log_emphasize()
 check_bin()
 {
   which $1 >/dev/null 2>&1
-  if [[ $! -ne 0 ]]; then
+  if [ $! -ne 0 ]; then
     log "$1 not found: you will need this for development, please install from your local command line"
     exit 1
   fi
@@ -26,7 +26,7 @@ check_bin()
 check_bin_warn()
 {
   which $1 >/dev/null 2>&1
-  if [[ $! -ne 0 ]]; then
+  if [ $! -ne 0 ]; then
     log "WARNING: $1 not found, you may want this for development"
   fi
 }

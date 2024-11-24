@@ -103,7 +103,11 @@ async function getMigrationsToRun(
 
   const filtered = files.filter((f) =>
     !migrationNames.includes(f.name.replace(".up.sql", ""))
-  );
+  ).sort((a, b) => {
+    if (a.name > b.name) return 1;
+    if (a.name < b.name) return -1;
+    return 0;
+  });
   const migrationsToRun = [];
   for (const f of filtered) {
     const p = `${MIGRATIONS_PATH}/${f.name}`;
