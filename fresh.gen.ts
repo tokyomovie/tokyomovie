@@ -28,6 +28,7 @@ import * as $form_SelectField from "./islands/form/SelectField.tsx";
 import * as $form_mod from "./islands/form/mod.ts";
 import * as $stars_Star from "./islands/stars/Star.tsx";
 import * as $stars_Stars from "./islands/stars/Stars.tsx";
+import * as $util_index from "./islands/util/index.ts";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -60,6 +61,7 @@ const manifest = {
     "./islands/form/mod.ts": $form_mod,
     "./islands/stars/Star.tsx": $stars_Star,
     "./islands/stars/Stars.tsx": $stars_Stars,
+    "./islands/util/index.ts": $util_index,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

@@ -83,8 +83,8 @@ export default function FormIsland() {
       >
         be a star
       </Button>
-      {showStars.value && <Stars number={100} spin />}
-      <Stars number={100} spin />
+      {showStars.value && <Stars number={100} spin scatterHang />}
+      <Stars number={250} spin scatterHang />
     </form>
   )
 }
