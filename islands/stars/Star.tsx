@@ -1,7 +1,6 @@
 import { useSignalEffect } from '@preact/signals'
 
 export default function Star({
-  spin,
   index,
   timeout,
   transition,
@@ -23,7 +22,6 @@ export default function Star({
     return `${y + 125}`
   }
   useSignalEffect(() => {
-    if (!spin) return
     const star = document.querySelector('.' + starClass) as HTMLDivElement
     star.style.transform = `translateY(${ypos}${y}px) translateX(${xpos}${x}px)`
     setTimeout(() => {

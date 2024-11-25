@@ -6,6 +6,23 @@ import InputField from '../form/InputField.tsx'
 import CheckboxField from '../form/CheckboxField.tsx'
 import Stars from '../stars/Stars.tsx'
 import Divider from '../../components/Divider.tsx'
+import Info from '../../components/Info.tsx'
+import ControlledInfo from '../../components/ControlledInfo.tsx'
+
+import Close from '../../components/icons/close.tsx'
+import Check from '../../components/icons/Check.tsx'
+import Notification from '../../components/icons/Notification.tsx'
+import Important from '../../components/icons/Important.tsx'
+import StarIcon from '../../components/icons/StarIcon.tsx'
+import Add from '../../components/icons/Add.tsx'
+import Cog from '../../components/icons/Cog.tsx'
+import Dots from '../../components/icons/Dots.tsx'
+import Link from '../../components/icons/Link.tsx'
+import Menu from '../../components/icons/Menu.tsx'
+import LocationPin from '../../components/icons/LocationPin.tsx'
+import Videocam from '../../components/icons/Videocam.tsx'
+import UserCircle from '../../components/icons/UserCircle.tsx'
+import UserGroup from '../../components/icons/UserGroup.tsx'
 
 const EXAMPLE_FORM_ID = 'example-form'
 
@@ -23,6 +40,7 @@ const exampleSelectData: SelectProps = {
 export default function FormIsland() {
   const invalid = useSignal(false)
   const showStars = useSignal(false)
+  const showInfo = useSignal(true)
   useSignalEffect(() => {
     showStars.value = false
   })
@@ -74,6 +92,7 @@ export default function FormIsland() {
       <p class="text-success">this was a successful action you took!</p>
       <Divider />
       <Button
+        fullWidth
         onClick={() => {
           showStars.value = true
           setTimeout(() => {
@@ -83,8 +102,40 @@ export default function FormIsland() {
       >
         be a star
       </Button>
-      {showStars.value && <Stars number={100} spin scatterHang />}
-      <Stars number={250} spin scatterHang />
+      {showStars.value && <Stars scatterHang />}
+      <Stars scatterHang />
+      <Divider />
+      <Info type="info" message="info text goes here" />
+      <Divider />
+      <Info type="success" message="success text goes here" />
+      <Divider />
+      <Info type="error" message="error text goes here" />
+      <Divider />
+      <ControlledInfo
+        type="info"
+        message="this is a controlled info message"
+        show={showInfo.value}
+        onClose={() => (showInfo.value = false)}
+      />
+      <div class="flex flex-wrap gap-2">
+        <Divider />
+        <Check />
+        <Close />
+        <Important />
+        <Notification />
+        <StarIcon />
+        <Add />
+        <Cog />
+        <Dots />
+        <Link />
+        <Menu />
+        <LocationPin />
+        <Videocam />
+        <UserCircle />
+        <UserGroup />
+      </div>
+
+      <Divider />
     </form>
   )
 }

@@ -1,15 +1,12 @@
 import { useSignal, useSignalEffect } from '@preact/signals'
-import { mobileCheck } from '../util/index.ts'
 import Star from './Star.tsx'
 
 export default function Stars({
-  number,
+  number = 350,
   scatterHang,
-  spin,
 }: {
-  number: number
+  number?: number
   scatterHang?: boolean
-  spin?: boolean
 }) {
   const show = useSignal(true)
   const transitionMs = 750
@@ -27,12 +24,7 @@ export default function Stars({
   })
 
   const starsArray = Array.from({ length: number }).map((_, index) => (
-    <Star
-      index={index}
-      spin={spin}
-      timeout={starTimeout}
-      transition={starTimeout}
-    />
+    <Star index={index} timeout={starTimeout} transition={starTimeout} />
   ))
   if (show.value) {
     return (
