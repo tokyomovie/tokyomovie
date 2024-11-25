@@ -77,7 +77,8 @@ Deno.test("database operations", async (t) => {
   });
 
   await t.step("remove user from a event", () => {
-    expect(removeUserFromEvent(db, { eventId: event.id, userId: user1.id })).toBe(1);
+    expect(removeUserFromEvent(db, { eventId: event.id, userId: user1.id }))
+      .toBe(1);
 
     const users = findUsersAttendingEvent(db, event.id);
     expect(users).toHaveLength(1);

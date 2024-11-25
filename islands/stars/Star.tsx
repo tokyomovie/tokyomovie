@@ -1,11 +1,11 @@
-import { useSignal, useSignalEffect } from '@preact/signals'
+import { useSignal, useSignalEffect } from "@preact/signals";
 
 export default function Star({ spin }: { spin?: boolean }) {
-  const x = Math.floor(Math.random() * 1500)
-  const y = Math.floor(Math.random() * 1500)
-  const xpos = x % 2 === 0 ? '-' : ''
-  const ypos = y % 2 === 0 ? '-' : ''
-  if (spin)
+  const x = Math.floor(Math.random() * 1500);
+  const y = Math.floor(Math.random() * 1500);
+  const xpos = x % 2 === 0 ? "-" : "";
+  const ypos = y % 2 === 0 ? "-" : "";
+  if (spin) {
     return (
       <div
         class="star animate-spin w-3  transition-all absolute"
@@ -15,6 +15,7 @@ export default function Star({ spin }: { spin?: boolean }) {
       >
         ⭐
       </div>
-    )
-  return <div class="transition absolute">⭐</div>
+    );
+  }
+  return <div class="transition absolute">⭐</div>;
 }

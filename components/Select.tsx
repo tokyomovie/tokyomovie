@@ -1,8 +1,8 @@
 export interface SelectProps {
-  name: string
-  options: Array<{ value: string; label: string }>
-  invalid?: boolean
-  disabled?: boolean
+  name: string;
+  options: Array<{ value: string; label: string }>;
+  invalid?: boolean;
+  disabled?: boolean;
 }
 
 export default function Select({
@@ -19,8 +19,8 @@ export default function Select({
       disabled={disabled}
     >
       {options.map(({ value, label }) => {
-        return <option value={value}>{label}</option>
+        return <option value={value}>{label}</option>;
       })}
     </select>
-  )
+  );
 }
