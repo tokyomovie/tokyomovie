@@ -46,6 +46,7 @@ export const handler: Handlers = {
           message: errorsToString(parsed.error.errors),
           type: "error",
         },
+        users: findUsers(connection.db),
       });
     }
 
@@ -58,14 +59,13 @@ export const handler: Handlers = {
       // @ts-ignore because
       delete user.password;
       createUser(connection.db, user);
-      const users = findUsers(connection.db);
 
       return ctx.render({
         flash: {
           message: `User successfully created`,
           type: "success",
         },
-        users,
+        users: findUsers(connection.db),
       });
     } catch (e) {
       console.error(e);
@@ -74,6 +74,7 @@ export const handler: Handlers = {
           message: `Error creating user`,
           type: "error",
         },
+        users: findUsers(connection.db),
       });
     }
   },
