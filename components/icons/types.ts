@@ -1,5 +1,5 @@
 export interface IconProps {
-  primaryFill?: string
-  secondaryFill?: string
-  width?: string
+  primaryFill?: string;
+  secondaryFill?: string;
+  width?: string;
 }

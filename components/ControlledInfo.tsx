@@ -1,12 +1,11 @@
-import Info, { InfoProps } from '../components/Info.tsx'
-import Close from '../components/icons/close.tsx'
-import Button from '../islands/Button.tsx'
+import Info, { InfoProps } from "../components/Info.tsx";
+import Close from "./icons/close.tsx";
 
-type InfoPropTypes = Pick<InfoProps, 'type' | 'message'>
+type InfoPropTypes = Pick<InfoProps, "type" | "message">;
 
 interface ControlledInfoProps extends InfoPropTypes {
-  show: boolean
-  onClose: () => void
+  show: boolean;
+  onClose: () => void;
 }
 
 export default function ControlledInfo({
@@ -15,14 +14,18 @@ export default function ControlledInfo({
   show,
   onClose,
 }: ControlledInfoProps) {
-  let closeToUse = <Close />
-  if (type === 'success')
+  let closeToUse = <Close />;
+  if (type === "success") {
     closeToUse = (
       <Close primaryFill="fill-success" secondaryFill="fill-success-2" />
-    )
-  if (type === 'error')
-    closeToUse = <Close primaryFill="fill-error" secondaryFill="fill-error-2" />
-  if (show)
+    );
+  }
+  if (type === "error") {
+    closeToUse = (
+      <Close primaryFill="fill-error" secondaryFill="fill-error-2" />
+    );
+  }
+  if (show) {
     return (
       <Info
         type={type}
@@ -36,6 +39,7 @@ export default function ControlledInfo({
           </button>
         }
       />
-    )
-  return null
+    );
+  }
+  return null;
 }

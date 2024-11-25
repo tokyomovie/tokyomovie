@@ -12,5 +12,5 @@ export default function Header() {
         〜〜〜 an evening with the staaaars 〜〜〜
       </div>
     </header>
-  )
+  );
 }

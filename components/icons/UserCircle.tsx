@@ -1,9 +1,9 @@
-import { IconProps } from './types.ts'
+import { IconProps } from "./types.ts";
 
 export default function UserCircle({
-  primaryFill = 'fill-primary',
-  secondaryFill = 'fill-primary-4',
-  width = 'w-8',
+  primaryFill = "fill-primary",
+  secondaryFill = "fill-primary-4",
+  width = "w-8",
 }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class={width}>
@@ -18,5 +18,5 @@ export default function UserCircle({
         />
       </g>
     </svg>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import { IconProps } from './types.ts'
+import { IconProps } from "./types.ts";
 
 export default function UserGroup({
-  primaryFill = 'fill-primary',
-  secondaryFill = 'fill-primary-4',
-  width = 'w-8',
+  primaryFill = "fill-primary",
+  secondaryFill = "fill-primary-4",
+  width = "w-8",
 }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class={width}>
@@ -16,5 +16,5 @@ export default function UserGroup({
         d="M12 13a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm-3 1h6a3 3 0 0 1 3 3v3a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-3a3 3 0 0 1 3-3z"
       />
     </svg>
-  )
+  );
 }

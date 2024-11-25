@@ -1,5 +1,5 @@
-import { LabelGroup } from './mod.ts'
-import Select from '../../components/Select.tsx'
+import { LabelGroup } from "./mod.ts";
+import Select from "../../components/Select.tsx";
 
 export default function SelectField({
   name,
@@ -9,12 +9,12 @@ export default function SelectField({
   helperText,
   error,
 }: {
-  name: string
-  label: string
-  options: { value: string; label: string }[]
-  required?: boolean
-  helperText?: string
-  error?: string
+  name: string;
+  label: string;
+  options: { value: string; label: string }[];
+  required?: boolean;
+  helperText?: string;
+  error?: string;
 }) {
   return (
     <div class="flex gap-2 flex-col">
@@ -26,5 +26,5 @@ export default function SelectField({
       <Select name={name} options={options} />
       {error && <p class="text-error">{error}</p>}
     </div>
-  )
+  );
 }

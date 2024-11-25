@@ -1,1 +1,1 @@
-export const mobileCheck = () => globalThis.innerWidth <= 550
+export const mobileCheck = () => globalThis.innerWidth <= 550;

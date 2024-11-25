@@ -1,9 +1,9 @@
-import { IconProps } from './types.ts'
+import { IconProps } from "./types.ts";
 
 export default function Check({
-  primaryFill = 'fill-primary',
-  secondaryFill = 'fill-primary-4',
-  width = 'w-8',
+  primaryFill = "fill-primary",
+  secondaryFill = "fill-primary-4",
+  width = "w-8",
 }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class={width}>
@@ -13,5 +13,5 @@ export default function Check({
         d="M10 14.59l6.3-6.3a1 1 0 0 1 1.4 1.42l-7 7a1 1 0 0 1-1.4 0l-3-3a1 1 0 0 1 1.4-1.42l2.3 2.3z"
       />
     </svg>
-  )
+  );
 }

@@ -1,9 +1,9 @@
-import { IconProps } from './types.ts'
+import { IconProps } from "./types.ts";
 
 export default function Link({
-  primaryFill = 'fill-primary',
-  secondaryFill = 'fill-primary-4',
-  width = 'w-8',
+  primaryFill = "fill-primary",
+  secondaryFill = "fill-primary-4",
+  width = "w-8",
 }: IconProps) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class={width}>
@@ -16,5 +16,5 @@ export default function Link({
         d="M19 6.41L8.7 16.71a1 1 0 1 1-1.4-1.42L17.58 5H14a1 1 0 0 1 0-2h6a1 1 0 0 1 1 1v6a1 1 0 0 1-2 0V6.41z"
       />
     </svg>
-  )
+  );
 }
