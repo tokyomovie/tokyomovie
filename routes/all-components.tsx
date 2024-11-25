@@ -1,6 +1,6 @@
-import Button from '../islands/Button.tsx'
-import FormIsland from '../islands/FormIsland/FormIsland.tsx'
-import Header from '../components/Headers.tsx'
+import Button from "../islands/Button.tsx";
+import FormIsland from "../islands/FormIsland/FormIsland.tsx";
+import Header from "../components/Headers.tsx";
 
 export default function () {
   return (
@@ -8,5 +8,5 @@ export default function () {
       <Header />
       <FormIsland />
     </div>
-  )
+  );
 }

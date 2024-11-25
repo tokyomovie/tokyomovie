@@ -21,7 +21,7 @@ function getData() {
   return {
     movies: findMovies(connection.db),
     events: findEvents(connection.db),
-  }
+  };
 }
 
 export const handler: Handlers = {

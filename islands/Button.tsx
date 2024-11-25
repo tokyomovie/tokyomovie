@@ -1,8 +1,8 @@
-import { ComponentChildren, JSX } from 'preact'
+import { ComponentChildren, JSX } from "preact";
 
 export default function Button({
   children,
-  type = 'button',
+  type = "button",
   ...buttonProps
 }: { children: ComponentChildren } & JSX.HTMLAttributes<HTMLButtonElement>) {
   return (
@@ -13,5 +13,5 @@ export default function Button({
     >
       {children}
     </button>
-  )
+  );
 }

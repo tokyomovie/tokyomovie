@@ -1,15 +1,15 @@
-import Checkbox from '../../components/Checkbox.tsx'
+import Checkbox from "../../components/Checkbox.tsx";
 
 export interface CheckboxFieldProps {
-  labelText: string
-  name: string
-  helperText?: string
-  error?: string
-  required?: boolean
+  labelText: string;
+  name: string;
+  helperText?: string;
+  error?: string;
+  required?: boolean;
 }
 
 export default function CheckboxField(props: CheckboxFieldProps) {
-  const { name, labelText, helperText, error, required } = props
+  const { name, labelText, helperText, error, required } = props;
   return (
     <div>
       <div class="flex flex-row gap-4">
@@ -26,5 +26,5 @@ export default function CheckboxField(props: CheckboxFieldProps) {
       {helperText && <div class="text-foreground-back mt-2">{helperText}</div>}
       {error && <p class="text-error">{error}</p>}
     </div>
-  )
+  );
 }

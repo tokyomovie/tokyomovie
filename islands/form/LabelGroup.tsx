@@ -1,11 +1,11 @@
 interface LabelGroupProps {
-  labelText: string
-  required?: boolean
-  helperText?: string
+  labelText: string;
+  required?: boolean;
+  helperText?: string;
 }
 
 export default function LabelGroup(props: LabelGroupProps) {
-  const { labelText, required, helperText } = props
+  const { labelText, required, helperText } = props;
   return (
     <div class="flex gap-0 flex-col">
       <div class="flex gap-2">
@@ -18,5 +18,5 @@ export default function LabelGroup(props: LabelGroupProps) {
       </div>
       {helperText && <div class="text-foreground-back">{helperText}</div>}
     </div>
-  )
+  );
 }
