@@ -7,6 +7,7 @@ import Button from "../../islands/Button.tsx";
 import { InputField, SelectField } from "../../islands/form/mod.ts";
 import { hashPassword } from "../../utils/auth.ts";
 import { z } from "zod";
+import { errorsToString } from "../../utils/forms.ts";
 
 const createUserSchema = z.object({
   name: z.string().min(1),
@@ -42,7 +43,7 @@ export const handler: Handlers = {
     if (!parsed.success) {
       return ctx.render({
         flash: {
-          message: parsed.error.toString(),
+          message: errorsToString(parsed.error.errors),
           type: "error",
         },
       });
@@ -88,7 +89,7 @@ export default function Users(props: PageProps<UsersProps>) {
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Users Admin</h1>
-      {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
+      {flash && <pre class={`p-2 text-${flash.type}`}>{flash.message}</pre>}
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create a User</h2>

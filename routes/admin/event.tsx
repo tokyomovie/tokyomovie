@@ -1,10 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { getConnection } from "../../database/db.ts";
-import { createEvent, findEvents, Event } from "../../database/query/event.ts";
-import { Movie, findMovies } from "../../database/query/movie.ts";
+import { createEvent, Event, findEvents } from "../../database/query/event.ts";
+import { findMovies, Movie } from "../../database/query/movie.ts";
 import Button from "../../islands/Button.tsx";
 import { InputField, SelectField } from "../../islands/form/mod.ts";
 import { z } from "zod";
+import { errorsToString } from "../../utils/forms.ts";
 
 const createEventSchema = z.object({
   name: z.string().min(1),
@@ -15,12 +16,17 @@ const createEventSchema = z.object({
   eventEndsAt: z.string().min(1),
 });
 
+function getData() {
+  using connection = getConnection();
+  return {
+    movies: findMovies(connection.db),
+    events: findEvents(connection.db),
+  }
+}
+
 export const handler: Handlers = {
   async GET(_req, ctx) {
-    using connection = getConnection();
-    const movies = findMovies(connection.db);
-    const events = findEvents(connection.db);
-    return await ctx.render({ events, movies });
+    return await ctx.render(getData());
   },
   async POST(req, ctx) {
     using connection = getConnection();
@@ -44,23 +50,23 @@ export const handler: Handlers = {
     if (!parsed.success) {
       return ctx.render({
         flash: {
-          message: parsed.error.toString(),
+          message: errorsToString(parsed.error.errors),
           type: "error",
         },
+        ...getData(),
       });
     }
 
     try {
       const { data } = parsed;
       createEvent(connection.db, data);
-      const events = findEvents(connection.db);
 
       return ctx.render({
         flash: {
           message: `Event successfully created`,
           type: "success",
         },
-        events,
+        ...getData(),
       });
     } catch (e) {
       console.error(e);
@@ -69,6 +75,7 @@ export const handler: Handlers = {
           message: `Error creating event`,
           type: "error",
         },
+        ...getData(),
       });
     }
   },
@@ -85,21 +92,46 @@ export default function Events(props: PageProps<EventsProps>) {
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Events Admin</h1>
-      {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
+      {flash && <pre class={`p-2 text-${flash.type}`}>{flash.message}</pre>}
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create an Event</h2>
           <InputField label="Event Name" type="text" name="name" required />
-          <InputField label="Relative Path to Event" type="text" name="path" helperText="A path to the static event page within tokyomovie.group"/>
-          <InputField label="Absolute URL" type="text" name="url" helperText="A URL to the event page that is outside of tokyomovie.group" />
+          <InputField
+            label="Relative Path to Event"
+            type="text"
+            name="path"
+            helperText="A path to the static event page within tokyomovie.group"
+          />
+          <InputField
+            label="Absolute URL"
+            type="text"
+            name="url"
+            helperText="A URL to the event page that is outside of tokyomovie.group"
+          />
           <SelectField
             name="movieId"
             label="Movie"
-            options={movies?.map((m) => ({ value: m.id.toString(), label: m.name })) ?? []}
-    required
+            options={movies?.map((m) => ({
+              value: m.id.toString(),
+              label: m.name,
+            })) ?? []}
+            required
           />
-          <InputField label="Event Starts At" type="datetime-local" min={new Date().toISOString()} name="eventStartsAt" required />
-          <InputField label="Event Ends At" type="datetime-local" min={new Date().toISOString()} name="eventEndsAt" required />
+          <InputField
+            label="Event Starts At"
+            type="datetime-local"
+            min={new Date().toISOString()}
+            name="eventStartsAt"
+            required
+          />
+          <InputField
+            label="Event Ends At"
+            type="datetime-local"
+            min={new Date().toISOString()}
+            name="eventEndsAt"
+            required
+          />
           <div>
             <Button type="submit">
               Create Event
@@ -113,7 +145,7 @@ export default function Events(props: PageProps<EventsProps>) {
         <ul>
           {events?.map(({ id, name, eventStartsAt }, i) => (
             <li>
-              {id}. {name} @{eventStartsAt} 
+              {id}. {name} @{eventStartsAt}
             </li>
           ))}
         </ul>

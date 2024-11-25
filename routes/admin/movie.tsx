@@ -4,6 +4,7 @@ import { createMovie, findMovies, Movie } from "../../database/query/movie.ts";
 import Button from "../../islands/Button.tsx";
 import { InputField } from "../../islands/form/mod.ts";
 import { z } from "zod";
+import { errorsToString } from "../../utils/forms.ts";
 
 const createMovieSchema = z.object({
   name: z.string().min(1),
@@ -15,8 +16,7 @@ const createMovieSchema = z.object({
 export const handler: Handlers = {
   async GET(_req, ctx) {
     using connection = getConnection();
-    const movies = findMovies(connection.db);
-    return await ctx.render({ movies });
+    return await ctx.render({ movies: findMovies(connection.db) });
   },
   async POST(req, ctx) {
     using connection = getConnection();
@@ -31,28 +31,28 @@ export const handler: Handlers = {
       name,
       description,
       url,
-      icon
+      icon,
     });
     if (!parsed.success) {
       return ctx.render({
         flash: {
-          message: parsed.error.toString(),
+          message: errorsToString(parsed.error.errors),
           type: "error",
         },
+        movies: findMovies(connection.db),
       });
     }
 
     try {
       const { data } = parsed;
       createMovie(connection.db, data);
-      const movies = findMovies(connection.db);
 
       return ctx.render({
         flash: {
           message: `Movie successfully created`,
           type: "success",
         },
-        movies,
+        movies: findMovies(connection.db),
       });
     } catch (e) {
       console.error(e);
@@ -61,6 +61,7 @@ export const handler: Handlers = {
           message: `Error creating movie`,
           type: "error",
         },
+        movies: findMovies(connection.db),
       });
     }
   },
@@ -76,14 +77,24 @@ export default function Movies(props: PageProps<MoviesProps>) {
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Movies Admin</h1>
-      {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
+      {flash && <pre class={`p-2 text-${flash.type}`}>{flash.message}</pre>}
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create an Movie</h2>
           <InputField label="Name" type="text" name="name" required />
           <InputField label="Description" type="text" name="description" />
-          <InputField label="URL" type="text" name="url" helperText="A link to a movie page" />
-          <InputField label="Icon" type="text" name="icon" helperText="A static path to an icon" />
+          <InputField
+            label="URL"
+            type="text"
+            name="url"
+            helperText="A link to a movie page"
+          />
+          <InputField
+            label="Icon"
+            type="text"
+            name="icon"
+            helperText="A static path to an icon"
+          />
           <div>
             <Button type="submit">
               Create Movie
@@ -97,7 +108,7 @@ export default function Movies(props: PageProps<MoviesProps>) {
         <ul>
           {movies?.map(({ name }, i) => (
             <li>
-              {i}. {name} 
+              {i}. {name}
             </li>
           ))}
         </ul>

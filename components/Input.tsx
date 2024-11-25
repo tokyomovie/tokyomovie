@@ -13,7 +13,7 @@ export default function Input(props: InputProps) {
   const { name, value, type = 'text', placeholder, invalid, disabled, ...inputProps } = props
   return (
     <input
-      class="border rounded p-2 shadow-block outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200"
+      class="border rounded p-2 shadow-block outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200 text-black"
       type={type}
       name={name}
       value={value}
