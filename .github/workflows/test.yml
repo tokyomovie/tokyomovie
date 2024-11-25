@@ -27,11 +27,13 @@ jobs:
       - name: Lint
         run: "deno fmt --check"
 
-      - name: Test
+      - name: Install SQLite
         uses: actions/setup-sqlite@v1
         with:
           sqlite-version: 3.40.0
           sqlite-year: 2022
+
+      - name: Test
         env:
           DB_PATH: test.db
         run: |
