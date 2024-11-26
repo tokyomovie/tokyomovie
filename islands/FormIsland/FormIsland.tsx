@@ -117,6 +117,21 @@ export default function FormIsland() {
         show={showInfo.value}
         onClose={() => (showInfo.value = false)}
       />
+      <Divider />
+      <ControlledInfo
+        type="success"
+        message="this is a controlled success message"
+        show={showInfo.value}
+        onClose={() => (showInfo.value = false)}
+      />
+      <Divider />
+      <ControlledInfo
+        type="error"
+        message="this is a controlled error message"
+        show={showInfo.value}
+        onClose={() => (showInfo.value = false)}
+      />
+      <Divider />
       <div class="flex flex-wrap gap-2">
         <Divider />
         <Check />
