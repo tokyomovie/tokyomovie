@@ -8,7 +8,6 @@ import Stars from "../stars/Stars.tsx";
 import Divider from "../../components/Divider.tsx";
 import Info from "../../components/Info.tsx";
 import ControlledInfo from "../../components/ControlledInfo.tsx";
-
 import Close from "../../components/icons/Close.tsx";
 import Check from "../../components/icons/Check.tsx";
 import Notification from "../../components/icons/Notification.tsx";
@@ -41,6 +40,7 @@ export default function FormIsland() {
   const invalid = useSignal(false);
   const showStars = useSignal(false);
   const showInfo = useSignal(true);
+
   useSignalEffect(() => {
     showStars.value = false;
   });

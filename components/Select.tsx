@@ -13,7 +13,7 @@ export default function Select({
 }: SelectProps) {
   return (
     <select
-      class="border rounded shadow-block p-2 outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200"
+      class="border rounded shadow-block p-2 outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200 text-black"
       name={name}
       aria-invalid={invalid}
       disabled={disabled}

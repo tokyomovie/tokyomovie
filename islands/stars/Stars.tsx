@@ -26,6 +26,7 @@ export default function Stars({
   const starsArray = Array.from({ length: number }).map((_, index) => (
     <Star index={index} timeout={starTimeout} transition={starTimeout} />
   ));
+
   if (show.value) {
     return (
       <div

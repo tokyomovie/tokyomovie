@@ -1,3 +1,4 @@
+import { JSX } from "preact";
 import { LabelGroup } from "./mod.ts";
 import Input from "../../components/Input.tsx";
 
@@ -17,7 +18,7 @@ export default function InputField({
   value?: string;
   error?: string;
   required?: boolean;
-}) {
+} & JSX.HTMLAttributes<HTMLInputElement>) {
   return (
     <div class="flex gap-2 flex-col">
       <LabelGroup

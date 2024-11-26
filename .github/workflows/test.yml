@@ -1,0 +1,35 @@
+name: Test
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: "**"
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Install Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Lint
+        run: "deno fmt --check"
+
+      - uses: ryohidaka/action-setup-sqlite@v1.2.0
+        with:
+          version: "3.43.2"
+
+      - name: Test
+        env:
+          DB_PATH: test.db
+          SESSION_TOKEN: aGFjayB0aGUgcGxhbmV0Cg==
+        run: |
+          deno run db:migrateAll
+          deno run test

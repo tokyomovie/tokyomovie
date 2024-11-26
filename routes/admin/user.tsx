@@ -7,6 +7,7 @@ import Button from "../../islands/Button.tsx";
 import { InputField, SelectField } from "../../islands/form/mod.ts";
 import { hashPassword } from "../../utils/auth.ts";
 import { z } from "zod";
+import { errorsToString } from "../../utils/forms.ts";
 
 const createUserSchema = z.object({
   name: z.string().min(1),
@@ -42,9 +43,10 @@ export const handler: Handlers = {
     if (!parsed.success) {
       return ctx.render({
         flash: {
-          message: parsed.error.toString(),
+          message: errorsToString(parsed.error.errors),
           type: "error",
         },
+        users: findUsers(connection.db),
       });
     }
 
@@ -57,14 +59,13 @@ export const handler: Handlers = {
       // @ts-ignore because
       delete user.password;
       createUser(connection.db, user);
-      const users = findUsers(connection.db);
 
       return ctx.render({
         flash: {
           message: `User successfully created`,
           type: "success",
         },
-        users,
+        users: findUsers(connection.db),
       });
     } catch (e) {
       console.error(e);
@@ -73,6 +74,7 @@ export const handler: Handlers = {
           message: `Error creating user`,
           type: "error",
         },
+        users: findUsers(connection.db),
       });
     }
   },
@@ -88,14 +90,15 @@ export default function Users(props: PageProps<UsersProps>) {
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Users Admin</h1>
-      {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
+      {flash && <pre class={`p-2 text-${flash.type}`}>{flash.message}</pre>}
       <form method="post">
-        <h2 class="text-xl font-bold">Create a User</h2>
-        <div class="flex flex-col text-xs">
-          <InputField type="text" name="name" />
-          <InputField type="email" name="email" />
-          <InputField type="password" name="password" />
+        <div class="flex flex-col text-xs gap-4">
+          <h2 class="text-lg font-bold">Create a User</h2>
+          <InputField label="Name" type="text" name="name" />
+          <InputField label="E-mail" type="email" name="email" />
+          <InputField label="Password" type="password" name="password" />
           <SelectField
+            label="Role"
             name="role"
             options={[
               { label: "User", value: "user" },
