@@ -1,5 +1,5 @@
 import Info, { InfoProps } from "../components/Info.tsx";
-import Close from "./icons/close.tsx";
+import Close from "./icons/Close.tsx";
 
 type InfoPropTypes = Pick<InfoProps, "type" | "message">;
 
