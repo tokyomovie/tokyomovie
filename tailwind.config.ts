@@ -6,15 +6,19 @@ export default {
     extend: {
       colors: {
         success: "rgb(86 249 25)",
+        "success-2": "rgb(37 65 41)",
         error: "rgb(255 241 0)",
+        "error-2": "rgb(110 81 38)",
         gray: "rgba(57 64 75)",
         background: "rgb(24 5 39)",
         "background-low": "rgb(89 32 111)",
         foreground: "white",
         "foreground-back": "#cebfcc",
         primary: "#39c1ce",
+        "primary-2": "#23929e",
+        "primary-3": "rgb(27 110 147)",
+        "primary-4": "rgb(26 57 91)",
         highlight: "rgb(177 255 247)",
-        secondary: "#23929e",
       },
       boxShadow: {
         focus:
