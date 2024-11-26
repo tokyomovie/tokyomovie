@@ -102,6 +102,19 @@ export default function FormIsland() {
       >
         be a star
       </Button>
+      <Divider />
+      <Button
+        fullWidth
+        inverse
+        onClick={() => {
+          showStars.value = true;
+          setTimeout(() => {
+            showStars.value = false;
+          }, 1000);
+        }}
+      >
+        be an inverse star
+      </Button>
       {showStars.value && <Stars scatterHang />}
       <Stars scatterHang />
       <Divider />
