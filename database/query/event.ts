@@ -44,7 +44,7 @@ export function findEventById(db: Database, id: number): null | Event {
     WHERE id = ?
     LIMIT 1
   `);
-  const [movie] = stmt2.all<Event>(event.movieId);
+  const [movie] = stmt2.all<Movie>(event.movieId);
   event.movie = movie;
 
   return event;
