@@ -7,7 +7,7 @@ import { InputField } from "../islands/form/mod.ts";
 import { z } from "zod";
 import { checkPassword } from "../utils/auth.ts";
 import { encodeSession } from "../utils/session.ts";
-import { RequestState } from "../types/request.ts";
+import { State } from "../types/request.ts";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -15,7 +15,7 @@ const loginSchema = z.object({
 });
 
 export const handler = {
-  async POST(req: Request, ctx: FreshContext<RequestState>) {
+  async POST(req: Request, ctx: FreshContext<State>) {
     using connection = getConnection();
 
     const form = await req.formData();

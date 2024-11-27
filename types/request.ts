@@ -25,7 +25,7 @@ export class Context {
   }
 }
 
-export interface RequestState {
+export interface State {
   user: User | null;
   context: Context;
 }

@@ -1,9 +1,9 @@
 import { FreshContext } from "$fresh/server.ts";
 import { deleteCookie } from "$std/http/cookie.ts";
-import { RequestState } from "../../types/request.ts";
+import { State } from "../../types/request.ts";
 
 export const handler = {
-  POST(_req: Request, ctx: FreshContext<RequestState>) {
+  POST(_req: Request, ctx: FreshContext<State>) {
     const { user } = ctx.state;
     const headers = new Headers();
 

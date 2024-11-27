@@ -1,6 +1,6 @@
 import { FreshContext } from "$fresh/server.ts";
 import { authMiddleware } from "../middleware/auth.ts";
-import { RequestState, Context } from "../types/request.ts";
+import { State, Context } from "../types/request.ts";
 
 // memo: https://fresh.deno.dev/docs/examples/init-the-server
 // export async function handler(
@@ -18,7 +18,7 @@ import { RequestState, Context } from "../types/request.ts";
 
 export async function handler(
   req: Request,
-  ctx: FreshContext<RequestState>,
+  ctx: FreshContext<State>,
 ) {
   ctx.state.context = Context.instance();
 

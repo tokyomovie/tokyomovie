@@ -3,7 +3,7 @@ import { getCookies } from "$std/http/cookie.ts";
 import { PROTECTED_ROUTES } from "../constants/routes.ts";
 import { getConnection } from "../database/db.ts";
 import { findUserById } from "../database/query/user.ts";
-import { RequestState } from "../types/request.ts";
+import { State } from "../types/request.ts";
 import { decodeSession } from "../utils/session.ts";
 
 export async function authMiddleware({
@@ -11,7 +11,7 @@ export async function authMiddleware({
   ctx,
 }: {
   req: Request;
-  ctx: FreshContext<RequestState>;
+  ctx: FreshContext<State>;
 }) {
   const url = new URL(req.url);
   if (url.pathname.match(/.+\.\w+$/)) {
