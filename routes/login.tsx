@@ -7,6 +7,7 @@ import { InputField } from "../islands/form/mod.ts";
 import { z } from "zod";
 import { checkPassword } from "../utils/auth.ts";
 import { encodeSession } from "../utils/session.ts";
+import { RequestState } from "../types/request.ts";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -14,7 +15,7 @@ const loginSchema = z.object({
 });
 
 export const handler = {
-  async POST(req: Request, ctx: FreshContext) {
+  async POST(req: Request, ctx: FreshContext<RequestState>) {
     using connection = getConnection();
 
     const form = await req.formData();
@@ -42,7 +43,7 @@ export const handler = {
       const headers = new Headers();
       setCookie(headers, {
         name: "auth",
-        value: await encodeSession({ userId: user.id }),
+        value: await encodeSession({ userId: user.id }, ctx.state.context.sessionKeyAndIv),
         sameSite: "Strict",
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,
