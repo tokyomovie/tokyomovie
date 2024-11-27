@@ -1,8 +1,8 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
-import { RequestState } from "../../types/request.ts";
+import { State } from "../../types/request.ts";
 
 export const handler = {
-  GET(_req: Request, ctx: FreshContext<RequestState>) {
+  GET(_req: Request, ctx: FreshContext<State>) {
     return ctx.render();
   },
 };
