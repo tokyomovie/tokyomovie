@@ -19,6 +19,8 @@ export default {
         "primary-3": "rgb(27 110 147)",
         "primary-4": "rgb(26 57 91)",
         highlight: "rgb(177 255 247)",
+        "yellow-green": "#a1e44d",
+        "razzmataz": "#E40066",
       },
       boxShadow: {
         focus:

@@ -22,8 +22,12 @@ import * as $user_index from "./routes/user/index.tsx";
 import * as $user_logout from "./routes/user/logout.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
+import * as $EventIsland_EventIsland from "./islands/EventIsland/EventIsland.tsx";
 import * as $FormIsland_FormIsland from "./islands/FormIsland/FormIsland.tsx";
 import * as $ShowingIsland_ShowingIsland from "./islands/ShowingIsland/ShowingIsland.tsx";
+import * as $event_Event from "./islands/event/Event.tsx";
+import * as $event_RSVPStatus from "./islands/event/RSVPStatus.tsx";
+import * as $event_StatusLabel from "./islands/event/StatusLabel.tsx";
 import * as $form_CheckboxField from "./islands/form/CheckboxField.tsx";
 import * as $form_InputField from "./islands/form/InputField.tsx";
 import * as $form_LabelGroup from "./islands/form/LabelGroup.tsx";
@@ -61,8 +65,12 @@ const manifest = {
   islands: {
     "./islands/Button.tsx": $Button,
     "./islands/Counter.tsx": $Counter,
+    "./islands/EventIsland/EventIsland.tsx": $EventIsland_EventIsland,
     "./islands/FormIsland/FormIsland.tsx": $FormIsland_FormIsland,
     "./islands/ShowingIsland/ShowingIsland.tsx": $ShowingIsland_ShowingIsland,
+    "./islands/event/Event.tsx": $event_Event,
+    "./islands/event/RSVPStatus.tsx": $event_RSVPStatus,
+    "./islands/event/StatusLabel.tsx": $event_StatusLabel,
     "./islands/form/CheckboxField.tsx": $form_CheckboxField,
     "./islands/form/InputField.tsx": $form_InputField,
     "./islands/form/LabelGroup.tsx": $form_LabelGroup,
