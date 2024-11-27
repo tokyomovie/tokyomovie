@@ -8,6 +8,7 @@ import { errorsToString } from "../../utils/forms.ts";
 
 const createMovieSchema = z.object({
   name: z.string().min(1),
+  year: z.number(),
   description: z.string(),
   url: z.string(),
   icon: z.string(),
@@ -23,12 +24,14 @@ export const handler: Handlers = {
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
+    const year = Number(form.get("year"));
     const description = form.get("description")?.toString() || "";
     const url = form.get("url")?.toString() || "";
     const icon = form.get("icon")?.toString() || "";
 
     const parsed = await createMovieSchema.safeParseAsync({
       name,
+      year,
       description,
       url,
       icon,
@@ -78,11 +81,26 @@ export default function Movies(props: PageProps<MoviesProps>) {
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Movies Admin</h1>
       {flash && <pre class={`p-2 text-${flash.type}`}>{flash.message}</pre>}
-      <form method="post">
+      <form id="create-movie" method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create an Movie</h2>
-          <InputField label="Name" type="text" name="name" required />
-          <InputField label="Description" type="text" name="description" />
+          <InputField
+            label="Name"
+            type="text"
+            name="name"
+            required
+          />
+          <InputField
+            label="Year"
+            type="text"
+            name="year"
+            required
+          />
+          <InputField
+            label="Description"
+            type="text"
+            name="description"
+          />
           <InputField
             label="URL"
             type="text"
@@ -106,9 +124,9 @@ export default function Movies(props: PageProps<MoviesProps>) {
       <div>
         <h2 class="text-xl font-bold">Movies</h2>
         <ul>
-          {movies?.map(({ name }, i) => (
+          {movies?.map(({ name, year }, i) => (
             <li>
-              {i}. {name}
+              {i}. {name} {year && `(${year})`}
             </li>
           ))}
         </ul>

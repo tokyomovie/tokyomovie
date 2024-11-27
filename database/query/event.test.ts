@@ -36,6 +36,7 @@ Deno.test("database operations", async (t) => {
   });
   const movie = createMovie(db, {
     name: "hackers",
+    year: 1984,
     description: "a banger",
     url: "http://aurl.com",
     icon: "/public/my-icon.png",
