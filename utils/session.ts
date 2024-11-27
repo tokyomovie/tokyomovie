@@ -15,11 +15,13 @@ const te = (s: string) => new TextEncoder().encode(s);
 const td = (d: Uint8Array) => new TextDecoder().decode(d);
 
 export type SessionKeyAndIv = {
-  key: CryptoKey,
-  iv: Uint8Array,
-}
+  key: CryptoKey;
+  iv: Uint8Array;
+};
 
-export async function createSessionKeyAndIv(sessionToken: string): Promise<SessionKeyAndIv> {
+export async function createSessionKeyAndIv(
+  sessionToken: string,
+): Promise<SessionKeyAndIv> {
   const rawKey = te(sessionToken);
   const key = await crypto.subtle.importKey(
     "raw",
@@ -29,10 +31,13 @@ export async function createSessionKeyAndIv(sessionToken: string): Promise<Sessi
     ["encrypt", "decrypt"],
   );
 
-  return { key, iv: new Uint8Array(16) }
+  return { key, iv: new Uint8Array(16) };
 }
 
-export async function encodeSession(session: Session, { key, iv }: SessionKeyAndIv): Promise<string> {
+export async function encodeSession(
+  session: Session,
+  { key, iv }: SessionKeyAndIv,
+): Promise<string> {
   if (!session.userId) {
     throw Error(`invalid session of: ${JSON.stringify(session)}`);
   }
@@ -48,7 +53,10 @@ export async function encodeSession(session: Session, { key, iv }: SessionKeyAnd
   return encodeBase64(encryptedBytes);
 }
 
-export async function decodeSession(encoded: string, { key, iv }: SessionKeyAndIv): Promise<Session> {
+export async function decodeSession(
+  encoded: string,
+  { key, iv }: SessionKeyAndIv,
+): Promise<Session> {
   const decrypted = await crypto.subtle.decrypt(
     { name: "AES-CBC", iv },
     key,

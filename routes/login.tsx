@@ -1,6 +1,5 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
 import { setCookie } from "$std/http/cookie.ts";
-import { getConnection } from "../database/db.ts";
 import { findUserByEmail } from "../database/query/user.ts";
 import Button from "../islands/Button.tsx";
 import { InputField } from "../islands/form/mod.ts";
@@ -16,7 +15,7 @@ const loginSchema = z.object({
 
 export const handler = {
   async POST(req: Request, ctx: FreshContext<State>) {
-    using connection = getConnection();
+    const { db } = ctx.state.context;
 
     const form = await req.formData();
     const email = form.get("email")?.toString() || "";
@@ -34,7 +33,7 @@ export const handler = {
 
     try {
       const { data } = parsed;
-      const user = findUserByEmail(connection.db, data.email);
+      const user = findUserByEmail(db, data.email);
 
       if (!user || !(await checkPassword(user.passwordHash, data.password))) {
         throw new Error("invalid login");
@@ -43,7 +42,10 @@ export const handler = {
       const headers = new Headers();
       setCookie(headers, {
         name: "auth",
-        value: await encodeSession({ userId: user.id }, ctx.state.context.sessionKeyAndIv),
+        value: await encodeSession(
+          { userId: user.id },
+          ctx.state.context.sessionKeyAndIv,
+        ),
         sameSite: "Strict",
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24,

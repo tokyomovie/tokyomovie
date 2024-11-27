@@ -5,6 +5,7 @@ import Button from "../../islands/Button.tsx";
 import { InputField } from "../../islands/form/mod.ts";
 import { z } from "zod";
 import { errorsToString } from "../../utils/forms.ts";
+import { State } from "../../types/request.ts";
 
 const createMovieSchema = z.object({
   name: z.string().min(1),
@@ -13,13 +14,12 @@ const createMovieSchema = z.object({
   icon: z.string(),
 });
 
-export const handler: Handlers = {
+export const handler: Handlers<MoviesProps, State> = {
   async GET(_req, ctx) {
-    using connection = getConnection();
-    return await ctx.render({ movies: findMovies(connection.db) });
+    return await ctx.render({ movies: findMovies(ctx.state.context.db) });
   },
   async POST(req, ctx) {
-    using connection = getConnection();
+    const { db } = ctx.state.context;
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
@@ -39,20 +39,20 @@ export const handler: Handlers = {
           message: errorsToString(parsed.error.errors),
           type: "error",
         },
-        movies: findMovies(connection.db),
+        movies: findMovies(db),
       });
     }
 
     try {
       const { data } = parsed;
-      createMovie(connection.db, data);
+      createMovie(db, data);
 
       return ctx.render({
         flash: {
           message: `Movie successfully created`,
           type: "success",
         },
-        movies: findMovies(connection.db),
+        movies: findMovies(db),
       });
     } catch (e) {
       console.error(e);
@@ -61,7 +61,7 @@ export const handler: Handlers = {
           message: `Error creating movie`,
           type: "error",
         },
-        movies: findMovies(connection.db),
+        movies: findMovies(db),
       });
     }
   },

@@ -32,7 +32,10 @@ export async function authMiddleware({
   }
 
   if (encodedSession) {
-    const session = await decodeSession(encodedSession, ctx.state.context.sessionKeyAndIv);
+    const session = await decodeSession(
+      encodedSession,
+      ctx.state.context.sessionKeyAndIv,
+    );
 
     using connection = getConnection();
     const user = findUserById(connection.db, session.userId);

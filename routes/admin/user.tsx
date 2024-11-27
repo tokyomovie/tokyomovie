@@ -1,6 +1,5 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { USER_ROLE } from "../../constants/user.ts";
-import { getConnection } from "../../database/db.ts";
 import { Role } from "../../database/query/user.ts";
 import { createUser, findUsers, User } from "../../database/query/user.ts";
 import Button from "../../islands/Button.tsx";
@@ -8,6 +7,7 @@ import { InputField, SelectField } from "../../islands/form/mod.ts";
 import { hashPassword } from "../../utils/auth.ts";
 import { z } from "zod";
 import { errorsToString } from "../../utils/forms.ts";
+import { State } from "../../types/request.ts";
 
 const createUserSchema = z.object({
   name: z.string().min(1),
@@ -19,14 +19,13 @@ const createUserSchema = z.object({
   role: z.enum(USER_ROLE),
 });
 
-export const handler: Handlers = {
+export const handler: Handlers<UsersProps, State> = {
   async GET(_req, ctx) {
-    using connection = getConnection();
-    const users = findUsers(connection.db);
+    const users = findUsers(ctx.state.context.db);
     return await ctx.render({ users });
   },
   async POST(req, ctx) {
-    using connection = getConnection();
+    const { db } = ctx.state.context;
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
@@ -46,7 +45,7 @@ export const handler: Handlers = {
           message: errorsToString(parsed.error.errors),
           type: "error",
         },
-        users: findUsers(connection.db),
+        users: findUsers(db),
       });
     }
 
@@ -58,14 +57,14 @@ export const handler: Handlers = {
       };
       // @ts-ignore because
       delete user.password;
-      createUser(connection.db, user);
+      createUser(db, user);
 
       return ctx.render({
         flash: {
           message: `User successfully created`,
           type: "success",
         },
-        users: findUsers(connection.db),
+        users: findUsers(db),
       });
     } catch (e) {
       console.error(e);
@@ -74,7 +73,7 @@ export const handler: Handlers = {
           message: `Error creating user`,
           type: "error",
         },
-        users: findUsers(connection.db),
+        users: findUsers(db),
       });
     }
   },

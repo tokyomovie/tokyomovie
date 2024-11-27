@@ -1,11 +1,12 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { getConnection } from "../../database/db.ts";
 import { createEvent, Event, findEvents } from "../../database/query/event.ts";
 import { findMovies, Movie } from "../../database/query/movie.ts";
 import Button from "../../islands/Button.tsx";
 import { InputField, SelectField } from "../../islands/form/mod.ts";
 import { z } from "zod";
 import { errorsToString } from "../../utils/forms.ts";
+import { Database } from "jsr:@db/sqlite@0.11";
+import { State } from "../../types/request.ts";
 
 const createEventSchema = z.object({
   name: z.string().min(1),
@@ -16,20 +17,19 @@ const createEventSchema = z.object({
   eventEndsAt: z.string().min(1),
 });
 
-function getData() {
-  using connection = getConnection();
+function getData(db: Database) {
   return {
-    movies: findMovies(connection.db),
-    events: findEvents(connection.db),
+    movies: findMovies(db),
+    events: findEvents(db),
   };
 }
 
-export const handler: Handlers = {
+export const handler: Handlers<EventsProps, State> = {
   async GET(_req, ctx) {
-    return await ctx.render(getData());
+    return await ctx.render(getData(ctx.state.context.db));
   },
   async POST(req, ctx) {
-    using connection = getConnection();
+    const { db } = ctx.state.context;
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
@@ -53,20 +53,20 @@ export const handler: Handlers = {
           message: errorsToString(parsed.error.errors),
           type: "error",
         },
-        ...getData(),
+        ...getData(db),
       });
     }
 
     try {
       const { data } = parsed;
-      createEvent(connection.db, data);
+      createEvent(db, data);
 
       return ctx.render({
         flash: {
           message: `Event successfully created`,
           type: "success",
         },
-        ...getData(),
+        ...getData(db),
       });
     } catch (e) {
       console.error(e);
@@ -75,7 +75,7 @@ export const handler: Handlers = {
           message: `Error creating event`,
           type: "error",
         },
-        ...getData(),
+        ...getData(db),
       });
     }
   },
@@ -143,7 +143,7 @@ export default function Events(props: PageProps<EventsProps>) {
       <div>
         <h2 class="text-xl font-bold">Events</h2>
         <ul>
-          {events?.map(({ id, name, eventStartsAt }, i) => (
+          {events?.map(({ id, name, eventStartsAt }) => (
             <li>
               {id}. {name} @{eventStartsAt}
             </li>

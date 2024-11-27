@@ -1,6 +1,6 @@
 import { FreshContext } from "$fresh/server.ts";
 import { authMiddleware } from "../middleware/auth.ts";
-import { State, Context } from "../types/request.ts";
+import { Context, State } from "../types/request.ts";
 
 // memo: https://fresh.deno.dev/docs/examples/init-the-server
 // export async function handler(
