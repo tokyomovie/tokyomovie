@@ -1,8 +1,8 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
 import { RequestState } from "../../types/request.ts";
 import Header from "../../components/Header.tsx";
-import ShowingIsland from "../../islands/ShowingIsland/ShowingIsland.tsx";
 import Stars from "../../islands/stars/Stars.tsx";
+import EventIsland from "../../islands/EventIsland/EventIsland.tsx";
 
 export const handler = {
   GET(_req: Request, ctx: FreshContext<State>) {
@@ -17,12 +17,12 @@ type EventProps = {
 export default function Event(props: PageProps<EventProps>) {
   const { flash } = props.data || {};
   return (
-    <div className="text-foreground bg-background h-screen">
+    <div class="bg-background">
       <Header />
-      <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
+      <div class="max-w-screen-md min-h-screen text-foreground bg-background mx-auto flex flex-col items-center justify-center">
         {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
         <h1 class="text-3xl text-primary">Events</h1>
-        <ShowingIsland />
+        <EventIsland />
       </div>
       <Stars />
     </div>
