@@ -14,6 +14,7 @@ const loginSchema = z.object({
 });
 
 export const handler = {
+  // TODO: implement account lock for too many failed attempts
   async POST(req: Request, ctx: FreshContext<State>) {
     const { db } = ctx.state.context;
 
@@ -36,7 +37,12 @@ export const handler = {
       const user = findUserByEmail(db, data.email);
 
       if (!user || !(await checkPassword(user.passwordHash, data.password))) {
-        throw new Error("invalid login");
+        return ctx.render({
+          flash: {
+            type: "error",
+            message: "invalid login",
+          },
+        });
       }
 
       const headers = new Headers();

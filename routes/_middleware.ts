@@ -22,5 +22,38 @@ export async function handler(
 ) {
   ctx.state.context = Context.instance();
 
-  return await authMiddleware({ req, ctx });
+  return await authMiddleware({
+    req,
+    ctx,
+    onError: (req) => {
+      const url = new URL(req.url);
+      if (url.pathname.startsWith("/api")) {
+        return new Response(JSON.stringify({ message: "invalid request" }), {
+          headers: { "Content-Type": "application/json" },
+          status: 404,
+        });
+      }
+
+      return new Response(null, {
+        headers: { Location: "/login" },
+        status: 303,
+      });
+    },
+    onSuccess: (req, user) => {
+      const url = new URL(req.url);
+      // We pass through API requests
+      if (url.pathname.startsWith("/api")) {
+        return;
+      }
+
+      // If this is a request to login and the user is already logged in,
+      // redirect them to user
+      if (user && url.pathname.startsWith("/login")) {
+        return new Response("", {
+          status: 303,
+          headers: { Location: "/user" },
+        });
+      }
+    },
+  });
 }
