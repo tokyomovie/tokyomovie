@@ -21,7 +21,6 @@ export default {
         highlight: "rgb(177 255 247)",
         "yellow-green": "#a1e44d",
         "razzmataz": "#E40066",
-        "purple": "#A42CD6",
       },
       boxShadow: {
         focus:

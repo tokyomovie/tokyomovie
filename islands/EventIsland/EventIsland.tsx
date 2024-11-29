@@ -1,3 +1,4 @@
+import Card from "../../components/Card.tsx";
 import Event from "../event/Event.tsx";
 
 const sampleEventData = [
@@ -47,20 +48,22 @@ const sampleEventData = [
 ];
 
 const events = sampleEventData.map((event) => (
-  <Event
-    eventTitle={event.eventTitle}
-    movieTitle={event.movieTitle}
-    releaseYear={event.releaseYear}
-    synopsis={event.synopsis}
-    eventDescription={event.eventDescription}
-    date={event.date}
-    time={event.time}
-    location={event.location}
-    price={event.price}
-    rsvp={event.rsvp}
-    going={event.going}
-    seatsLeft={event.seatsLeft}
-  />
+  <Card>
+    <Event
+      eventTitle={event.eventTitle}
+      movieTitle={event.movieTitle}
+      releaseYear={event.releaseYear}
+      synopsis={event.synopsis}
+      eventDescription={event.eventDescription}
+      date={event.date}
+      time={event.time}
+      location={event.location}
+      price={event.price}
+      rsvp={event.rsvp}
+      going={event.going}
+      seatsLeft={event.seatsLeft}
+    />
+  </Card>
 ));
 
 export default function EventIsland() {
