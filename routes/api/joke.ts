@@ -1,4 +1,5 @@
 import { FreshContext } from "$fresh/server.ts";
+import * as apiResponse from "../../utils/response/api.ts";
 
 // Jokes courtesy of https://punsandoneliners.com/randomness/programmer-jokes/
 const JOKES = [
@@ -17,5 +18,10 @@ const JOKES = [
 export const handler = (_req: Request, _ctx: FreshContext): Response => {
   const randomIndex = Math.floor(Math.random() * JOKES.length);
   const body = JOKES[randomIndex];
-  return new Response(body);
+
+  if (randomIndex > 2) {
+    return apiResponse.userError("You got unlucky!");
+  }
+
+  return apiResponse.success(body);
 };
