@@ -57,34 +57,6 @@ export function findMovieByName(db: Database, email: string): null | Movie {
   return movie ?? null;
 }
 
-export function findMoviesAttendedByUser(
-  db: Database,
-  userId: number,
-): Movie[] {
-  const stmt = db.prepare(`
-    SELECT * FROM movies
-    INNER JOIN attended_movies ON movies.id = attended_movies.movieId
-    AND attended_movies.userId = ?
-  `);
-  const rows = stmt.all<Movie>(userId);
-
-  return rows;
-}
-
-export function createAttendedMovie(
-  db: Database,
-  attended: { movieId: number; userId: number },
-): number {
-  return db.exec(
-    `
-    INSERT INTO attended_movies
-      (userId, movieId)
-    VALUES (:userId, :movieId)
-  `,
-    attended,
-  );
-}
-
 export function deleteMovie(db: Database, id: number): number {
   return db.exec(
     `DELETE FROM movies

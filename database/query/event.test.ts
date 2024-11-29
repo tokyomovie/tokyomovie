@@ -45,26 +45,79 @@ Deno.test("database operations", async (t) => {
     event = createEvent(db, {
       name: "foo event",
       movieId: movie.id,
+      venue: "da club",
+      venueUrl: "http://daclub.com",
       path: "/path",
       url: "https://imdb.com/path",
       eventStartsAt: new Date().toISOString(),
       eventEndsAt: new Date().toISOString(),
+      price: 1000,
+      priceDescription: "one drink",
     });
 
     expect(event.id).toBeTruthy();
   });
 
+  await t.step("can create event with no price or description", () => {
+    const eventNoPrice = createEvent(db, {
+      name: "foo event",
+      movieId: movie.id,
+      path: "/path",
+      url: "https://imdb.com/path",
+      venue: "da club 2",
+      venueUrl: "http://daclub2.com",
+      eventStartsAt: new Date().toISOString(),
+      eventEndsAt: new Date().toISOString(),
+      price: null,
+      priceDescription: null,
+    });
+
+    expect(eventNoPrice.id).toBeTruthy();
+  });
+
   await t.step("find events", () => {
-    expect(findEvents(db)).toHaveLength(1);
+    const events = findEvents(db, user1.id);
+    expect(events).toHaveLength(2);
+    expect(events[0]).toMatchObject({
+      name: "foo event",
+      path: "/path",
+      url: "https://imdb.com/path",
+      price: 1000,
+      venue: "da club",
+      venueUrl: "http://daclub.com",
+      priceDescription: "one drink",
+      movie: expect.objectContaining({ name: "hackers" }),
+      rsvp: "no_rsvp",
+      attendingCount: 0,
+    });
+    expect(events[1]).toMatchObject({
+      name: "foo event",
+      path: "/path",
+      url: "https://imdb.com/path",
+      price: null,
+      venue: "da club 2",
+      venueUrl: "http://daclub2.com",
+      priceDescription: null,
+      movie: expect.objectContaining({ name: "hackers" }),
+      rsvp: "no_rsvp",
+      attendingCount: 0,
+    });
   });
 
   await t.step("find event with id", () => {
-    const found = findEventById(db, event.id);
-    expect(found).not.toBeUndefined();
-    expect(found?.id).toBe(event.id);
-    expect(found?.movie?.name).toEqual(movie.name);
+    const found = findEventById(db, event.id, user1.id);
+    expect(found).toMatchObject({
+      name: "foo event",
+      path: "/path",
+      url: "https://imdb.com/path",
+      price: 1000,
+      priceDescription: "one drink",
+      movie: expect.objectContaining({ name: "hackers" }),
+      rsvp: "no_rsvp",
+      attendingCount: 0,
+    });
 
-    const eventNotExist = findEventById(db, Date.now());
+    const eventNotExist = findEventById(db, Date.now(), user1.id);
     expect(eventNotExist).toBeNull();
   });
 
@@ -74,6 +127,12 @@ Deno.test("database operations", async (t) => {
 
     const users = findUsersAttendingEvent(db, event.id);
     expect(users).toHaveLength(2);
+
+    const found = findEventById(db, event.id, user1.id);
+    expect(found).toMatchObject({
+      attendingCount: 2,
+      rsvp: "attending",
+    });
   });
 
   await t.step("remove user from a event", () => {
@@ -82,6 +141,17 @@ Deno.test("database operations", async (t) => {
 
     const users = findUsersAttendingEvent(db, event.id);
     expect(users).toHaveLength(1);
+
+    const found = findEventById(db, event.id, user1.id);
+    expect(found).toMatchObject({
+      attendingCount: 1,
+      rsvp: "not_attending",
+    });
+    const found2 = findEventById(db, event.id, user2.id);
+    expect(found2).toMatchObject({
+      attendingCount: 1,
+      rsvp: "attending",
+    });
   });
 
   await t.step("delete event", () => {
