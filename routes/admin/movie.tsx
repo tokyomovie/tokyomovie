@@ -1,11 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { getConnection } from "../../database/db.ts";
 import { createMovie, findMovies, Movie } from "../../database/query/movie.ts";
 import Button from "../../islands/Button.tsx";
 import { InputField } from "../../islands/form/mod.ts";
 import { z } from "zod";
 import { errorsToString } from "../../utils/forms.ts";
 import { State } from "../../types/request.ts";
+import RowItem from "../../components/admin/RowItem.tsx";
 
 const createMovieSchema = z.object({
   name: z.string().min(1),
@@ -106,10 +106,10 @@ export default function Movies(props: PageProps<MoviesProps>) {
       <div>
         <h2 class="text-xl font-bold">Movies</h2>
         <ul>
-          {movies?.map(({ name }, i) => (
-            <li>
+          {movies?.map(({ id, name }, i) => (
+            <RowItem>
               {i}. {name}
-            </li>
+            </RowItem>
           ))}
         </ul>
       </div>
