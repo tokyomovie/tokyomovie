@@ -15,6 +15,8 @@ const createEventSchema = z.object({
   movieId: z.number(),
   eventStartsAt: z.string().min(1),
   eventEndsAt: z.string().min(1),
+  price: z.number().nullable(),
+  priceDescription: z.string().nullable(),
 });
 
 function getData(db: Database) {
@@ -36,6 +38,8 @@ export const handler: Handlers<EventsProps, State> = {
     const path = form.get("path")?.toString() || "";
     const url = form.get("url")?.toString() || "";
     const movieId = parseInt(form.get("movieId")?.toString() || "") || 0;
+    const price = parseInt(form.get("price")?.toString() || "") || null;
+    const priceDescription = form.get("priceDescription")?.toString() || null;
     const eventStartsAt = form.get("eventStartsAt")?.toString() || "";
     const eventEndsAt = form.get("eventEndsAt")?.toString() || "";
 
@@ -46,6 +50,8 @@ export const handler: Handlers<EventsProps, State> = {
       movieId,
       eventStartsAt,
       eventEndsAt,
+      price,
+      priceDescription,
     });
     if (!parsed.success) {
       return ctx.render({
@@ -97,18 +103,6 @@ export default function Events(props: PageProps<EventsProps>) {
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create an Event</h2>
           <InputField label="Event Name" type="text" name="name" required />
-          <InputField
-            label="Relative Path to Event"
-            type="text"
-            name="path"
-            helperText="A path to the static event page within tokyomovie.group"
-          />
-          <InputField
-            label="Absolute URL"
-            type="text"
-            name="url"
-            helperText="A URL to the event page that is outside of tokyomovie.group"
-          />
           <SelectField
             name="movieId"
             label="Movie"
@@ -117,6 +111,32 @@ export default function Events(props: PageProps<EventsProps>) {
               label: m.name,
             })) ?? []}
             required
+          />
+          <InputField
+            label="Price"
+            type="number"
+            name="price"
+            placeholder="1000"
+          />
+          <InputField
+            label="Price Description"
+            placeholder="one drink"
+            type="text"
+            name="price"
+          />
+          <InputField
+            label="Relative Path to Event"
+            type="text"
+            name="path"
+            helperText="A path to the static event page within tokyomovie.group"
+            placeholder="/existenz"
+          />
+          <InputField
+            label="Absolute URL"
+            type="text"
+            name="url"
+            helperText="A URL to the event page that is outside of tokyomovie.group"
+            placeholder="https://some-other-site.com/my-movie"
           />
           <InputField
             label="Event Starts At"

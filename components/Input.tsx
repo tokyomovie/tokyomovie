@@ -4,9 +4,7 @@ export type InputProps = {
   name: string;
   type?: string;
   value?: string;
-  placeholder?: string;
   invalid?: boolean;
-  disabled?: boolean;
 } & JSX.HTMLAttributes<HTMLInputElement>;
 
 export default function Input(props: InputProps) {
@@ -16,7 +14,6 @@ export default function Input(props: InputProps) {
     type = "text",
     placeholder,
     invalid,
-    disabled,
     ...inputProps
   } = props;
 
@@ -28,7 +25,6 @@ export default function Input(props: InputProps) {
       value={value}
       placeholder={placeholder}
       aria-invalid={invalid}
-      disabled={disabled}
       {...inputProps}
     />
   );

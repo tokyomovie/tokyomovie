@@ -54,7 +54,7 @@ function rowToEvent(e: any): Event {
   };
 }
 
-export function findEvents(db: Database, userId: number, opts = {
+export function findEvents(db: Database, userId: number = 0, opts = {
   limit: 10,
   offset: 0,
 }): Event[] {
@@ -94,7 +94,7 @@ export function findEvents(db: Database, userId: number, opts = {
 export function findEventById(
   db: Database,
   id: number,
-  userId: number,
+  userId: number = 0,
 ): null | Event {
   const stmt = db.prepare(`
     SELECT

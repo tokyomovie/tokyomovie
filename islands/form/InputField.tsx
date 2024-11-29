@@ -10,6 +10,7 @@ export default function InputField({
   value,
   error,
   required,
+  ...inputProps
 }: {
   name: string;
   label: string;
@@ -26,7 +27,7 @@ export default function InputField({
         required={required}
         helperText={helperText}
       />
-      <Input name={name} type={type} value={value} />
+      <Input {...inputProps} name={name} type={type} value={value} />
       {error && <p class="text-error">{error}</p>}
     </div>
   );
