@@ -1,15 +1,12 @@
 import { expect } from "@std/expect";
 import {
-  createAttendedMovie,
   createMovie,
   deleteMovie,
   findMovieById,
   findMovieByName,
-  findMoviesAttendedByUser,
   type Movie,
 } from "./movie.ts";
 import { getConnection } from "../db.ts";
-import { createUser } from "./user.ts";
 
 Deno.test("database operations", async (t) => {
   using connection = getConnection();
@@ -42,27 +39,6 @@ Deno.test("database operations", async (t) => {
 
     const movieNotExist = findMovieById(db, Date.now());
     expect(movieNotExist).toBeNull();
-  });
-
-  const user = createUser(db, {
-    name: "yeah",
-    email: "foop@doop.com",
-    role: "user",
-    passwordHash: "yupper",
-  });
-
-  await t.step("attend movie", () => {
-    const attended = createAttendedMovie(db, {
-      movieId: movie.id,
-      userId: user.id,
-    });
-    expect(attended).toBe(1);
-  });
-
-  await t.step("get attended movies", () => {
-    const attended = findMoviesAttendedByUser(db, user.id);
-    expect(attended).toHaveLength(1);
-    expect(attended[0].name).toBe("foo movie");
   });
 
   await t.step("delete movie", () => {

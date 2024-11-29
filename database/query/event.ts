@@ -5,49 +5,125 @@ import { User } from "./user.ts";
 export type Event = {
   id: number;
   name: string;
-  movieId: number;
   path?: string;
   url?: string;
   createdAt: string;
+  price: number | null;
+  priceDescription: string | null;
   eventStartsAt: string;
   eventEndsAt: string;
   movie?: Movie;
+  attendingCount: number;
+  rsvp: "no_rsvp" | "attending" | "not_attending";
 };
 
-export type EventCreate = Omit<Event, "id" | "createdAt">;
+export type EventCreate =
+  & Omit<
+    Event,
+    "id" | "createdAt" | "userAttending" | "attendingCount" | "rsvp"
+  >
+  & { movieId: number };
 
-export function findEvents(db: Database, opts = {
+function rsvp(row: null | number) {
+  if (row === null) return "no_rsvp";
+  if (row === 0) return "not_attending";
+
+  return "attending";
+}
+
+function rowToEvent(e: any): Event {
+  return {
+    id: e.id,
+    name: e.name,
+    path: e.path,
+    url: e.url,
+    price: e.price,
+    priceDescription: e.priceDescription,
+    createdAt: e.createdAt,
+    eventStartsAt: e.startsAt,
+    eventEndsAt: e.eventEndsAt,
+    movie: {
+      id: e.movie_id,
+      name: e.movie_name,
+      description: e.movie_description,
+      url: e.movie_url,
+      icon: e.movie_icon,
+    },
+    attendingCount: e.attendingCount,
+    rsvp: rsvp(e.attending),
+  };
+}
+
+export function findEvents(db: Database, userId: number, opts = {
   limit: 10,
   offset: 0,
 }): Event[] {
   const stmt = db.prepare(`
-    SELECT * FROM events
+    SELECT
+      events.*,
+      movies.id as movie_id,
+      movies.name as movie_name,
+      movies.description as movie_description,
+      movies.url as movie_url,
+      movies.icon as movie_icon,
+      (
+        SELECT count(*)
+        FROM event_users
+        WHERE events.id = event_users.eventId
+         AND event_users.attending = 1
+      ) attendingCount,
+      (
+        SELECT attending FROM event_users 
+        WHERE events.id = event_users.eventId
+          AND event_users.userId = :userId
+      ) attending
+    FROM events
+    INNER JOIN movies ON movies.id = events.movieId
     ORDER BY eventStartsAt ASC
-    LIMIT ? OFFSET ?
+    LIMIT :limit OFFSET :offset
   `);
-  const rows = stmt.all<Event>(opts.limit, opts.offset);
+  const rows = stmt.all({
+    userId,
+    ...opts,
+  });
+  const events = rows.map(rowToEvent);
 
-  return rows;
+  return events;
 }
 
-export function findEventById(db: Database, id: number): null | Event {
+export function findEventById(
+  db: Database,
+  id: number,
+  userId: number,
+): null | Event {
   const stmt = db.prepare(`
-    SELECT * FROM events
-    WHERE id = ?
+    SELECT
+      events.*,
+      movies.id as movie_id,
+      movies.name as movie_name,
+      movies.description as movie_description,
+      movies.url as movie_url,
+      movies.icon as movie_icon,
+      (
+        SELECT count(*)
+        FROM event_users
+        WHERE events.id = event_users.eventId
+          AND event_users.attending = 1
+      ) attendingCount,
+      (
+        SELECT attending FROM event_users 
+        WHERE events.id = event_users.eventId
+          AND event_users.userId = :userId
+      ) attending
+    FROM events
+    INNER JOIN movies ON movies.id = events.movieId
+    WHERE events.id = :id
     LIMIT 1
   `);
-  const [event] = stmt.all<Event>(id);
-  if (!event) return null;
+  const [e] = stmt.all({ id, userId });
+  if (!e) return null;
 
-  const stmt2 = db.prepare(`
-    SELECT * FROM movies
-    WHERE id = ?
-    LIMIT 1
-  `);
-  const [movie] = stmt2.all<Event>(event.movieId);
-  event.movie = movie;
-
-  return event;
+  return rowToEvent(e);
 }
 
 export function findUsersAttendingEvent(db: Database, eventId: number): User[] {
@@ -55,6 +131,7 @@ export function findUsersAttendingEvent(db: Database, eventId: number): User[] {
     SELECT users.* FROM event_users   
     INNER JOIN users ON event_users.userId = users.id
     WHERE eventId = ?
+      AND event_users.attending = 1
   `);
 
   return stmt.all<User>(eventId);
@@ -63,8 +140,8 @@ export function findUsersAttendingEvent(db: Database, eventId: number): User[] {
 export function createEvent(db: Database, event: EventCreate): Event {
   const stmt = db.prepare(`
     INSERT INTO events
-      (name, movieId, path, url, eventStartsAt, eventEndsAt)
-    VALUES (:name, :movieId, :path, :url, :eventStartsAt, :eventEndsAt)
+      (name, movieId, path, url, price, priceDescription, eventStartsAt, eventEndsAt)
+    VALUES (:name, :movieId, :path, :url, :price, :priceDescription, :eventStartsAt, :eventEndsAt)
     RETURNING *
   `);
   const [created] = stmt.all<Event>(event);
@@ -81,8 +158,8 @@ export function addUserToEvent(
 ): number {
   return db.exec(
     `INSERT INTO event_users
-      (eventId, userId)
-    VALUES (:eventId, :userId)`,
+      (eventId, userId, attending)
+    VALUES (:eventId, :userId, 1)`,
     { eventId, userId },
   );
 }
@@ -95,7 +172,8 @@ export function removeUserFromEvent(
   },
 ): number {
   return db.exec(
-    `DELETE FROM event_users
+    `UPDATE event_users
+     SET attending = 0
      WHERE eventId = :eventId
        AND userId = :userId`,
     { eventId, userId },
