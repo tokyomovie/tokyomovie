@@ -38,7 +38,7 @@ log "Installing deno deps"
 deno install
 log "Deps OK"
 
-mkdir resources
+mkdir -p resources
 
 log "Setting up env vars"
 cp -n .env.development.example .env.development.local
