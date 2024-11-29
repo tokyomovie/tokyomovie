@@ -20,10 +20,12 @@ import * as $user_layout from "./routes/user/_layout.tsx";
 import * as $user_event from "./routes/user/event.tsx";
 import * as $user_index from "./routes/user/index.tsx";
 import * as $user_logout from "./routes/user/logout.tsx";
+import * as $user_movie from "./routes/user/movie.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $EventIsland_EventIsland from "./islands/EventIsland/EventIsland.tsx";
 import * as $FormIsland_FormIsland from "./islands/FormIsland/FormIsland.tsx";
+import * as $MovieIsland_MovieIsland from "./islands/MovieIsland/MovieIsland.tsx";
 import * as $event_Event from "./islands/event/Event.tsx";
 import * as $event_RSVPStatus from "./islands/event/RSVPStatus.tsx";
 import * as $event_StatusLabel from "./islands/event/StatusLabel.tsx";
@@ -32,6 +34,7 @@ import * as $form_InputField from "./islands/form/InputField.tsx";
 import * as $form_LabelGroup from "./islands/form/LabelGroup.tsx";
 import * as $form_SelectField from "./islands/form/SelectField.tsx";
 import * as $form_mod from "./islands/form/mod.ts";
+import * as $movie_Movie from "./islands/movie/Movie.tsx";
 import * as $stars_Star from "./islands/stars/Star.tsx";
 import * as $stars_Stars from "./islands/stars/Stars.tsx";
 import * as $util_index from "./islands/util/index.ts";
@@ -57,12 +60,14 @@ const manifest = {
     "./routes/user/event.tsx": $user_event,
     "./routes/user/index.tsx": $user_index,
     "./routes/user/logout.tsx": $user_logout,
+    "./routes/user/movie.tsx": $user_movie,
   },
   islands: {
     "./islands/Button.tsx": $Button,
     "./islands/Counter.tsx": $Counter,
     "./islands/EventIsland/EventIsland.tsx": $EventIsland_EventIsland,
     "./islands/FormIsland/FormIsland.tsx": $FormIsland_FormIsland,
+    "./islands/MovieIsland/MovieIsland.tsx": $MovieIsland_MovieIsland,
     "./islands/event/Event.tsx": $event_Event,
     "./islands/event/RSVPStatus.tsx": $event_RSVPStatus,
     "./islands/event/StatusLabel.tsx": $event_StatusLabel,
@@ -71,6 +76,7 @@ const manifest = {
     "./islands/form/LabelGroup.tsx": $form_LabelGroup,
     "./islands/form/SelectField.tsx": $form_SelectField,
     "./islands/form/mod.ts": $form_mod,
+    "./islands/movie/Movie.tsx": $movie_Movie,
     "./islands/stars/Star.tsx": $stars_Star,
     "./islands/stars/Stars.tsx": $stars_Stars,
     "./islands/util/index.ts": $util_index,

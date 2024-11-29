@@ -46,9 +46,7 @@ const sampleEventData = [
   },
 ];
 
-const events = sampleEventData.map((event) => (
-  <Card event={event} />
-));
+const events = sampleEventData.map((event) => <Card event={event} />);
 
 export default function EventIsland() {
   return (

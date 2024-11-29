@@ -59,7 +59,7 @@ export default function Event(props: EventProps) {
               <h2 class="text-2xl text-error">
                 {eventTitle}
               </h2>
-              <h3 text->{movieTitle} ({releaseYear})</h3>
+              <h3 class="text-xl text-error">{movieTitle} ({releaseYear})</h3>
             </div>
           )}
           {!eventTitle && (
