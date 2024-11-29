@@ -5,6 +5,8 @@ import { User } from "./user.ts";
 export type Event = {
   id: number;
   name: string;
+  venue: string;
+  venueUrl: string;
   path?: string;
   url?: string;
   createdAt: string;
@@ -35,12 +37,14 @@ function rowToEvent(e: any): Event {
   return {
     id: e.id,
     name: e.name,
+    venue: e.venue,
+    venueUrl: e.venueUrl,
     path: e.path,
     url: e.url,
     price: e.price,
     priceDescription: e.priceDescription,
     createdAt: e.createdAt,
-    eventStartsAt: e.startsAt,
+    eventStartsAt: e.eventStartsAt,
     eventEndsAt: e.eventEndsAt,
     movie: {
       id: e.movie_id,
@@ -140,8 +144,8 @@ export function findUsersAttendingEvent(db: Database, eventId: number): User[] {
 export function createEvent(db: Database, event: EventCreate): Event {
   const stmt = db.prepare(`
     INSERT INTO events
-      (name, movieId, path, url, price, priceDescription, eventStartsAt, eventEndsAt)
-    VALUES (:name, :movieId, :path, :url, :price, :priceDescription, :eventStartsAt, :eventEndsAt)
+      (name, movieId, venue, venueUrl, path, url, price, priceDescription, eventStartsAt, eventEndsAt)
+    VALUES (:name, :movieId, :venue, :venueUrl, :path, :url, :price, :priceDescription, :eventStartsAt, :eventEndsAt)
     RETURNING *
   `);
   const [created] = stmt.all<Event>(event);

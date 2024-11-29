@@ -2,6 +2,8 @@ CREATE TABLE IF NOT EXISTS events (
   id INTEGER PRIMARY KEY,
   name TEXT NOT NULL,
   movieId INTEGER NOT NULL,
+  venue TEXT NOT NULL,
+  venueUrl TEXT NOT NULL default '',
   path TEXT,
   url TEXT,
   -- a datetime for when the event starts
