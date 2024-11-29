@@ -1,3 +1,4 @@
+import { useSignalEffect } from "@preact/signals";
 import RSVPStatus from "./RSVPStatus.tsx";
 
 export interface EventProps {
@@ -30,6 +31,12 @@ export default function Event(props: EventProps) {
     going,
     seatsLeft,
   } = props;
+  useSignalEffect(() => {
+    const loggedIn = localStorage.getItem("logged-in");
+    if (!loggedIn) {
+      localStorage.setItem("logged-in", "true");
+    }
+  });
   return (
     <>
       <div class="px-3 flex flex-col">

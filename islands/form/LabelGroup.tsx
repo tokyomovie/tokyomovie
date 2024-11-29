@@ -1,15 +1,19 @@
 interface LabelGroupProps {
   labelText: string;
+  htmlFor: string;
   required?: boolean;
   helperText?: string;
 }
 
 export default function LabelGroup(props: LabelGroupProps) {
-  const { labelText, required, helperText } = props;
+  const { labelText, htmlFor, required, helperText } = props;
   return (
     <div class="flex gap-0 flex-col">
       <div class="flex gap-2">
-        <label class="text-large font-bold relative text-foreground">
+        <label
+          htmlFor={htmlFor}
+          class="text-large font-bold relative text-foreground"
+        >
           {labelText}
           {required && (
             <div class="text-error absolute right-[-25px] top-0">⭐</div>

@@ -22,6 +22,7 @@ import LocationPin from "../../components/icons/LocationPin.tsx";
 import Videocam from "../../components/icons/Videocam.tsx";
 import UserCircle from "../../components/icons/UserCircle.tsx";
 import UserGroup from "../../components/icons/UserGroup.tsx";
+import Title from "../../components/Title.tsx";
 
 const EXAMPLE_FORM_ID = "example-form";
 
@@ -57,6 +58,12 @@ export default function FormIsland() {
         console.log(data.get("example-check") === "on");
       }}
     >
+      <Title level={1}>Big Ol Title</Title>
+      <Title level={1} invert>Big Ol Title</Title>
+      <Title level={2}>less Big Ol Title</Title>
+      <Title level={2} invert>less Big Ol Title</Title>
+      <Title level={3}>even less Big Ol Title</Title>
+      <Title level={3} invert>even less Big Ol Title</Title>
       <SelectField
         name="example-select"
         label="example select"
