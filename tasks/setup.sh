@@ -78,6 +78,10 @@ case "$choice" in
 esac
 log "Admin creation OK"
 
+log "Running initial tests for sanity"
+deno task test
+log "Tests OK"
+
 log_emphasize "Your setup is finished. You can run the app with \`deno task dev\`. 
 
 You can login with with you default admin:
