@@ -28,7 +28,7 @@ jobs:
 
       - name: Test
         env:
-          DB_PATH: test.db
+          DB_PATH: resources/test.db
           SESSION_TOKEN: aGFjayB0aGUgcGxhbmV0Cg==
         run: |
           deno run db:migrateAll

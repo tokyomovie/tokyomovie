@@ -15,7 +15,7 @@
     "db:migrateAll": "deno run --allow-env --allow-read --allow-write --allow-ffi --allow-net ./tasks/migrateAll.ts",
     "db:addAdmin": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/addAdmin.ts",
     "format": "deno fmt --ignore=static ./",
-    "format:check": "deno fmt --ignore=static ./ --check",
+    "format:check": "deno fmt --ignore=static . --check",
     "clean": "./tasks/clean.sh",
     "reset": "deno task clean && deno task setup"
   },

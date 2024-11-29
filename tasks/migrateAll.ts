@@ -11,6 +11,5 @@ async function runMigrateAll(envPath: string) {
   db.close();
 }
 
-
 await runMigrateAll(`.env.development.local`);
 await runMigrateAll(`.env.test.local`);

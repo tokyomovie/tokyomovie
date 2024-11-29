@@ -182,14 +182,18 @@ export default function Events(props: PageProps<EventsProps>) {
       <div>
         <h2 class="text-xl font-bold">Events</h2>
         <ul>
-          {events?.map(({ id, name, eventStartsAt, venue, eventEndsAt, attendingCount }) => {
-            return (
-              <li>
-                {id}. {name} @{venue}, starts: {eventStartsAt}, ends:{" "}
-                {eventEndsAt}, RSVP'd: {attendingCount}
-              </li>
-            );
-          })}
+          {events?.map(
+            (
+              { id, name, eventStartsAt, venue, eventEndsAt, attendingCount },
+            ) => {
+              return (
+                <li>
+                  {id}. {name} @{venue}, starts: {eventStartsAt}, ends:{" "}
+                  {eventEndsAt}, RSVP'd: {attendingCount}
+                </li>
+              );
+            },
+          )}
         </ul>
       </div>
     </div>
