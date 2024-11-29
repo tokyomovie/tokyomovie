@@ -1,5 +1,5 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
-import { RequestState } from "../../types/request.ts";
+import { State } from "../../types/request.ts";
 import Header from "../../components/Header.tsx";
 import Stars from "../../islands/stars/Stars.tsx";
 import EventIsland from "../../islands/EventIsland/EventIsland.tsx";
