@@ -8,10 +8,14 @@ export default function StatusLabel(props: StatusLabelProps) {
   return (
     <div class="text-xs">
       {rsvp && going && (
-        <div class="p-1 bg-yellow-green text-white rounded text-center">going</div>
+        <div class="p-1 bg-yellow-green text-white rounded text-center">
+          going
+        </div>
       )}
       {rsvp && !going && (
-        <div class="p-1 bg-razzmataz text-white rounded text-center">not going</div>
+        <div class="p-1 bg-razzmataz text-white rounded text-center">
+          not going
+        </div>
       )}
       {!rsvp && (
         <div class="p-1 bg-gray text-white rounded text-center">
