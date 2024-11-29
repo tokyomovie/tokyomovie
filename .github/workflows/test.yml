@@ -32,4 +32,4 @@ jobs:
           SESSION_TOKEN: aGFjayB0aGUgcGxhbmV0Cg==
         run: |
           deno run db:migrateAll
-          deno run test
+          deno run test:ci

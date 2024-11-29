@@ -3,6 +3,7 @@
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "test": "deno test --env-file='.env.test.local' --allow-env --allow-read --allow-write --allow-ffi",
+    "test:ci": "deno test --allow-env --allow-read --allow-write --allow-ffi",
     "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
     "manifest": "deno task cli manifest $(pwd)",
     "dev": "deno run -A --watch=static/,routes/ --env-file='.env.development.local' dev.ts",

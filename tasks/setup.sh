@@ -55,7 +55,8 @@ sqlite3 "$DB_PATH" ""
 log "Test db setup at $DB_PATH"
 
 log "Migrating databases"
-deno task db:migrateAll
+deno task db:migrateAll .env.development.local
+deno task db:migrateAll .env.test.local
 log "Migrating OK"
 
 source .env.development.local
