@@ -1,3 +1,4 @@
+import { useSignalEffect } from "@preact/signals";
 import RSVPStatus from "./RSVPStatus.tsx";
 
 export interface EventProps {
@@ -30,6 +31,7 @@ export default function Event(props: EventProps) {
     going,
     seatsLeft,
   } = props;
+
   return (
     <>
       <div class="px-3 flex flex-col">

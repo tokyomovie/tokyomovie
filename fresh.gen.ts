@@ -14,13 +14,16 @@ import * as $admin_movie from "./routes/admin/movie.tsx";
 import * as $admin_user from "./routes/admin/user.tsx";
 import * as $all_components from "./routes/all-components.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $bng from "./routes/bng.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
 import * as $user_layout from "./routes/user/_layout.tsx";
+import * as $user_bng from "./routes/user/bng.tsx";
 import * as $user_event from "./routes/user/event.tsx";
 import * as $user_index from "./routes/user/index.tsx";
 import * as $user_logout from "./routes/user/logout.tsx";
 import * as $user_movie from "./routes/user/movie.tsx";
+import * as $user_poll from "./routes/user/poll.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $EventIsland_EventIsland from "./islands/EventIsland/EventIsland.tsx";
@@ -54,13 +57,16 @@ const manifest = {
     "./routes/admin/user.tsx": $admin_user,
     "./routes/all-components.tsx": $all_components,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/bng.tsx": $bng,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
     "./routes/user/_layout.tsx": $user_layout,
+    "./routes/user/bng.tsx": $user_bng,
     "./routes/user/event.tsx": $user_event,
     "./routes/user/index.tsx": $user_index,
     "./routes/user/logout.tsx": $user_logout,
     "./routes/user/movie.tsx": $user_movie,
+    "./routes/user/poll.tsx": $user_poll,
   },
   islands: {
     "./islands/Button.tsx": $Button,

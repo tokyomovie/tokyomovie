@@ -19,11 +19,12 @@ export default function SelectField({
   return (
     <div class="flex gap-2 flex-col">
       <LabelGroup
+        htmlFor={name}
         labelText={label}
         required={required}
         helperText={helperText}
       />
-      <Select name={name} options={options} />
+      <Select id={name} name={name} options={options} />
       {error && <p class="text-error">{error}</p>}
     </div>
   );

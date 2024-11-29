@@ -15,7 +15,10 @@ export default function CheckboxField(props: CheckboxFieldProps) {
       <div class="flex flex-row gap-4">
         <Checkbox name={name} />
         <div class="flex gap-2">
-          <label class="text-large font-bold relative text-foreground">
+          <label
+            htmlFor={name}
+            class="text-large font-bold relative text-foreground"
+          >
             {labelText}
             {required && (
               <div class="text-error absolute right-[-28px] top-0">⭐</div>

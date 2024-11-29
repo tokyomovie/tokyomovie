@@ -7,6 +7,9 @@ import { z } from "zod";
 import { checkPassword } from "../utils/auth.ts";
 import { encodeSession } from "../utils/session.ts";
 import { State } from "../types/request.ts";
+import StackCenter from "../components/StackCenter.tsx";
+import Info from "../components/Info.tsx";
+import Title from "../components/Title.tsx";
 
 const loginSchema = z.object({
   email: z.string().email(),
@@ -81,12 +84,21 @@ type LoginProps = {
 export default function Login(props: PageProps<LoginProps>) {
   const { flash, validationError } = props.data || {};
   return (
-    <div class="test px-4 py-8 mx-auto bg-[#86efac] size-full">
-      <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-        {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
-        <form method="post">
-          <h2 class="text-xl font-bold">Login</h2>
-          <div class="flex flex-col text-xs gap-2">
+    <div class="test px-4 py-8 mx-auto size-full">
+      <StackCenter>
+        <Title style={{ transform: "skew(5deg, 5deg)" }} level={1}>Login</Title>
+        {flash && <Info icon type="error" message={flash.message} />}
+        <div class="pl-8 pr-8 mt-10">
+          <p>
+            to experience everything tokyo movie group has to offer you must log
+            in
+          </p>
+          <p>
+            このサイト提供しているものを体験するにはローグインが必要となってる
+          </p>
+        </div>
+        <form class="w-full p-8" method="post">
+          <StackCenter classes="gap-12 w-full">
             <InputField
               label="email:"
               type="email"
@@ -99,14 +111,13 @@ export default function Login(props: PageProps<LoginProps>) {
               name="password"
               error={validationError?.fieldErrors?.password?.join(", ")}
             />
-            <div class="flex gap-2 flex-col">
-              <Button type="submit">
-                Login
-              </Button>
-            </div>
-          </div>
+
+            <Button fullWidth type="submit">
+              Login
+            </Button>
+          </StackCenter>
         </form>
-      </div>
+      </StackCenter>
     </div>
   );
 }

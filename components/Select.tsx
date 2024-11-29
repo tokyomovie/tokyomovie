@@ -1,15 +1,18 @@
-export interface SelectProps {
+import { JSX } from "preact";
+
+export type SelectProps = {
   name: string;
   options: Array<{ value: string; label: string }>;
   invalid?: boolean;
   disabled?: boolean;
-}
+} & JSX.HTMLAttributes<HTMLSelectElement>;
 
 export default function Select({
   name,
   options,
   invalid = false,
   disabled = false,
+  ...rest
 }: SelectProps) {
   return (
     <select
@@ -17,6 +20,7 @@ export default function Select({
       name={name}
       aria-invalid={invalid}
       disabled={disabled}
+      {...rest}
     >
       {options.map(({ value, label }) => {
         return <option value={value}>{label}</option>;

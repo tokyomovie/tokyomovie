@@ -21,13 +21,14 @@ export default function InputField({
   required?: boolean;
 } & JSX.HTMLAttributes<HTMLInputElement>) {
   return (
-    <div class="flex gap-2 flex-col">
+    <div class="flex gap-2 flex-col w-full">
       <LabelGroup
+        htmlFor={name}
         labelText={label}
         required={required}
         helperText={helperText}
       />
-      <Input {...inputProps} name={name} type={type} value={value} />
+      <Input {...inputProps} id={name} name={name} type={type} value={value} />
       {error && <p class="text-error">{error}</p>}
     </div>
   );

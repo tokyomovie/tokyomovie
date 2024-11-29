@@ -14,7 +14,7 @@ export default {
         "background-low": "rgb(89 32 111)",
         foreground: "white",
         "foreground-back": "#cebfcc",
-        primary: "#39c1ce",
+        primary: "rgb(57 192 206)",
         "primary-2": "#23929e",
         "primary-3": "rgb(27 110 147)",
         "primary-4": "rgb(26 57 91)",
@@ -26,6 +26,7 @@ export default {
         focus:
           "rgb(24 5 39) 0px 0px 0px 0.125rem, rgb(177 255 247) 0px 0px 0px 0.2rem",
         block: "-3px 3px 0px 0px rgb(177 255 247)",
+        glow: "0px 0px 8px 0px rgba(57,192,206,0.75)",
       },
       animation: {
         "rotate-90-right-cw":

@@ -1,23 +1,49 @@
-import { useSignal } from "@preact/signals";
-import Counter from "../islands/Counter.tsx";
+import Header from "../components/Header.tsx";
+import Button from "../islands/Button.tsx";
+import StackCenter from "../components/StackCenter.tsx";
+import Title from "../components/Title.tsx";
+import { PageProps } from "$fresh/server.ts";
+import * as serverResponse from "../utils/response/server.ts";
+import SpinningStar from "../components/SpinningStar.tsx";
 
-export default function Home() {
-  const count = useSignal(3);
+import { FreshContext } from "$fresh/server.ts";
+import { State } from "../types/request.ts";
+
+export const handler = {
+  async GET(_req: Request, ctx: FreshContext<State>) {
+    const { user } = ctx.state;
+
+    if (user) {
+      return serverResponse.redirect("/user/event");
+    }
+
+    return await ctx.render();
+  },
+};
+
+export default function Home(props: PageProps) {
   return (
-    <div class="test px-4 py-8 mx-auto bg-[#86efac]">
-      <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
-        <img
-          class="my-6"
-          src="/bng.png"
-          width="500"
-          height="500"
-          alt="homina homina!"
-        />
-        <h1 class="text-4xl font-bold">kinsey scale</h1>
-        <p class="my-4">
-          gay spectrum checker
-        </p>
-        <Counter count={count} />
+    <div>
+      <Header />
+      <div class="flex justify-center my-2 p-8">
+        <StackCenter>
+          <div class="text-center">
+            <Title level={1}>welcome to tokyo movie group</Title>
+            <p class="mt-14">
+              the only tokyo movie group that has its own website for some
+              unknown reason
+            </p>
+            <Title level={1}>東京ムービーグループへよーこそ</Title>
+            <p class="mt-14">
+              なぜか分からんWEBサイトのある東京ムービーグループの一つである
+            </p>
+          </div>
+          <a class="w-full" href="./login">
+            <Button fullWidth>
+              enter エンター
+            </Button>
+          </a>
+        </StackCenter>
       </div>
     </div>
   );
