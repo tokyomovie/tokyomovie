@@ -21,6 +21,7 @@ Deno.test("database operations", async (t) => {
   await t.step("create movie", () => {
     movie = createMovie(db, {
       name: "foo movie",
+      year: 1984,
       description: "yeah",
       url: "http://aurl.com",
       icon: "/public/my-icon.png",

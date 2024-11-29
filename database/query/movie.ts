@@ -3,6 +3,7 @@ import { Database } from "jsr:@db/sqlite@0.11";
 export type Movie = {
   id: number;
   name: string;
+  year: number;
   description?: string;
   url?: string;
   icon?: string;
@@ -26,8 +27,8 @@ export function findMovies(db: Database, opts = {
 export function createMovie(db: Database, movie: MovieCreate): Movie {
   const stmt = db.prepare(`
     INSERT INTO movies
-      (name, description, url, icon)
-    VALUES (:name, :description, :url, :icon)
+      (name, year, description, url, icon)
+    VALUES (:name, year:, :description, :url, :icon)
     RETURNING *
   `);
   const [created] = stmt.all<Movie>(movie);
