@@ -36,8 +36,9 @@ Visit http://localhost:8000/login to log in with your user
 
 ### DB
 
-For now, this project uses sqlite3 for simplicity's sake. Sqlite3 can run on pretty much anything, and the data is just stored as a file. 
-The way this is structured at the present moment is like this:
+For now, this project uses sqlite3 for simplicity's sake. Sqlite3 can run on
+pretty much anything, and the data is just stored as a file. The way this is
+structured at the present moment is like this:
 
 ```
 Reads
@@ -46,13 +47,15 @@ Writes
 [Fresh Page] ===> [Query] ===> [Database]
 
 If we wanted to do something asyncronously, then you'd stick an api in there and fetch it client side
-[Database] ===> [Query] ===> [JSON API] ===> [Fresh Page]  
+[Database] ===> [Query] ===> [JSON API] ===> [Fresh Page]
 ```
 
-Query will get data from database, do any data transformations if necessary, and then it gets rendered into the page.
-The query functions are there so we don't have to look at a bunch of SQL and we can make data from the database easier to use, if necessary.
+Query will get data from database, do any data transformations if necessary, and
+then it gets rendered into the page. The query functions are there so we don't
+have to look at a bunch of SQL and we can make data from the database easier to
+use, if necessary.
 
-*directory structure*
+_directory structure_
 
 ```
 /database
@@ -64,14 +67,20 @@ The query functions are there so we don't have to look at a bunch of SQL and we 
 
 #### Migrations
 
-There is a small migrations system to help us manage the database schema. When you want to alter the schema of the database, you will have to make a migration. When there is a change to the database, you will have to run the migrations, so your copy of the database works.
+There is a small migrations system to help us manage the database schema. When
+you want to alter the schema of the database, you will have to make a migration.
+When there is a change to the database, you will have to run the migrations, so
+your copy of the database works.
 
-- `deno task db:migration:create` - create migration sql file for modifying db schema, see database/migrations for examples
-- `deno task db:migration` - for migrations and rollbacks - you can choose to migrate / rollback one at a time or all at once
+- `deno task db:migration:create` - create migration sql file for modifying db
+  schema, see database/migrations for examples
+- `deno task db:migration` - for migrations and rollbacks - you can choose to
+  migrate / rollback one at a time or all at once
 - `deno task db:migrateAll` - convenience script for running all migrations
 
 #### ERD Diagram
 
 TBD
 
-For now, you can probably use some tools out there like https://www.datensen.com/blog/erd-creator-for-sqlite/.
+For now, you can probably use some tools out there like
+https://www.datensen.com/blog/erd-creator-for-sqlite/.
