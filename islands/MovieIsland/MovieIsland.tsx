@@ -1,4 +1,5 @@
 import Card from "../../components/Card.tsx";
+import Movie from "../movie/Movie.tsx";
 
 const sampleMovieData = [
   {
@@ -30,7 +31,18 @@ const sampleMovieData = [
   },
 ];
 
-const movies = sampleMovieData.map((movie) => <Card movie={movie} />);
+const movies = sampleMovieData.map((movie) => (
+  <Card>
+    <Movie
+      movieTitle={movie.movieTitle}
+      releaseYear={movie.releaseYear}
+      synopsis={movie.synopsis}
+      runtime={movie.runtime}
+      genre={movie.genre}
+      poster={movie.poster}
+    />
+  </Card>
+));
 
 export default function MovieIsland() {
   return (
