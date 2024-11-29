@@ -20,7 +20,7 @@ jobs:
           deno-version: v2.x
 
       - name: Lint
-        run: "deno fmt --check"
+        run: "deno task fmt:check"
 
       - uses: ryohidaka/action-setup-sqlite@v1.2.0
         with:
