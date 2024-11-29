@@ -12,6 +12,8 @@ const createEventSchema = z.object({
   name: z.string().min(1),
   path: z.string(),
   url: z.string(),
+  venue: z.string().min(1),
+  venueUrl: z.string().url(),
   movieId: z.number(),
   eventStartsAt: z.string().min(1),
   eventEndsAt: z.string().min(1),
@@ -37,6 +39,8 @@ export const handler: Handlers<EventsProps, State> = {
     const name = form.get("name")?.toString() || "";
     const path = form.get("path")?.toString() || "";
     const url = form.get("url")?.toString() || "";
+    const venue = form.get("venue")?.toString() || "";
+    const venueUrl = form.get("venueUrl")?.toString() || "";
     const movieId = parseInt(form.get("movieId")?.toString() || "") || 0;
     const price = parseInt(form.get("price")?.toString() || "") || null;
     const priceDescription = form.get("priceDescription")?.toString() || null;
@@ -52,6 +56,8 @@ export const handler: Handlers<EventsProps, State> = {
       eventEndsAt,
       price,
       priceDescription,
+      venue,
+      venueUrl,
     });
     if (!parsed.success) {
       return ctx.render({
@@ -113,6 +119,19 @@ export default function Events(props: PageProps<EventsProps>) {
             required
           />
           <InputField
+            label="Venue"
+            placeholder="Movie Barn"
+            type="text"
+            name="venue"
+            required
+          />
+          <InputField
+            label="Venue URL"
+            placeholder="https://movie-barn.com"
+            type="text"
+            name="venueUrl"
+          />
+          <InputField
             label="Price"
             type="number"
             name="price"
@@ -163,11 +182,14 @@ export default function Events(props: PageProps<EventsProps>) {
       <div>
         <h2 class="text-xl font-bold">Events</h2>
         <ul>
-          {events?.map(({ id, name, eventStartsAt }) => (
-            <li>
-              {id}. {name} @{eventStartsAt}
-            </li>
-          ))}
+          {events?.map(({ id, name, eventStartsAt, venue, eventEndsAt }) => {
+            return (
+              <li>
+                {id}. {name} @{venue}, starts: {eventStartsAt}, ends:{" "}
+                {eventEndsAt}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>
