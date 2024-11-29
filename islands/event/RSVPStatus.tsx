@@ -4,24 +4,24 @@ import Button from "../Button.tsx";
 import Stars from "../stars/Stars.tsx";
 
 export interface RSVPStatusProps {
-    rsvp: boolean;
-    going?: boolean;
+  rsvp: boolean;
+  going?: boolean;
 }
 
 export default function RSVPStatus(props: RSVPStatusProps) {
-    const {
-        rsvp = false,
-        going,
-    } = props;
+  const {
+    rsvp = false,
+    going,
+  } = props;
 
-    const showStars = useSignal(false);
-    useSignalEffect(() => {
-        showStars.value = false;
-    });
+  const showStars = useSignal(false);
+  useSignalEffect(() => {
+    showStars.value = false;
+  });
 
-    return (
-        <div>
-            <StatusLabel rsvp={rsvp} going={going} />
-        </div>
-    );
+  return (
+    <div>
+      <StatusLabel rsvp={rsvp} going={going} />
+    </div>
+  );
 }

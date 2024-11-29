@@ -19,10 +19,12 @@ export default function Event(props: PageProps<EventProps>) {
   return (
     <div class="bg-background">
       <Header />
-      <div class="max-w-screen-md min-h-screen text-foreground bg-background mx-auto flex flex-col items-center justify-center">
+      <div>
         {flash && <p class={`p-2 text-${flash.type}`}>{flash.message}</p>}
         <h1 class="text-3xl text-primary">Events</h1>
-        <EventIsland />
+        <div>
+          <EventIsland />
+        </div>
       </div>
       <Stars />
     </div>
