@@ -88,6 +88,15 @@ export default function Login(props: PageProps<LoginProps>) {
       <StackCenter>
         <Title style={{ transform: "skew(5deg, 5deg)" }} level={1}>Login</Title>
         {flash && <Info icon type="error" message={flash.message} />}
+        <div class="pl-8 pr-8 mt-10">
+          <p>
+            to experience everything tokyo movie group has to offer you must log
+            in
+          </p>
+          <p>
+            このサイト提供しているものを体験するにはローグインが必要となってる
+          </p>
+        </div>
         <form class="w-full p-8" method="post">
           <StackCenter classes="gap-12 w-full">
             <InputField

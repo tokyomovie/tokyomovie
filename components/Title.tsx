@@ -1,6 +1,7 @@
 import { ComponentChildren, JSX } from "preact";
 
 export type TitleProps = {
+  /** 1 means h1, 2 means h2, 3 means h3 */
   level: 1 | 2 | 3;
   children: ComponentChildren;
   invert?: boolean;

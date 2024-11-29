@@ -2,8 +2,24 @@ import Header from "../components/Header.tsx";
 import Button from "../islands/Button.tsx";
 import StackCenter from "../components/StackCenter.tsx";
 import Title from "../components/Title.tsx";
-import Divider from "../components/Divider.tsx";
 import { PageProps } from "$fresh/server.ts";
+import * as serverResponse from "../utils/response/server.ts";
+import SpinningStar from "../components/SpinningStar.tsx";
+
+import { FreshContext } from "$fresh/server.ts";
+import { State } from "../types/request.ts";
+
+export const handler = {
+  async GET(_req: Request, ctx: FreshContext<State>) {
+    const { user } = ctx.state;
+
+    if (user) {
+      return serverResponse.redirect("/user/event");
+    }
+
+    return await ctx.render();
+  },
+};
 
 export default function Home(props: PageProps) {
   return (
@@ -17,21 +33,15 @@ export default function Home(props: PageProps) {
               the only tokyo movie group that has its own website for some
               unknown reason
             </p>
-            <Title level={1}>東京ムービグループへよーこそ</Title>
+            <Title level={1}>東京ムービーグループへよーこそ</Title>
             <p class="mt-14">
-              なぜか分からんWEBサイトのある東京ムービグループの一つである
-            </p>
-            <Divider />
-            <p>
-              to experience everything tokyo movie group has to offer you must
-              log in
-            </p>
-            <p>
-              このサイト提供しているものを体験するにはローグインが必要となってる
+              なぜか分からんWEBサイトのある東京ムービーグループの一つである
             </p>
           </div>
           <a class="w-full" href="./login">
-            <Button fullWidth>proceed to login</Button>
+            <Button fullWidth>
+              enter エンター
+            </Button>
           </a>
         </StackCenter>
       </div>
