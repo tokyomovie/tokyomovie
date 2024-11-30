@@ -11,6 +11,7 @@ import * as $admin_middleware from "./routes/admin/_middleware.ts";
 import * as $admin_event from "./routes/admin/event.tsx";
 import * as $admin_index from "./routes/admin/index.tsx";
 import * as $admin_movie from "./routes/admin/movie.tsx";
+import * as $admin_poll from "./routes/admin/poll.tsx";
 import * as $admin_user from "./routes/admin/user.tsx";
 import * as $all_components from "./routes/all-components.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
@@ -54,6 +55,7 @@ const manifest = {
     "./routes/admin/event.tsx": $admin_event,
     "./routes/admin/index.tsx": $admin_index,
     "./routes/admin/movie.tsx": $admin_movie,
+    "./routes/admin/poll.tsx": $admin_poll,
     "./routes/admin/user.tsx": $admin_user,
     "./routes/all-components.tsx": $all_components,
     "./routes/api/joke.ts": $api_joke,

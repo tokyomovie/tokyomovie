@@ -23,7 +23,9 @@ export type Poll = {
   }[];
 };
 
-export type PollCreate = Omit<PollRecord, "id" | "createdAt" | "endsAt">;
+export type PollCreate =
+  & Omit<PollRecord, "id" | "createdAt" | "endsAt" | "active">
+  & { active: boolean };
 
 function transform(record: PollRecord): Poll {
   return { ...record, active: record.active === 1 };
@@ -39,6 +41,17 @@ export function findPolls(db: Database, opts = {
   `);
   const rows = stmt.all<PollRecord>(opts.limit, opts.offset)
     .map(transform);
+
+  // TODO: BAD NO DONT DO THIS
+  rows.map((row) => {
+    const stmt2 = db.prepare(`
+      SELECT movies.id, movies.name, poll_movies.voteTotal FROM poll_movies
+      INNER JOIN movies ON poll_movies.movieId = movies.id
+      WHERE pollId = ?
+    `);
+    const movies = stmt2.all<Required<Poll>["movies"][0]>(row.id);
+    row.movies = movies;
+  });
 
   return rows;
 }
@@ -69,7 +82,10 @@ export function createPoll(db: Database, poll: PollCreate): Poll {
     VALUES (:name, :description, :active, :endsAt)
     RETURNING *
   `);
-  const [created] = stmt.all<PollRecord>(poll);
+  const [created] = stmt.all<PollRecord>({
+    ...poll,
+    active: poll.active ? 1 : 0,
+  });
 
   return transform(created);
 }
