@@ -50,6 +50,7 @@ const sampleEventData = [
 
 export default function EventIsland(props: { events: EventType[] }) {
   const { events } = props;
+
   return (
     <div>
       {events.map((event) => (
@@ -67,7 +68,10 @@ export default function EventIsland(props: { events: EventType[] }) {
             priceDescription={event.priceDescription}
             rsvp={true}
             going={event.rsvp === "attending"}
+            // TODO: add attendance limit for venue, lol
             seatsLeft={28 - event.attendingCount}
+            promoUrl={event.path || event.url}
+            iconPath={event.movie?.icon}
           />
         </Card>
       ))}

@@ -14,6 +14,8 @@ export interface EventProps {
   rsvp: boolean;
   going?: boolean;
   seatsLeft: number;
+  promoUrl?: string | null;
+  iconPath?: string | null;
 }
 
 export default function Event(props: EventProps) {
@@ -31,6 +33,8 @@ export default function Event(props: EventProps) {
     rsvp = false,
     going,
     seatsLeft,
+    promoUrl,
+    iconPath,
   } = props;
 
   return (
@@ -82,6 +86,31 @@ export default function Event(props: EventProps) {
             </div>
           )}
         </div>
+        {iconPath && (
+          <div>
+            <div class="py-2">
+              <img src={iconPath} />
+            </div>
+          </div>
+        )}
+        {promoUrl && (
+          <div>
+            <div class="py-2">
+              <h4 class="text-l text-error">Event Promotion Page</h4>
+              <p class="text-highlight">
+                <a href={promoUrl}>
+                  <div>
+                    <img
+                      src="/cyberdelia-2024/images/joey.jpg"
+                      class="w-[100px]"
+                    />
+                  </div>
+                  {"<"}(check it)
+                </a>
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </>
   );
