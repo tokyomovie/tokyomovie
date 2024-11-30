@@ -24,3 +24,6 @@ resources/
 **/.DS_Store
 
 static/.DS_Store
+.pup
+nohup.out
+pup*
