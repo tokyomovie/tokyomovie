@@ -10,6 +10,7 @@ import { State } from "../../types/request.ts";
 
 const createEventSchema = z.object({
   name: z.string().min(1),
+  description: z.string().min(1),
   path: z.string(),
   url: z.string(),
   venue: z.string().min(1),
@@ -37,6 +38,7 @@ export const handler: Handlers<EventsProps, State> = {
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
+    const description = form.get("description")?.toString() || "";
     const path = form.get("path")?.toString() || "";
     const url = form.get("url")?.toString() || "";
     const venue = form.get("venue")?.toString() || "";
@@ -49,6 +51,7 @@ export const handler: Handlers<EventsProps, State> = {
 
     const parsed = await createEventSchema.safeParseAsync({
       name,
+      description,
       path,
       url,
       movieId,
@@ -109,6 +112,12 @@ export default function Events(props: PageProps<EventsProps>) {
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create an Event</h2>
           <InputField label="Event Name" type="text" name="name" required />
+          <InputField
+            label="Event Description"
+            type="text"
+            name="description"
+            required
+          />
           <SelectField
             name="movieId"
             label="Movie"

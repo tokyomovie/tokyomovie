@@ -12,6 +12,7 @@ const createMovieSchema = z.object({
   description: z.string(),
   url: z.string(),
   icon: z.string(),
+  releaseYear: z.number(),
 });
 
 export const handler: Handlers<MoviesProps, State> = {
@@ -26,12 +27,15 @@ export const handler: Handlers<MoviesProps, State> = {
     const description = form.get("description")?.toString() || "";
     const url = form.get("url")?.toString() || "";
     const icon = form.get("icon")?.toString() || "";
+    const releaseYear = parseInt(form.get("releaseYear")?.toString() || "") ||
+      null;
 
     const parsed = await createMovieSchema.safeParseAsync({
       name,
       description,
       url,
       icon,
+      releaseYear,
     });
     if (!parsed.success) {
       return ctx.render({
@@ -95,6 +99,12 @@ export default function Movies(props: PageProps<MoviesProps>) {
             name="icon"
             helperText="A static path to an icon"
           />
+          <InputField
+            label="Release Year"
+            type="number"
+            name="releaseYear"
+            placeholder="1000"
+          />
           <div>
             <Button type="submit">
               Create Movie
@@ -106,9 +116,9 @@ export default function Movies(props: PageProps<MoviesProps>) {
       <div>
         <h2 class="text-xl font-bold">Movies</h2>
         <ul>
-          {movies?.map(({ id, name }, i) => (
+          {movies?.map(({ id, name }) => (
             <RowItem>
-              {i}. {name}
+              {id}. {name}
             </RowItem>
           ))}
         </ul>
