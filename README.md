@@ -16,8 +16,8 @@ Set up your dev environment with
 deno task setup
 ```
 
-If this is your first time running the setup script, please follow the prompts
-to make an admin user.
+An admin will be setup for you, but if you like you will be prompted to setup
+your own admin.
 
 Run the local dev server with
 
@@ -26,6 +26,13 @@ deno task dev
 ```
 
 Visit http://localhost:8000/login to log in with your user
+
+If at any time you would like to reset your DB and rebuild everything fresh then
+run:
+
+```
+deno task reset
+```
 
 ### Stack
 

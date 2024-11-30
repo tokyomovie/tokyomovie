@@ -3,10 +3,11 @@
   "tasks": {
     "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
     "test": "deno test --env-file='.env.test.local' --allow-env --allow-read --allow-write --allow-ffi",
+    "test:ci": "deno test --allow-env --allow-read --allow-write --allow-ffi",
     "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
     "manifest": "deno task cli manifest $(pwd)",
     "dev": "deno run -A --watch=static/,routes/ --env-file='.env.development.local' dev.ts",
-    "build": "deno run -A dev.ts build",
+    "build": "deno run --env-file='.env.development.local' -A dev.ts build",
     "preview": "deno run -A main.ts",
     "update": "deno run -A -r https://fresh.deno.dev/update .",
     "setup": "./tasks/setup.sh",
@@ -15,7 +16,9 @@
     "db:migrateAll": "deno run --allow-env --allow-read --allow-write --allow-ffi --allow-net ./tasks/migrateAll.ts",
     "db:addAdmin": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/addAdmin.ts",
     "format": "deno fmt --ignore=static ./",
-    "format:check": "deno fmt --ignore=static ./"
+    "format:check": "deno fmt --ignore=static . --check",
+    "clean": "./tasks/clean.sh",
+    "reset": "deno task clean && deno task setup"
   },
   "lint": {
     "rules": {
