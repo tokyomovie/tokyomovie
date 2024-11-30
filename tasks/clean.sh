@@ -1,5 +1,5 @@
 #!/bin/bash
 
-rm -r _fresh
-rm -r node_modules
-rm -r resources
+rm -rf _fresh
+rm -rf node_modules
+rm -rf resources
