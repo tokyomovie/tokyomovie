@@ -44,6 +44,7 @@ import * as $form_mod from "./islands/form/mod.ts";
 import * as $movie_Movie from "./islands/movie/Movie.tsx";
 import * as $poll_Poll from "./islands/poll/Poll.tsx";
 import * as $poll_PollEntry from "./islands/poll/PollEntry.tsx";
+import * as $poll_handlers from "./islands/poll/handlers.tsx";
 import * as $poll_mockdata from "./islands/poll/mockdata.tsx";
 import * as $stars_Star from "./islands/stars/Star.tsx";
 import * as $stars_Stars from "./islands/stars/Stars.tsx";
@@ -96,6 +97,7 @@ const manifest = {
     "./islands/movie/Movie.tsx": $movie_Movie,
     "./islands/poll/Poll.tsx": $poll_Poll,
     "./islands/poll/PollEntry.tsx": $poll_PollEntry,
+    "./islands/poll/handlers.tsx": $poll_handlers,
     "./islands/poll/mockdata.tsx": $poll_mockdata,
     "./islands/stars/Star.tsx": $stars_Star,
     "./islands/stars/Stars.tsx": $stars_Stars,

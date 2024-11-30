@@ -5,7 +5,8 @@ import Button from "../Button.tsx";
 // type T = Poll['movies'][number]
 // TODO: type  this out properly
 export type PollEntryProps = {
-  id: number;
+  pollId: number;
+  movieId: number;
   name: string;
   voteTotal: number;
   selected: boolean;
@@ -13,7 +14,7 @@ export type PollEntryProps = {
 };
 
 export default function PollEntry(props: PollEntryProps) {
-  const { id, name, voteTotal, selected, clickHandler } = props;
+  const { pollId, movieId, name, voteTotal, selected, clickHandler } = props;
 
   return (
     <div
@@ -22,7 +23,7 @@ export default function PollEntry(props: PollEntryProps) {
       <div class="absolute top-[-35px] right-0 rounded bg-background-low px-2">
         votes: {voteTotal}
       </div>
-      <div class="w-[200px]">
+      <div class="w-[70%]">
         <Title level={3}>{name}</Title>
       </div>
       <div>
