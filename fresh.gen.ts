@@ -15,6 +15,8 @@ import * as $admin_poll from "./routes/admin/poll.tsx";
 import * as $admin_user from "./routes/admin/user.tsx";
 import * as $all_components from "./routes/all-components.tsx";
 import * as $api_joke from "./routes/api/joke.ts";
+import * as $api_polls from "./routes/api/polls.ts";
+import * as $api_polls_pollId_vote from "./routes/api/polls/[pollId]/vote.ts";
 import * as $bng from "./routes/bng.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
@@ -59,6 +61,8 @@ const manifest = {
     "./routes/admin/user.tsx": $admin_user,
     "./routes/all-components.tsx": $all_components,
     "./routes/api/joke.ts": $api_joke,
+    "./routes/api/polls.ts": $api_polls,
+    "./routes/api/polls/[pollId]/vote.ts": $api_polls_pollId_vote,
     "./routes/bng.tsx": $bng,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
