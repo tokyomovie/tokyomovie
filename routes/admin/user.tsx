@@ -31,7 +31,19 @@ export const handler: Handlers<UsersProps, State> = {
     const name = form.get("name")?.toString() || "";
     const email = form.get("email")?.toString() || "";
     const password = form.get("password")?.toString() || "";
+    const passwordConfirm = form.get("passwordConfirm")?.toString() || "";
     const role = form.get("role")?.toString() as Role;
+
+    if (password !== passwordConfirm) {
+      return ctx.render({
+        flash: {
+          message:
+            "Passwords don't match, TRY TO TYPE BETTER THIS TIME hehehehe",
+          type: "error",
+        },
+        users: findUsers(db),
+      });
+    }
 
     const parsed = await createUserSchema.safeParseAsync({
       name,
@@ -89,13 +101,19 @@ export default function Users(props: PageProps<UsersProps>) {
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Users Admin</h1>
-      {flash && <pre class={`p-2 text-${flash.type}`}>{flash.message}</pre>}
+      {flash && <p class={`p-2 m-0 p-0 text-${flash.type}`}>{flash.message}</p>}
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create a User</h2>
           <InputField label="Name" type="text" name="name" />
           <InputField label="E-mail" type="email" name="email" />
           <InputField label="Password" type="password" name="password" />
+          <InputField
+            label="Confirm Password"
+            type="password"
+            name="passwordConfirm"
+            helperText="We just need to make sure you can type"
+          />
           <SelectField
             label="Role"
             name="role"
