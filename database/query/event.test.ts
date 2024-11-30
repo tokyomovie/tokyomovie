@@ -154,6 +154,16 @@ Deno.test("database operations", async (t) => {
       attendingCount: 1,
       rsvp: "attending",
     });
+    const events = findEvents(db, user1.id);
+    expect(events[1].id).toBe(event.id);
+    expect(events[1]).toMatchObject({
+      rsvp: "not_attending",
+    });
+    const events2 = findEvents(db, user2.id);
+    expect(events2[1].id).toBe(event.id);
+    expect(events2[1]).toMatchObject({
+      rsvp: "attending",
+    });
   });
 
   await t.step("delete event", () => {

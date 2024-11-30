@@ -1,17 +1,13 @@
 import { useSignal, useSignalEffect } from "@preact/signals";
 import StatusLabel from "./StatusLabel.tsx";
-import Button from "../Button.tsx";
-import Stars from "../stars/Stars.tsx";
 
 export interface RSVPStatusProps {
-  rsvp: boolean;
-  going?: boolean;
+  rsvp: "no_rsvp" | "attending" | "not_attending";
 }
 
 export default function RSVPStatus(props: RSVPStatusProps) {
   const {
-    rsvp = false,
-    going,
+    rsvp = "no_rsvp",
   } = props;
 
   const showStars = useSignal(false);
@@ -21,7 +17,7 @@ export default function RSVPStatus(props: RSVPStatusProps) {
 
   return (
     <div>
-      <StatusLabel rsvp={rsvp} going={going} />
+      <StatusLabel rsvp={rsvp} />
     </div>
   );
 }

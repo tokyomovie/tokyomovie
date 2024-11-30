@@ -1,5 +1,6 @@
 import { LabelGroup } from "./mod.ts";
 import Select from "../../components/Select.tsx";
+import { JSX } from "preact/jsx-runtime";
 
 export default function SelectField({
   name,
@@ -8,6 +9,8 @@ export default function SelectField({
   required,
   helperText,
   error,
+  onChange,
+  value,
 }: {
   name: string;
   label: string;
@@ -15,6 +18,8 @@ export default function SelectField({
   required?: boolean;
   helperText?: string;
   error?: string;
+  onChange?: JSX.HTMLAttributes<HTMLSelectElement>["onChange"];
+  value?: string;
 }) {
   return (
     <div class="flex gap-2 flex-col">
@@ -24,7 +29,13 @@ export default function SelectField({
         required={required}
         helperText={helperText}
       />
-      <Select id={name} name={name} options={options} />
+      <Select
+        value={value}
+        id={name}
+        name={name}
+        options={options}
+        onChange={onChange}
+      />
       {error && <p class="text-error">{error}</p>}
     </div>
   );

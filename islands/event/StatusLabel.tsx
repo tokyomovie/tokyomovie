@@ -1,23 +1,22 @@
 export interface StatusLabelProps {
-  rsvp: boolean;
-  going?: boolean;
+  rsvp: "no_rsvp" | "attending" | "not_attending";
 }
 
 export default function StatusLabel(props: StatusLabelProps) {
-  const { rsvp = "false", going } = props;
+  const { rsvp = "no_rsvp" } = props;
   return (
     <div class="text-xs">
-      {rsvp && going && (
+      {rsvp === "attending" && (
         <div class="p-1 bg-yellow-green text-white rounded text-center">
           going
         </div>
       )}
-      {rsvp && !going && (
+      {rsvp === "not_attending" && (
         <div class="p-1 bg-razzmataz text-white rounded text-center">
           not going
         </div>
       )}
-      {!rsvp && (
+      {rsvp === "no_rsvp" && (
         <div class="p-1 bg-gray text-white rounded text-center">
           not yet RSVP'd
         </div>

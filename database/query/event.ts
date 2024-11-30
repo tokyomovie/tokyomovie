@@ -92,6 +92,7 @@ export function findEvents(db: Database, userId: number = 0, opts = {
     userId,
     ...opts,
   });
+  console.log({ rows });
   const events = rows.map(rowToEvent);
 
   return events;
@@ -165,7 +166,12 @@ export function addUserToEvent(
   return db.exec(
     `INSERT INTO event_users
       (eventId, userId, attending)
-    VALUES (:eventId, :userId, 1)`,
+    VALUES (:eventId, :userId, 1)
+    ON CONFLICT (eventId, userId)
+    DO 
+       UPDATE 
+       SET attending = 1;
+    `,
     { eventId, userId },
   );
 }

@@ -220,7 +220,6 @@ export default function Polls(props: PageProps<PollsProps>) {
             (
               { id, name, endsAt, movies },
             ) => {
-              console.log({ movies });
               return (
                 <li class="flex flex-col">
                   <span>

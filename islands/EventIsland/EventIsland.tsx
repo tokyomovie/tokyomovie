@@ -56,6 +56,7 @@ export default function EventIsland(props: { events: EventType[] }) {
       {events.map((event) => (
         <Card>
           <Event
+            eventId={event.id}
             eventTitle={event.name}
             movieTitle={event.movie?.name || ""}
             releaseYear={2000}
@@ -66,8 +67,7 @@ export default function EventIsland(props: { events: EventType[] }) {
             location={event.venue}
             price={event.price ? event.price.toString() : ""}
             priceDescription={event.priceDescription}
-            rsvp={true}
-            going={event.rsvp === "attending"}
+            rsvp={event.rsvp}
             // TODO: add attendance limit for venue, lol
             seatsLeft={28 - event.attendingCount}
             promoUrl={event.path || event.url}

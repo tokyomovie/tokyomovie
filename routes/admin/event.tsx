@@ -22,19 +22,20 @@ const createEventSchema = z.object({
   priceDescription: z.string().nullable(),
 });
 
-function getData(db: Database) {
+function getData(db: Database, userId?: number) {
   return {
     movies: findMovies(db),
-    events: findEvents(db),
+    events: findEvents(db, userId),
   };
 }
 
 export const handler: Handlers<EventsProps, State> = {
   async GET(_req, ctx) {
-    return await ctx.render(getData(ctx.state.context.db));
+    return await ctx.render(getData(ctx.state.context.db, ctx.state.user?.id));
   },
   async POST(req, ctx) {
     const { db } = ctx.state.context;
+    const { user } = ctx.state;
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";
@@ -68,7 +69,7 @@ export const handler: Handlers<EventsProps, State> = {
           message: errorsToString(parsed.error.errors),
           type: "error",
         },
-        ...getData(db),
+        ...getData(db, user?.id),
       });
     }
 
@@ -81,7 +82,7 @@ export const handler: Handlers<EventsProps, State> = {
           message: `Event successfully created`,
           type: "success",
         },
-        ...getData(db),
+        ...getData(db, user?.id),
       });
     } catch (e) {
       console.error(e);
@@ -90,7 +91,7 @@ export const handler: Handlers<EventsProps, State> = {
           message: `Error creating event`,
           type: "error",
         },
-        ...getData(db),
+        ...getData(db, user?.id),
       });
     }
   },

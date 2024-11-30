@@ -6,15 +6,15 @@ import Title from "../../components/Title.tsx";
 import { type Event, findEvents } from "../../database/query/event.ts";
 import { Database } from "jsr:@db/sqlite@0.11";
 
-function getData(db: Database) {
+function getData(db: Database, userId?: number) {
   return {
-    events: findEvents(db),
+    events: findEvents(db, userId),
   };
 }
 
 export const handler = {
   async GET(_req: Request, ctx: FreshContext<State>) {
-    return await ctx.render(getData(ctx.state.context.db));
+    return await ctx.render(getData(ctx.state.context.db, ctx.state.user?.id));
   },
 };
 

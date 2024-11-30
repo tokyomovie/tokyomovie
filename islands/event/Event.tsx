@@ -1,6 +1,10 @@
+import { useSignal, useSignalEffect } from "@preact/signals";
+import Button from "../Button.tsx";
+import SelectField from "../form/SelectField.tsx";
 import RSVPStatus from "./RSVPStatus.tsx";
 
 export interface EventProps {
+  eventId: number;
   eventTitle?: string;
   movieTitle: string;
   releaseYear: number;
@@ -11,8 +15,7 @@ export interface EventProps {
   location: string;
   price: string;
   priceDescription?: string | null;
-  rsvp: boolean;
-  going?: boolean;
+  rsvp: "no_rsvp" | "attending" | "not_attending";
   seatsLeft: number;
   promoUrl?: string | null;
   iconPath?: string | null;
@@ -20,6 +23,7 @@ export interface EventProps {
 
 export default function Event(props: EventProps) {
   const {
+    eventId,
     eventTitle,
     movieTitle,
     releaseYear,
@@ -30,12 +34,24 @@ export default function Event(props: EventProps) {
     location,
     price,
     priceDescription,
-    rsvp = false,
-    going,
+    rsvp: initialRsvp = "no_rsvp",
     seatsLeft,
     promoUrl,
     iconPath,
   } = props;
+
+  const rsvp = useSignal(initialRsvp);
+
+  useSignalEffect(() => {
+    if (rsvp.value === "no_rsvp") {
+      return;
+    }
+    fetch(`/api/events/${eventId}/rsvp`, {
+      method: "post",
+      body: JSON.stringify({ attending: rsvp.value === "attending" }),
+      credentials: "include",
+    });
+  });
 
   return (
     <>
@@ -56,7 +72,33 @@ export default function Event(props: EventProps) {
           <p>{seatsLeft}</p>
         </div>
         <div class="my-2 p-2 shadow-block border border-highlight rounded">
-          <RSVPStatus rsvp={rsvp} going={going} />
+          <RSVPStatus rsvp={rsvp.value} />
+        </div>
+        <div class="my-2 p-2 shadow-block border border-highlight rounded">
+          <SelectField
+            name="rsvp"
+            label="RSVP Update"
+            value={rsvp.value}
+            options={[{
+              value: "no_rsvp",
+              label: "",
+            }, {
+              value: "attending",
+              label: "Attending",
+            }, {
+              value: "not_attending",
+              label: "Not Attending",
+            }]}
+            onChange={(e) => {
+              const newRsvp = e.currentTarget.value as
+                | "no_rsvp"
+                | "attending"
+                | "not_attending";
+              if (newRsvp === rsvp.value) return;
+              if (newRsvp === "no_rsvp") return;
+              rsvp.value = newRsvp;
+            }}
+          />
         </div>
       </div>
       <div class="py-5 px-3">
