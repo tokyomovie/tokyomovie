@@ -1,4 +1,4 @@
 ALTER TABLE events 
 ADD COLUMN description TEXT NOT NULL DEFAULT '';
-ALTER TABLE events 
+ALTER TABLE movies
 ADD COLUMN releaseYear INTEGER;

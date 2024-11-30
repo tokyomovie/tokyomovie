@@ -1,12 +1,12 @@
 PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
-INSERT INTO movies VALUES(1,'Hackers','HACK THE PLANET!!!!','','/hackers.jpg');
-INSERT INTO movies VALUES(2,'Existenz','jack in to jack off with this killer thriller','','/existenz.jpg');
+INSERT INTO movies VALUES(1,'Hackers','Dade, a tech genius, is banned from using a computer till he turns eighteen, after he is deemed responsible for writing a virus. When he turns eighteen however, he decides to create another virus.','','/hackers.jpg', 1995);
+INSERT INTO movies VALUES(2,'Existenz','In the near future, people start to magnify game designers for what they create, as superstars and players can organically enter inside the games.','','/existenz.jpg', 1999);
 INSERT INTO users VALUES(1,'aaron','admin','foo@foo.com','$2a$08$ZKeEbwELw2UbHUu3MfItDOgFQqfwPgMOB6vEVN1qzBbgG8QNK87Nu');
 INSERT INTO users VALUES(2,'Shimada','user','shimada@dred.cto','$2a$08$/3oro8IVwzTV4hyxULNeNOFlKUKJnhGseUMvYc6PpiaSO9zB9ddBu');
 INSERT INTO users VALUES(3,'Dusty','user','dust@ball.com','$2a$08$z7WxLGOfHIAKvQh2ATrizOfQYaGG3uswfmho6UvPG5Ml/MyElpZr2');
-INSERT INTO events VALUES(1,'Cyberdelia 2024',1,'Cinema Novecento','https://cinema1900.wixsite.com/home/1900information','/cyberdelia-2024/index.html','','2024-06-01T20:00','2024-06-01T22:30','2024-11-29 16:31:48',NULL,NULL);
-INSERT INTO events VALUES(2,'Antenna Research Welcomes you to...Existenz',2,'Cinema Novecento','https://cinema1900.wixsite.com/home/1900information','/existenz/index.html','','2024-11-30T20:00','2024-11-30T22:00','2024-11-29 16:33:41',1000,NULL);
+INSERT INTO events VALUES(1,'Cyberdelia 2024',1,'Cinema Novecento','https://cinema1900.wixsite.com/home/1900information','/cyberdelia-2024/index.html','','2024-06-01T20:00','2024-06-01T22:30','2024-11-29 16:31:48',NULL,NULL, 'HACK THE PLANET!!!!');
+INSERT INTO events VALUES(2,'Antenna Research Welcomes you to...Existenz',2,'Cinema Novecento','https://cinema1900.wixsite.com/home/1900information','/existenz/index.html','','2024-11-30T20:00','2024-11-30T22:00','2024-11-29 16:33:41',1000,'1 drink', 'jack in to jack off with this killer thriller');
 INSERT INTO event_users VALUES(1,1,1);
 INSERT INTO event_users VALUES(1,2,1);
 INSERT INTO event_users VALUES(1,3,0);

@@ -1,4 +1,4 @@
 ALTER TABLE events 
 DROP COLUMN description;
-ALTER TABLE events 
+ALTER TABLE movies 
 DROP COLUMN releaseYear;
