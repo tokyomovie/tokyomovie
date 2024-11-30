@@ -6,6 +6,7 @@ export type Movie = {
   description?: string;
   url?: string;
   icon?: string;
+  releaseYear?: number;
 };
 
 export type MovieCreate = Omit<Movie, "id">;
@@ -26,8 +27,8 @@ export function findMovies(db: Database, opts = {
 export function createMovie(db: Database, movie: MovieCreate): Movie {
   const stmt = db.prepare(`
     INSERT INTO movies
-      (name, description, url, icon)
-    VALUES (:name, :description, :url, :icon)
+      (name, description, url, icon, releaseYear)
+    VALUES (:name, :description, :url, :icon, :releaseYear)
     RETURNING *
   `);
   const [created] = stmt.all<Movie>(movie);

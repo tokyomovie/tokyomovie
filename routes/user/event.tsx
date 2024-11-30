@@ -3,19 +3,28 @@ import { State } from "../../types/request.ts";
 import Stars from "../../islands/stars/Stars.tsx";
 import EventIsland from "../../islands/EventIsland/EventIsland.tsx";
 import Title from "../../components/Title.tsx";
+import { type Event, findEvents } from "../../database/query/event.ts";
+import { Database } from "jsr:@db/sqlite@0.11";
+
+function getData(db: Database) {
+  return {
+    events: findEvents(db),
+  };
+}
 
 export const handler = {
-  GET(_req: Request, ctx: FreshContext<State>) {
-    return ctx.render();
+  async GET(_req: Request, ctx: FreshContext<State>) {
+    return await ctx.render(getData(ctx.state.context.db));
   },
 };
 
 type EventProps = {
   flash?: { message: string; type: string };
+  events: Event[];
 };
 
 export default function Event(props: PageProps<EventProps>) {
-  const { flash } = props.data || {};
+  const { flash, events } = props.data || {};
   return (
     <div>
       <div>
@@ -24,7 +33,7 @@ export default function Event(props: PageProps<EventProps>) {
           <Title level={1}>Events</Title>
         </div>
         <div>
-          <EventIsland />
+          <EventIsland events={events} />
         </div>
       </div>
       <Stars />

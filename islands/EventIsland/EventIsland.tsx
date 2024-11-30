@@ -1,4 +1,5 @@
 import Card from "../../components/Card.tsx";
+import { type Event as EventType } from "../../database/query/event.ts";
 import Event from "../event/Event.tsx";
 
 const sampleEventData = [
@@ -47,29 +48,33 @@ const sampleEventData = [
   },
 ];
 
-const events = sampleEventData.map((event) => (
-  <Card>
-    <Event
-      eventTitle={event.eventTitle}
-      movieTitle={event.movieTitle}
-      releaseYear={event.releaseYear}
-      synopsis={event.synopsis}
-      eventDescription={event.eventDescription}
-      date={event.date}
-      time={event.time}
-      location={event.location}
-      price={event.price}
-      rsvp={event.rsvp}
-      going={event.going}
-      seatsLeft={event.seatsLeft}
-    />
-  </Card>
-));
+export default function EventIsland(props: { events: EventType[] }) {
+  const { events } = props;
 
-export default function EventIsland() {
   return (
     <div>
-      {events}
+      {events.map((event) => (
+        <Card>
+          <Event
+            eventTitle={event.name}
+            movieTitle={event.movie?.name || ""}
+            releaseYear={2000}
+            synopsis={event.movie?.description || ""}
+            eventDescription={event.description}
+            date={event.eventStartsAt}
+            time={event.eventStartsAt}
+            location={event.venue}
+            price={event.price ? event.price.toString() : ""}
+            priceDescription={event.priceDescription}
+            rsvp={true}
+            going={event.rsvp === "attending"}
+            // TODO: add attendance limit for venue, lol
+            seatsLeft={28 - event.attendingCount}
+            promoUrl={event.path || event.url}
+            iconPath={event.movie?.icon}
+          />
+        </Card>
+      ))}
     </div>
   );
 }

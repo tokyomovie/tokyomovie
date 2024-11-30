@@ -5,6 +5,7 @@ import { User } from "./user.ts";
 export type Event = {
   id: number;
   name: string;
+  description: string;
   venue: string;
   venueUrl: string;
   path?: string;
@@ -37,6 +38,7 @@ function rowToEvent(e: any): Event {
   return {
     id: e.id,
     name: e.name,
+    description: e.description,
     venue: e.venue,
     venueUrl: e.venueUrl,
     path: e.path,
@@ -83,7 +85,7 @@ export function findEvents(db: Database, userId: number = 0, opts = {
       ) attending
     FROM events
     INNER JOIN movies ON movies.id = events.movieId
-    ORDER BY eventStartsAt ASC
+    ORDER BY eventStartsAt DESC
     LIMIT :limit OFFSET :offset
   `);
   const rows = stmt.all({
@@ -144,8 +146,8 @@ export function findUsersAttendingEvent(db: Database, eventId: number): User[] {
 export function createEvent(db: Database, event: EventCreate): Event {
   const stmt = db.prepare(`
     INSERT INTO events
-      (name, movieId, venue, venueUrl, path, url, price, priceDescription, eventStartsAt, eventEndsAt)
-    VALUES (:name, :movieId, :venue, :venueUrl, :path, :url, :price, :priceDescription, :eventStartsAt, :eventEndsAt)
+      (name, description, movieId, venue, venueUrl, path, url, price, priceDescription, eventStartsAt, eventEndsAt)
+    VALUES (:name, :description, :movieId, :venue, :venueUrl, :path, :url, :price, :priceDescription, :eventStartsAt, :eventEndsAt)
     RETURNING *
   `);
   const [created] = stmt.all<Event>(event);
