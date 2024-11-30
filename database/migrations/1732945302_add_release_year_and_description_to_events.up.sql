@@ -1,0 +1,4 @@
+ALTER TABLE events 
+ADD COLUMN description TEXT NOT NULL DEFAULT '';
+ALTER TABLE events 
+ADD COLUMN releaseYear INTEGER;
