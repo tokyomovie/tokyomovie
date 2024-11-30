@@ -51,7 +51,7 @@ Deno.test("database operations", async (t) => {
     poll = createPoll(db, {
       name: "foo poll",
       description: "a cool poll yueahhhhh",
-      active: 1,
+      active: true,
     });
 
     expect(poll.id).toBeTruthy();
