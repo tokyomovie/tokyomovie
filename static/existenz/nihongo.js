@@ -1,13 +1,12 @@
-const englishSynopsis =
-  '<h3>what is eXistenz?</h3>' +
-  '<p>eXistenz is a 1999 science fiction horror film written, produced and directed by David Cronenberg. The film follows video game designer Allegra Geller who has created a virtual reality game called eXistenZ.</p>' +
-  '<p>After a crazed fan attempts to kill her, Allegra goes on the run with Ted, a young businessman who falls into the role of bodyguard.</p>' +
-  "<p>In an attempt to save her game, Allegra implants into Ted's body the video game pod that carries a damaged copy of eXistenZ. Allegra and Ted engage in a series of experiences that blur the lines between fantasy and reality.</p>"
+const englishSynopsis = "<h3>what is eXistenz?</h3>" +
+  "<p>eXistenz is a 1999 science fiction horror film written, produced and directed by David Cronenberg. The film follows video game designer Allegra Geller who has created a virtual reality game called eXistenZ.</p>" +
+  "<p>After a crazed fan attempts to kill her, Allegra goes on the run with Ted, a young businessman who falls into the role of bodyguard.</p>" +
+  "<p>In an attempt to save her game, Allegra implants into Ted's body the video game pod that carries a damaged copy of eXistenZ. Allegra and Ted engage in a series of experiences that blur the lines between fantasy and reality.</p>";
 
 // people tend to use template strings in these cases https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
 const jpSynopsis = `<h3>イグジステンズとは</h3>
   <p>『イグジステンズ』（eXistenZ）は、デヴィッド・クローネンバーグ監督・脚本による1999年のカナダ・イギリス映画。</p>
-  <p>近未来。誰もが脊髄にバイオポートなる穴を開け、そこにゲームポッド（＝コントローラー）を接続して仮想現実ゲームを楽しんでいた。新作ゲーム「イグジステンズ」の発表会場で、カリスマ的な天才ゲームデザイナー、アレグラ（ジェニファー・ジェイソン・リー）が突然銃撃され、警備員のテッド（ジュード・ロウ）は彼女を連れて逃亡。事件の背後には会社もからんだ陰謀があるらしい。</p>`
+  <p>近未来。誰もが脊髄にバイオポートなる穴を開け、そこにゲームポッド（＝コントローラー）を接続して仮想現実ゲームを楽しんでいた。新作ゲーム「イグジステンズ」の発表会場で、カリスマ的な天才ゲームデザイナー、アレグラ（ジェニファー・ジェイソン・リー）が突然銃撃され、警備員のテッド（ジュード・ロウ）は彼女を連れて逃亡。事件の背後には会社もからんだ陰謀があるらしい。</p>`;
 
 const enUpdates = `
   <h2>UPDATES & PRE-GAME</h2>
@@ -19,7 +18,7 @@ const enUpdates = `
   <p>
     Space is becoming limited. If you haven't confirmed attendance, reach out to someone about availability.
   </p>
-`
+`;
 const jpUpdates = `
   <h2>ご注意点、映画の前集合予定について</h2>
   <p>
@@ -34,16 +33,16 @@ const jpUpdates = `
   <p>
     参加人数がちょっと多くなってきたから、友達と連れて行きたいなら先にオーガナイザーにご連絡をお願いします！
   </p>
-`
+`;
 
-let currentLang = window.navigator.language || 'en'
+let currentLang = window.navigator.language || "en";
 
-const infoSection = document.querySelector('#info')
-const updatesSection = document.querySelector('#updates')
-const button = document.querySelector('.lang-btn')
+const infoSection = document.querySelector("#info");
+const updatesSection = document.querySelector("#updates");
+const button = document.querySelector(".lang-btn");
 
 function changeLanguage() {
-  console.log('changing language')
+  console.log("changing language");
   /**
    * as a dump, contrived example, imagine we had to pull in this data from an api
    * i've made info-data.json which you can pull in with a fetch request
@@ -53,19 +52,19 @@ function changeLanguage() {
    * try using that to render out the same raw html
    */
 
-  if (currentLang.includes('ja')) {
-    infoSection.innerHTML = jpSynopsis
-    updatesSection.innerHTML = jpUpdates
-    button.innerHTML = 'English'
-    currentLang = 'en'
-    return
+  if (currentLang.includes("ja")) {
+    infoSection.innerHTML = jpSynopsis;
+    updatesSection.innerHTML = jpUpdates;
+    button.innerHTML = "English";
+    currentLang = "en";
+    return;
   }
 
-  infoSection.innerHTML = englishSynopsis
-  updatesSection.innerHTML = enUpdates
-  button.innerHTML = '日本語'
-  currentLang = 'ja'
+  infoSection.innerHTML = englishSynopsis;
+  updatesSection.innerHTML = enUpdates;
+  button.innerHTML = "日本語";
+  currentLang = "ja";
 }
 
-button.addEventListener('click', changeLanguage)
-changeLanguage()
+button.addEventListener("click", changeLanguage);
+changeLanguage();

@@ -42,6 +42,9 @@ import * as $form_LabelGroup from "./islands/form/LabelGroup.tsx";
 import * as $form_SelectField from "./islands/form/SelectField.tsx";
 import * as $form_mod from "./islands/form/mod.ts";
 import * as $movie_Movie from "./islands/movie/Movie.tsx";
+import * as $poll_Poll from "./islands/poll/Poll.tsx";
+import * as $poll_PollEntry from "./islands/poll/PollEntry.tsx";
+import * as $poll_mockdata from "./islands/poll/mockdata.tsx";
 import * as $stars_Star from "./islands/stars/Star.tsx";
 import * as $stars_Stars from "./islands/stars/Stars.tsx";
 import * as $util_index from "./islands/util/index.ts";
@@ -91,6 +94,9 @@ const manifest = {
     "./islands/form/SelectField.tsx": $form_SelectField,
     "./islands/form/mod.ts": $form_mod,
     "./islands/movie/Movie.tsx": $movie_Movie,
+    "./islands/poll/Poll.tsx": $poll_Poll,
+    "./islands/poll/PollEntry.tsx": $poll_PollEntry,
+    "./islands/poll/mockdata.tsx": $poll_mockdata,
     "./islands/stars/Star.tsx": $stars_Star,
     "./islands/stars/Stars.tsx": $stars_Stars,
     "./islands/util/index.ts": $util_index,

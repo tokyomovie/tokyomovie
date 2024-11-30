@@ -1,10 +1,10 @@
 @font-face {
   font-family: axaxax;
-  src: url('fonts/axaxax.otf') format('opentype');
+  src: url("fonts/axaxax.otf") format("opentype");
 }
 @font-face {
-  font-family: 'Overload Burn';
-  src: url('fonts/Overload_Burn.otf') format('opentype');
+  font-family: "Overload Burn";
+  src: url("fonts/Overload_Burn.otf") format("opentype");
 }
 
 #updates > * {
@@ -29,7 +29,7 @@ body {
   min-height: 100vh;
 }
 h2 {
-  font-family: 'Oswald';
+  font-family: "Oswald";
   color: #cd5d43;
   text-shadow: 2px 2px #000;
 }
@@ -47,7 +47,7 @@ header {
 }
 html {
   font-size: 1.2rem;
-  font-family: 'courier new';
+  font-family: "courier new";
   color: #ddd;
   background-image: linear-gradient(#1f2c9c, #353a5e, #040647);
 }
@@ -74,7 +74,7 @@ section {
   background-image: url(images/pod.png);
 }
 .flavor-text {
-  font-family: 'Overload Burn', monospace;
+  font-family: "Overload Burn", monospace;
   color: #414ca0;
   text-shadow: none;
   font-size: 1.5rem;
@@ -87,7 +87,7 @@ section {
   left: 0;
   box-sizing: border-box;
   color: #cd5d43;
-  font-family: 'Oswald';
+  font-family: "Oswald";
   font-size: 2.4rem;
   text-shadow: 2px 2px #000;
   width: 100%;
@@ -100,7 +100,7 @@ section {
   box-shadow: 0 0 10px #bd5cfa, 0 0 25px #a742eb;
 }
 .japanese {
-  font-family: 'Rampart One';
+  font-family: "Rampart One";
 }
 .lang-btn {
   margin-top: 10px;
@@ -111,13 +111,12 @@ section {
 .radial-repeating {
   border-width: 20px;
   border-image: repeating-radial-gradient(
-      circle at 10px,
-      #414ca0,
-      #cd5d43 2px,
-      gray 4px,
-      #353a5e 2px
-    )
-    1;
+    circle at 10px,
+    #414ca0,
+    #cd5d43 2px,
+    gray 4px,
+    #353a5e 2px
+  ) 1;
 }
 .right {
   text-align: right;
@@ -141,7 +140,7 @@ section {
   box-sizing: border-box;
   font-size: 0.75rem;
   position: absolute;
-  background-image: url('images/flesh-bg.jpg');
+  background-image: url("images/flesh-bg.jpg");
   color: #000;
   font-family: axaxax;
   width: 65%;
@@ -169,9 +168,21 @@ section {
   box-sizing: border-box;
   color: #000000;
   display: flex;
-  font-family: ui-sans-serif, system-ui, -apple-system, system-ui, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif,
-    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family:
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    system-ui,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    "Noto Sans",
+    sans-serif,
+    "Apple Color Emoji",
+    "Segoe UI Emoji",
+    "Segoe UI Symbol",
+    "Noto Color Emoji";
   font-size: 1rem;
   font-weight: 700;
   justify-content: center;
@@ -196,7 +207,7 @@ section {
 }
 
 .button-53:after {
-  content: '';
+  content: "";
   position: absolute;
   border: 1px solid #000000;
   bottom: 4px;
