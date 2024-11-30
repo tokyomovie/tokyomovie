@@ -1,3 +1,4 @@
+import { ComponentChildren } from "https://esm.sh/v128/preact@10.22.0/src/index.js";
 import Info, { InfoProps } from "../components/Info.tsx";
 import Close from "./icons/Close.tsx";
 
@@ -5,12 +6,14 @@ type InfoPropTypes = Pick<InfoProps, "type" | "message">;
 
 interface ControlledInfoProps extends InfoPropTypes {
   show: boolean;
+  children?: ComponentChildren;
   onClose: () => void;
 }
 
 export default function ControlledInfo({
   type,
   message,
+  children,
   show,
   onClose,
 }: ControlledInfoProps) {
@@ -38,7 +41,9 @@ export default function ControlledInfo({
             {closeToUse}
           </button>
         }
-      />
+      >
+        {children}
+      </Info>
     );
   }
   return null;

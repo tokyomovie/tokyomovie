@@ -2,16 +2,20 @@ import { JSX } from "preact/jsx-runtime";
 import Important from "./icons/Important.tsx";
 import Check from "./icons/Check.tsx";
 import StarIcon from "./icons/StarIcon.tsx";
+import { ComponentChildren } from "preact";
 import clsx from "npm:clsx";
 
 export interface InfoProps {
   type: "info" | "success" | "error";
-  message: string;
+  message?: string;
+  children?: ComponentChildren;
   icon?: boolean;
   after?: JSX.Element;
 }
 
-export default function Info({ type, message, icon = true, after }: InfoProps) {
+export default function Info(
+  { type, message, children, icon = true, after }: InfoProps,
+) {
   const findIcon = () => {
     if (type === "success") {
       return (
@@ -45,7 +49,7 @@ export default function Info({ type, message, icon = true, after }: InfoProps) {
         )}
     >
       {icon && iconToUse}
-      <div class="w-full">{message}</div>
+      <div class="w-full">{message || children}</div>
       {after}
     </div>
   );
