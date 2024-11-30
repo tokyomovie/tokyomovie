@@ -21,6 +21,9 @@ export default function Admin() {
           <li>
             <a href="/admin/user">Users</a>
           </li>
+          <li>
+            <a href="/admin/poll">Polls</a>
+          </li>
         </ul>
       </nav>
     </>
