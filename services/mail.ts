@@ -13,7 +13,7 @@ export interface MailClient {
 }
 
 export function sendMail(client: MailClient, message: EmailMessage) {
-  client.send(message);
+  return client.send(message);
 }
 
 function createMailClientWithSendGrid(sgMail: sgMail.MailService): MailClient {

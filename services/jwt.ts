@@ -23,9 +23,18 @@ export async function createJwt(
   return jwt;
 }
 
-export async function verifyJwt(userId: number, jwt: string): Promise<Payload> {
-  const key = jwtKeyStorage[userId];
-  if (!key) throw Error("User has no associated jwt");
+export async function verifyJwt(
+  userId: number,
+  jwt: string,
+): Promise<Payload | null> {
+  try {
+    const key = jwtKeyStorage[userId];
+    if (!key) throw Error("User has no associated jwt");
 
-  return await verify(jwt, key);
+    return await verify(jwt, key);
+  } catch (e) {
+    console.error(`Could not verify jwt for user: ${userId}`, e);
+
+    return null;
+  }
 }
