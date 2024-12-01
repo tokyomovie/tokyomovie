@@ -40,6 +40,7 @@
     "@std/encoding": "jsr:@std/encoding@^1.0.5",
     "@std/expect": "jsr:@std/expect@^1.0.8",
     "clsx": "npm:clsx@^2.1.1",
+    "djwt": "https://deno.land/x/djwt@v3.0.2/mod.ts",
     "@sendgrid/mail": "npm:@sendgrid/mail@^8.1.4",
     "preact": "https://esm.sh/preact@10.22.0",
     "preact/": "https://esm.sh/preact@10.22.0/",
