@@ -15,8 +15,8 @@
     "db:migration": "deno run --allow-env --allow-read --allow-write --allow-ffi ./tasks/migrations.ts",
     "db:migrateAll": "deno run --allow-env --allow-read --allow-write --allow-ffi --allow-net ./tasks/migrateAll.ts",
     "db:addAdmin": "deno run --env-file='.env.development.local' --allow-env --allow-read --allow-write --allow-ffi ./tasks/addAdmin.ts",
-    "format": "deno fmt --ignore=static ./",
-    "format:check": "deno fmt --ignore=static . --check",
+    "format": "deno fmt --ignore=static,_fresh ./",
+    "format:check": "deno fmt --ignore=static,_fresh . --check",
     "clean": "./tasks/clean.sh",
     "reset": "deno task clean && deno task setup"
   },
@@ -40,6 +40,7 @@
     "@std/encoding": "jsr:@std/encoding@^1.0.5",
     "@std/expect": "jsr:@std/expect@^1.0.8",
     "clsx": "npm:clsx@^2.1.1",
+    "@sendgrid/mail": "npm:@sendgrid/mail@^8.1.4",
     "preact": "https://esm.sh/preact@10.22.0",
     "preact/": "https://esm.sh/preact@10.22.0/",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
