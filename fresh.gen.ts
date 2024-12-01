@@ -22,7 +22,7 @@ import * as $api_polls_pollId_vote from "./routes/api/polls/[pollId]/vote.ts";
 import * as $bng from "./routes/bng.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
-import * as $update_password from "./routes/update-password.tsx";
+import * as $reset_password from "./routes/reset-password.tsx";
 import * as $user_layout from "./routes/user/_layout.tsx";
 import * as $user_bng from "./routes/user/bng.tsx";
 import * as $user_event from "./routes/user/event.tsx";
@@ -76,7 +76,7 @@ const manifest = {
     "./routes/bng.tsx": $bng,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
-    "./routes/update-password.tsx": $update_password,
+    "./routes/reset-password.tsx": $reset_password,
     "./routes/user/_layout.tsx": $user_layout,
     "./routes/user/bng.tsx": $user_bng,
     "./routes/user/event.tsx": $user_event,

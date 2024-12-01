@@ -3,6 +3,7 @@ import { findUserById, findUsers, User } from "../../../database/query/user.ts";
 import Button from "../../../islands/Button.tsx";
 import { State } from "../../../types/request.ts";
 import { createJwt } from "../../../services/jwt.ts";
+import { SENDGRID_API_KEY } from "../../../config.ts";
 
 export const handler: Handlers<ResetProps, State> = {
   async GET(_req, ctx) {
@@ -35,15 +36,28 @@ export const handler: Handlers<ResetProps, State> = {
     }
 
     try {
-      const jwt = createJwt(userId, {}, 60 * 15);
+      const jwt = await createJwt(userId, {}, 60 * 15);
       const message = {
         to: user.email,
         subject: "Password change request at tokyomovie.group",
+        text:
+          `Hey, someone special from TokyoMovie.Group says you requested to change your password. So go over to http://localhost:8000/reset-password?u=${userId}&j=${jwt} to change it. This request will be invalid in fifteen minutes.
+        
+        If you didn't request this, then their may be an issue and you should probably get in contact with the tokyomovie.group administrator.`,
         html:
-          `<p>Hey, someone special from TokyoMovie.Group says you requested to change your password. So <a href="http://localhost:8000/update-password?j=${jwt}">go over to https://tokyomovie.group</a> to change it. This request will be invalid in fifteen minutes.</p>
+          `<p>Hey, someone special from TokyoMovie.Group says you requested to change your password. So <a href="http://localhost:8000/reset-password?u=${userId}&j=${jwt}">go over to https://tokyomovie.group</a> to change it. This request will be invalid in fifteen minutes.</p>
         </p>If you didn't request this, then their may be an issue and you should probably get in contact with the tokyomovie.group administrator.</p>`,
       };
-      await mail.send(message);
+      const wasSent = await mail.send(message);
+      if (!wasSent) {
+        return ctx.render({
+          flash: {
+            message: `There was an error sending the update password e-mail`,
+            type: "error",
+          },
+          users: findUsers(db),
+        });
+      }
       return ctx.render({
         flash: {
           message: `The user has been e-mailed to reset their password`,

@@ -37,6 +37,22 @@ export function createUser(db: Database, user: UserCreate): User {
   return created;
 }
 
+export function updatePassword(
+  db: Database,
+  userId: number,
+  passwordHash: string,
+): User {
+  const stmt = db.prepare(`
+    UPDATE users
+    SET passwordHash = :passwordHash
+    WHERE id = :userId
+    RETURNING id, name, role, email
+  `);
+  const [updated] = stmt.all<User>({ userId, passwordHash });
+
+  return updated;
+}
+
 export function findUserById(db: Database, id: number): null | User {
   const stmt = db.prepare(`
     SELECT * FROM users

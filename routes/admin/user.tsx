@@ -13,8 +13,8 @@ const createUserSchema = z.object({
   name: z.string().min(1),
   email: z.string().email(),
   password: z.string().min(8).regex(
-    /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/,
-    "must contain a number and a symbol",
+    /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
+    "must contain a number and a capital letter",
   ),
   role: z.enum(USER_ROLE),
 });
