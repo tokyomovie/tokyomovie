@@ -14,7 +14,7 @@ export type SelectedPoll =
   | null;
 
 export default function Poll(props: PollProps) {
-  const selectedPoll = useSignal<SelectedPoll>(null);
+  const selectedPollEntry = useSignal<SelectedPoll>(null);
   const voteSubmitted = useSignal(false);
   const error = useSignal("");
   const success = useSignal(false);
@@ -23,17 +23,18 @@ export default function Poll(props: PollProps) {
   );
 
   async function handleSubmitVote() {
-    if (!selectedPoll.value) {
+    if (!selectedPollEntry.value) {
       error.value = "select something please 何か選んで";
       setTimeout(() => {
         error.value = "";
       }, 2500);
     }
-    if (selectedPoll.value) {
-      const { pollId, movieId } = selectedPoll.value;
+    if (selectedPollEntry.value) {
+      const { pollId, movieId } = selectedPollEntry.value;
       const response = await voteForMovieInPoll(pollId, movieId);
       if (response.includes("error")) {
-        error.value = "something went wrong submitting your vote, try again";
+        error.value =
+          "something went wrong submitting your vote, try again or just give up because this app is garbage";
         setTimeout(() => {
           error.value = "";
         }, 2500);
@@ -42,8 +43,8 @@ export default function Poll(props: PollProps) {
       voteSubmitted.value = true;
       success.value = true;
       setTimeout(() => {
-        success.value = false;
-      }, 2500);
+        location.reload();
+      }, 850);
     }
   }
 
@@ -55,7 +56,7 @@ export default function Poll(props: PollProps) {
       <Divider classes="mt-[20px]" />
       <div>
         {movies?.map((movie, index) => {
-          const isSelected = movie.id === selectedPoll?.value?.movieId;
+          const isSelected = movie.id === selectedPollEntry?.value?.movieId;
           return (
             <>
               <div class="mx-4">
@@ -63,8 +64,16 @@ export default function Poll(props: PollProps) {
                   pollId={id}
                   movieId={movie.id}
                   selected={isSelected}
-                  selectedSignal={selectedPoll}
-                  errorSignal={error}
+                  clickHandler={() => {
+                    error.value = "";
+                    selectedPollEntry.value = {
+                      id: id,
+                      pollId: id,
+                      movieId: movie.id,
+                      name: movie.name,
+                      voteTotal: movie.voteTotal,
+                    };
+                  }}
                   {...movie}
                 />
               </div>

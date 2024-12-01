@@ -19,8 +19,10 @@ export default function Select({
 }: SelectProps) {
   return (
     <select
-      class={"border rounded shadow-block p-2 outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200 text-black " +
-        clsx(full && "w-full")}
+      class={clsx(
+        "border rounded shadow-block p-2 outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200 text-black",
+        { "w-full": full },
+      )}
       name={name}
       aria-invalid={invalid}
       disabled={disabled}

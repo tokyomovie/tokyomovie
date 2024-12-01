@@ -10,8 +10,7 @@ export type PollEntryProps = {
   pollId: number;
   movieId: number;
   selected: boolean;
-  selectedSignal: Signal<SelectedPoll>;
-  errorSignal: Signal<string>;
+  clickHandler: () => void;
 } & PollMovie;
 
 export default function PollEntry(props: PollEntryProps) {
@@ -19,8 +18,7 @@ export default function PollEntry(props: PollEntryProps) {
     name,
     voteTotal,
     selected,
-    selectedSignal,
-    errorSignal,
+    clickHandler,
   } = props;
 
   return (
@@ -35,10 +33,7 @@ export default function PollEntry(props: PollEntryProps) {
       </div>
       <div>
         <Button
-          onClick={() => {
-            selectedSignal.value = props;
-            errorSignal.value = "";
-          }}
+          onClick={clickHandler}
         >
           こいつ!
         </Button>
