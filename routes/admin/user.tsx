@@ -33,6 +33,13 @@ export const handler: Handlers<UsersProps, State> = {
     const password = form.get("password")?.toString() || "";
     const passwordConfirm = form.get("passwordConfirm")?.toString() || "";
     const role = form.get("role")?.toString() as Role;
+    const formInputs = {
+      name,
+      email,
+      password,
+      passwordConfirm,
+      role,
+    };
 
     if (password !== passwordConfirm) {
       return ctx.render({
@@ -42,6 +49,7 @@ export const handler: Handlers<UsersProps, State> = {
           type: "error",
         },
         users: findUsers(db),
+        form: formInputs,
       });
     }
 
@@ -58,6 +66,7 @@ export const handler: Handlers<UsersProps, State> = {
           type: "error",
         },
         users: findUsers(db),
+        form: formInputs,
       });
     }
 
@@ -77,6 +86,7 @@ export const handler: Handlers<UsersProps, State> = {
           type: "success",
         },
         users: findUsers(db),
+        form: formInputs,
       });
     } catch (e) {
       console.error(e);
@@ -86,6 +96,7 @@ export const handler: Handlers<UsersProps, State> = {
           type: "error",
         },
         users: findUsers(db),
+        form: formInputs,
       });
     }
   },
@@ -94,10 +105,17 @@ export const handler: Handlers<UsersProps, State> = {
 type UsersProps = {
   users?: User[];
   flash?: { message: string; type: string };
+  form?: {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirm: string;
+    role: Role;
+  };
 };
 
 export default function Users(props: PageProps<UsersProps>) {
-  const { users, flash } = props.data;
+  const { users, flash, form } = props.data;
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Users Admin</h1>
@@ -105,10 +123,21 @@ export default function Users(props: PageProps<UsersProps>) {
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">Create a User</h2>
-          <InputField label="Name" type="text" name="name" />
-          <InputField label="E-mail" type="email" name="email" />
-          <InputField label="Password" type="password" name="password" />
+          <InputField value={form?.name} label="Name" type="text" name="name" />
           <InputField
+            value={form?.email}
+            label="E-mail"
+            type="email"
+            name="email"
+          />
+          <InputField
+            value={form?.password}
+            label="Password"
+            type="password"
+            name="password"
+          />
+          <InputField
+            value={form?.passwordConfirm}
             label="Confirm Password"
             type="password"
             name="passwordConfirm"
@@ -117,6 +146,7 @@ export default function Users(props: PageProps<UsersProps>) {
           <SelectField
             label="Role"
             name="role"
+            value={form?.role}
             options={[
               { label: "User", value: "user" },
               { label: "Admin", value: "admin" },
