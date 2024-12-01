@@ -1,8 +1,10 @@
 import { JSX } from "preact";
+import clsx from "npm:clsx";
 
 export type SelectProps = {
   name: string;
   options: Array<{ value: string; label: string }>;
+  full?: boolean;
   invalid?: boolean;
   disabled?: boolean;
 } & JSX.HTMLAttributes<HTMLSelectElement>;
@@ -10,13 +12,15 @@ export type SelectProps = {
 export default function Select({
   name,
   options,
+  full = false,
   invalid = false,
   disabled = false,
   ...rest
 }: SelectProps) {
   return (
     <select
-      class="border rounded shadow-block p-2 outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200 text-black"
+      class={"border rounded shadow-block p-2 outline-offset-0 focus:outline-none focus:shadow-focus transition duration-200 text-black " +
+        clsx(full && "w-full")}
       name={name}
       aria-invalid={invalid}
       disabled={disabled}

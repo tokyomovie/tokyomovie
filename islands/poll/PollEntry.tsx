@@ -1,6 +1,7 @@
 import { Signal, useSignal, useSignalEffect } from "@preact/signals";
 import Title from "../../components/Title.tsx";
 import Button from "../Button.tsx";
+import { SelectedPoll } from "./Poll.tsx";
 
 // type T = Poll['movies'][number]
 // TODO: type  this out properly
@@ -10,11 +11,18 @@ export type PollEntryProps = {
   name: string;
   voteTotal: number;
   selected: boolean;
-  clickHandler: Signal<PollEntryProps | null>;
+  selectedSignal: Signal<SelectedPoll>;
+  errorSignal: Signal<string>;
 };
 
 export default function PollEntry(props: PollEntryProps) {
-  const { pollId, movieId, name, voteTotal, selected, clickHandler } = props;
+  const {
+    name,
+    voteTotal,
+    selected,
+    selectedSignal,
+    errorSignal,
+  } = props;
 
   return (
     <div
@@ -29,9 +37,8 @@ export default function PollEntry(props: PollEntryProps) {
       <div>
         <Button
           onClick={() => {
-            if (clickHandler) {
-              clickHandler.value = props;
-            }
+            selectedSignal.value = props;
+            errorSignal.value = "";
           }}
         >
           こいつ!
