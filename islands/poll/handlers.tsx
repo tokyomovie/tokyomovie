@@ -1,4 +1,5 @@
 import { Poll } from "../../database/query/poll.ts";
+
 export async function getPolls() {
   const response = await fetch("/api/polls", {
     method: "get",

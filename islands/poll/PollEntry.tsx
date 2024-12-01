@@ -1,20 +1,25 @@
-import { Signal, useSignal, useSignalEffect } from "@preact/signals";
+import { Signal } from "@preact/signals";
 import Title from "../../components/Title.tsx";
 import Button from "../Button.tsx";
+import { Poll } from "../../database/query/poll.ts";
+import { SelectedPoll } from "./Poll.tsx";
 
-// type T = Poll['movies'][number]
-// TODO: type  this out properly
+type PollMovie = NonNullable<Poll["movies"]>[number];
+
 export type PollEntryProps = {
   pollId: number;
   movieId: number;
-  name: string;
-  voteTotal: number;
   selected: boolean;
-  clickHandler: Signal<PollEntryProps | null>;
-};
+  clickHandler: () => void;
+} & PollMovie;
 
 export default function PollEntry(props: PollEntryProps) {
-  const { pollId, movieId, name, voteTotal, selected, clickHandler } = props;
+  const {
+    name,
+    voteTotal,
+    selected,
+    clickHandler,
+  } = props;
 
   return (
     <div
@@ -28,11 +33,7 @@ export default function PollEntry(props: PollEntryProps) {
       </div>
       <div>
         <Button
-          onClick={() => {
-            if (clickHandler) {
-              clickHandler.value = props;
-            }
-          }}
+          onClick={clickHandler}
         >
           こいつ!
         </Button>

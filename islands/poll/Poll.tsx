@@ -1,75 +1,62 @@
-import { useSignal, useSignalEffect } from "@preact/signals";
-import { FreshContext, PageProps } from "$fresh/server.ts";
-import { State } from "../../types/request.ts";
-import { Poll as Pollq } from "../../database/query/poll.ts";
+import { useComputed, useSignal } from "@preact/signals";
+import { Poll as PollQuery } from "../../database/query/poll.ts";
 import PollEntry from "./PollEntry.tsx";
-import Title from "../../components/Title.tsx";
 import Button from "../../islands/Button.tsx";
-import {
-  INIT_POLL_DATA,
-  POLL_ENTRY_MOCK,
-  POLL_MOCK_DATA,
-} from "./mockdata.tsx";
 import Divider from "../../components/Divider.tsx";
 import { PollEntryProps } from "./PollEntry.tsx";
-import { getPolls, voteForMovieInPoll } from "./handlers.tsx";
+import { voteForMovieInPoll } from "./handlers.tsx";
 import Info from "../../components/Info.tsx";
 
-type PollProps = {} & Pollq;
+type PollProps = {} & PollQuery;
 
-export default function Poll() {
-  const pollData = useSignal<PollProps>(INIT_POLL_DATA);
-  //@ts-ignore
-  const selected = useSignal<PollEntryProps | null>();
+export type SelectedPoll =
+  | Omit<PollEntryProps, "clickHandler" | "selected">
+  | null;
+
+export default function Poll(props: PollProps) {
+  const selectedPollEntry = useSignal<SelectedPoll>(null);
   const voteSubmitted = useSignal(false);
   const error = useSignal("");
   const success = useSignal(false);
-  useSignalEffect(() => {
-    getPolls().then((polls) => {
-      if (typeof polls !== "string") {
-        const lastPoll = polls.at(-1);
-        if (lastPoll) {
-          pollData.value = lastPoll;
-        }
+  const isSuccessful = useComputed(() =>
+    voteSubmitted.value && !error.value && success.value
+  );
+
+  async function handleSubmitVote() {
+    if (!selectedPollEntry.value) {
+      error.value = "select something please 何か選んで";
+      setTimeout(() => {
+        error.value = "";
+      }, 2500);
+    }
+    if (selectedPollEntry.value) {
+      const { pollId, movieId } = selectedPollEntry.value;
+      const response = await voteForMovieInPoll(pollId, movieId);
+      if (response.includes("error")) {
+        error.value =
+          "something went wrong submitting your vote, try again or just give up because this app is garbage";
+        setTimeout(() => {
+          error.value = "";
+        }, 2500);
+        return;
       }
-    });
-  });
-  const { id, name, description, active, createdAt, endsAt, movies } =
-    pollData.value;
-  function handleSubmitVote() {
-    if (selected.value?.pollId) {
-      voteForMovieInPoll(selected.value?.pollId, selected.value?.movieId).then(
-        (resp) => {
-          if (resp.includes("error")) {
-            error.value =
-              "something went wrong submitting your vote, try again";
-            setTimeout(() => {
-              error.value = "";
-            }, 2500);
-            return;
-          }
-          voteSubmitted.value = true;
-          success.value = true;
-          setTimeout(() => {
-            success.value = false;
-          }, 2500);
-        },
-      );
+      voteSubmitted.value = true;
+      success.value = true;
+      setTimeout(() => {
+        location.reload();
+      }, 850);
     }
   }
-  if (name === "INIT-ONLY") return null;
+
+  // TODO: handle rest of polls data
+  const { id, name, description, active, createdAt, endsAt, movies } = props;
+
   return (
     <div>
-      <div class="m-6">
-        <Title level={1}>
-          Polls 投票! What's the next movie? 次回何にしよう？
-        </Title>
-      </div>
-      <Divider classes="mt-[110px]" />
+      <Divider classes="mt-[20px]" />
       <div>
         {movies?.map((movie, index) => {
-          const { name, voteTotal } = movie;
-          const isSelected = movie.id === selected?.value?.movieId;
+          const isSelected = movie.id === selectedPollEntry?.value?.movieId;
           return (
             <>
               <div class="mx-4">
@@ -77,7 +64,16 @@ export default function Poll() {
                   pollId={id}
                   movieId={movie.id}
                   selected={isSelected}
-                  clickHandler={selected}
+                  clickHandler={() => {
+                    error.value = "";
+                    selectedPollEntry.value = {
+                      id: id,
+                      pollId: id,
+                      movieId: movie.id,
+                      name: movie.name,
+                      voteTotal: movie.voteTotal,
+                    };
+                  }}
                   {...movie}
                 />
               </div>
@@ -87,31 +83,23 @@ export default function Poll() {
         })}
       </div>
       <div class="mx-4 mt-[80px] flex flex-col gap-4 mb-12">
-        {!voteSubmitted.value && (
-          <Button fullWidth onClick={handleSubmitVote}>submit!</Button>
-        )}
-        {(voteSubmitted.value && !error.value) && (
+        {(isSuccessful.value) && (
           <Info type="success" message="vote submitted! どうもでーす" />
         )}
         {error.value && <Info type="error" message={error.value} />}
-        {
-          <Button
-            fullWidth
-            inverse
-            onClick={() => {
-              getPolls().then((polls) => {
-                if (typeof polls !== "string") {
-                  const lastPoll = polls.at(-1);
-                  if (lastPoll) {
-                    pollData.value = lastPoll;
-                  }
-                }
-              });
-            }}
-          >
-            refresh votes
-          </Button>
-        }
+        {!voteSubmitted.value && (
+          <Button fullWidth onClick={handleSubmitVote}>submit!</Button>
+        )}
+
+        <Button
+          fullWidth
+          inverse
+          onClick={() => {
+            location.reload();
+          }}
+        >
+          refresh votes
+        </Button>
       </div>
     </div>
   );
