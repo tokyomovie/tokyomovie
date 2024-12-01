@@ -1,19 +1,18 @@
-import { Signal, useSignal, useSignalEffect } from "@preact/signals";
+import { Signal } from "@preact/signals";
 import Title from "../../components/Title.tsx";
 import Button from "../Button.tsx";
+import { Poll } from "../../database/query/poll.ts";
 import { SelectedPoll } from "./Poll.tsx";
 
-// type T = Poll['movies'][number]
-// TODO: type  this out properly
+type PollMovie = NonNullable<Poll["movies"]>[number];
+
 export type PollEntryProps = {
   pollId: number;
   movieId: number;
-  name: string;
-  voteTotal: number;
   selected: boolean;
   selectedSignal: Signal<SelectedPoll>;
   errorSignal: Signal<string>;
-};
+} & PollMovie;
 
 export default function PollEntry(props: PollEntryProps) {
   const {
