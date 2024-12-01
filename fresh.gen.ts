@@ -13,6 +13,7 @@ import * as $admin_index from "./routes/admin/index.tsx";
 import * as $admin_movie from "./routes/admin/movie.tsx";
 import * as $admin_poll from "./routes/admin/poll.tsx";
 import * as $admin_user from "./routes/admin/user.tsx";
+import * as $admin_user_reset from "./routes/admin/user/reset.tsx";
 import * as $all_components from "./routes/all-components.tsx";
 import * as $api_events_eventId_rsvp from "./routes/api/events/[eventId]/rsvp.ts";
 import * as $api_joke from "./routes/api/joke.ts";
@@ -21,6 +22,7 @@ import * as $api_polls_pollId_vote from "./routes/api/polls/[pollId]/vote.ts";
 import * as $bng from "./routes/bng.tsx";
 import * as $index from "./routes/index.tsx";
 import * as $login from "./routes/login.tsx";
+import * as $update_password from "./routes/update-password.tsx";
 import * as $user_layout from "./routes/user/_layout.tsx";
 import * as $user_bng from "./routes/user/bng.tsx";
 import * as $user_event from "./routes/user/event.tsx";
@@ -65,6 +67,7 @@ const manifest = {
     "./routes/admin/movie.tsx": $admin_movie,
     "./routes/admin/poll.tsx": $admin_poll,
     "./routes/admin/user.tsx": $admin_user,
+    "./routes/admin/user/reset.tsx": $admin_user_reset,
     "./routes/all-components.tsx": $all_components,
     "./routes/api/events/[eventId]/rsvp.ts": $api_events_eventId_rsvp,
     "./routes/api/joke.ts": $api_joke,
@@ -73,6 +76,7 @@ const manifest = {
     "./routes/bng.tsx": $bng,
     "./routes/index.tsx": $index,
     "./routes/login.tsx": $login,
+    "./routes/update-password.tsx": $update_password,
     "./routes/user/_layout.tsx": $user_layout,
     "./routes/user/bng.tsx": $user_bng,
     "./routes/user/event.tsx": $user_event,
