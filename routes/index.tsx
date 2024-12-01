@@ -12,7 +12,7 @@ import Info from "../components/Info.tsx";
 
 export const handler = {
   async GET(_req: Request, ctx: FreshContext<State>) {
-    const { user } = ctx.state;
+    const { user } = ctx.state.context;
 
     if (user) {
       return serverResponse.redirect("/user/event");

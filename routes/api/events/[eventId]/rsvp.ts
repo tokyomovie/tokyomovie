@@ -9,8 +9,7 @@ import * as apiResponse from "../../../../utils/response/api.ts";
 export const handler: Handlers<{ pollId: string }, State> = {
   async POST(req, ctx) {
     const eventId = Number(ctx.params["eventId"]);
-    const { db } = ctx.state.context;
-    const { user } = ctx.state;
+    const { db, user } = ctx.state.context;
     const input = (await req.json()) as { attending: boolean };
 
     if (!eventId || !user?.id) {

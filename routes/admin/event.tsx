@@ -31,11 +31,12 @@ function getData(db: Database, userId?: number) {
 
 export const handler: Handlers<EventsProps, State> = {
   async GET(_req, ctx) {
-    return await ctx.render(getData(ctx.state.context.db, ctx.state.user?.id));
+    return await ctx.render(
+      getData(ctx.state.context.db, ctx.state.context.user?.id),
+    );
   },
   async POST(req, ctx) {
-    const { db } = ctx.state.context;
-    const { user } = ctx.state;
+    const { db, user } = ctx.state.context;
 
     const form = await req.formData();
     const name = form.get("name")?.toString() || "";

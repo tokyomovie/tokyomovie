@@ -44,7 +44,7 @@ export async function authMiddleware({
       return onError(req);
     }
 
-    ctx.state.user = user;
+    ctx.state.context.user = user;
 
     if (onSuccess && user) {
       const resp = onSuccess(req, user);

@@ -9,8 +9,7 @@ import * as apiResponse from "../../../../utils/response/api.ts";
 export const handler: Handlers<{ pollId: string }, State> = {
   async POST(req, ctx) {
     const pollId = Number(ctx.params["pollId"]);
-    const { db } = ctx.state.context;
-    const { user } = ctx.state;
+    const { db, user } = ctx.state.context;
     const input = (await req.json()) as { movieId: string };
     const movieId = Number(input.movieId);
     console.log({
@@ -38,8 +37,7 @@ export const handler: Handlers<{ pollId: string }, State> = {
   },
   async DELETE(req, ctx) {
     const pollId = Number(ctx.params["pollId"]);
-    const { db } = ctx.state.context;
-    const { user } = ctx.state;
+    const { db, user } = ctx.state.context;
     const input = (await req.json()) as { movieId: string };
     const movieId = Number(input.movieId);
     console.log({

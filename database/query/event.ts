@@ -92,7 +92,6 @@ export function findEvents(db: Database, userId: number = 0, opts = {
     userId,
     ...opts,
   });
-  console.log({ rows });
   const events = rows.map(rowToEvent);
 
   return events;
