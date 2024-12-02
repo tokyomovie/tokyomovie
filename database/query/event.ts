@@ -1,6 +1,6 @@
 import { Database } from "jsr:@db/sqlite@0.11";
-import { Movie } from "./movie.ts";
-import { User } from "./user.ts";
+import { Movie } from "#/database/query/movie.ts";
+import { User } from "#/database/query/user.ts";
 
 export type Event = {
   id: number;

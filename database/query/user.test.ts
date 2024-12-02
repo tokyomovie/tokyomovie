@@ -1,7 +1,12 @@
 import { expect } from "@std/expect";
-import { createUser, deleteUser, User } from "./user.ts";
-import { getConnection } from "../db.ts";
-import { findUserByEmail, findUserById } from "./user.ts";
+import { getConnection } from "#/database/db.ts";
+import {
+  createUser,
+  deleteUser,
+  findUserByEmail,
+  findUserById,
+  type User,
+} from "#/database/query/user.ts";
 
 Deno.test("database operations", async (t) => {
   using connection = getConnection();

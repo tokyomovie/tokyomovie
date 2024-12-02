@@ -8,10 +8,10 @@ import {
   findPolls,
   type Poll,
   removeVoteFromPoll,
-} from "./poll.ts";
-import { getConnection } from "../db.ts";
-import { createUser } from "./user.ts";
-import { createMovie } from "./movie.ts";
+} from "#/database/query/poll.ts";
+import { getConnection } from "#/database/db.ts";
+import { createUser } from "#/database/query/user.ts";
+import { createMovie } from "#/database/query/movie.ts";
 
 Deno.test("database operations", async (t) => {
   using connection = getConnection();

@@ -5,8 +5,8 @@ import {
   findMovieById,
   findMovieByName,
   type Movie,
-} from "./movie.ts";
-import { getConnection } from "../db.ts";
+} from "#/database/query/movie.ts";
+import { getConnection } from "#/database/db.ts";
 
 Deno.test("database operations", async (t) => {
   using connection = getConnection();
