@@ -68,6 +68,7 @@ export const handler: Handlers<UpdatePassword, State> = {
           type: "success",
         },
         user: ctx.state.context.user,
+        reset: true,
       });
     } catch (e) {
       console.error(e);
@@ -85,14 +86,24 @@ export const handler: Handlers<UpdatePassword, State> = {
 type UpdatePassword = {
   user: User | null;
   info?: InfoProps;
+  reset?: boolean;
 };
 
 export default function Users(props: PageProps<UpdatePassword>) {
-  const { user, info } = props.data;
+  const { user, info, reset = false } = props.data;
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Password Update</h1>
-      {info && <Info {...info} />}
+      {info && (
+        <Info type={info.type}>
+          <div>{info.message}</div>
+          {reset && (
+            <div>
+              Return to <a href="/login" class="text-highlight">login page</a>
+            </div>
+          )}
+        </Info>
+      )}
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">
@@ -103,15 +114,17 @@ export default function Users(props: PageProps<UpdatePassword>) {
             type="password"
             name="password"
             helperText="Must contain a number and a capital letter"
+            disabled={reset}
           />
           <InputField
             label="Confirm Password"
             type="password"
             name="passwordConfirm"
             helperText="We just need to make sure you can type"
+            disabled={reset}
           />
           <div>
-            <Button type="submit">
+            <Button type="submit" disabled={reset}>
               Update Password
             </Button>
           </div>

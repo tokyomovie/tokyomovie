@@ -20,9 +20,9 @@ export async function handler(
       return ctx.next();
     },
   });
-  // if (jwtResponse) {
-  //   return jwtResponse;
-  // }
+  if (jwtResponse) {
+    return jwtResponse;
+  }
 
   const authResponse = await authMiddleware({
     req,
