@@ -8,10 +8,10 @@ import {
   findEvents,
   findUsersAttendingEvent,
   removeUserFromEvent,
-} from "./event.ts";
-import { getConnection } from "../db.ts";
-import { createUser } from "./user.ts";
-import { createMovie } from "./movie.ts";
+} from "#/database/query/event.ts";
+import { getConnection } from "#/database/db.ts";
+import { createUser } from "#/database/query/user.ts";
+import { createMovie } from "#/database/query/movie.ts";
 
 Deno.test("database operations", async (t) => {
   using connection = getConnection();
