@@ -1,7 +1,7 @@
 import { JSX } from "preact/jsx-runtime";
-import Important from "./icons/Important.tsx";
-import Check from "./icons/Check.tsx";
-import StarIcon from "./icons/StarIcon.tsx";
+import Important from "#/components/icons/Important.tsx";
+import Check from "#/components/icons/Check.tsx";
+import StarIcon from "#/components/icons/StarIcon.tsx";
 import { ComponentChildren } from "preact";
 import clsx from "npm:clsx";
 

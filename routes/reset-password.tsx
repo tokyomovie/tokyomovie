@@ -6,6 +6,7 @@ import { InputField } from "#/islands/form/mod.ts";
 import { hashPassword } from "#/utils/auth.ts";
 import { errorsToString } from "#/utils/forms.ts";
 import { State } from "#/types/request.ts";
+import Info, { InfoProps } from "#/components/Info.tsx";
 
 const updatePasswordSchema = z.object({
   password: z.string().min(8).regex(
@@ -29,7 +30,7 @@ export const handler: Handlers<UpdatePassword, State> = {
     });
     if (!user) {
       return ctx.render({
-        flash: {
+        info: {
           message: "An unexpected error occurred.",
           type: "error",
         },
@@ -39,7 +40,7 @@ export const handler: Handlers<UpdatePassword, State> = {
 
     if (!parsed.success) {
       return ctx.render({
-        flash: {
+        info: {
           message: errorsToString(parsed.error.errors),
           type: "error",
         },
@@ -49,7 +50,7 @@ export const handler: Handlers<UpdatePassword, State> = {
 
     if (password !== passwordConfirm) {
       return ctx.render({
-        flash: {
+        info: {
           message:
             "Passwords don't match, TRY TO TYPE BETTER THIS TIME hehehehe",
           type: "error",
@@ -62,7 +63,7 @@ export const handler: Handlers<UpdatePassword, State> = {
     try {
       updatePassword(db, user.id, passwordHash);
       return ctx.render({
-        flash: {
+        info: {
           message: `Password successfully updated.`,
           type: "success",
         },
@@ -71,7 +72,7 @@ export const handler: Handlers<UpdatePassword, State> = {
     } catch (e) {
       console.error(e);
       return ctx.render({
-        flash: {
+        info: {
           message: `Error resetting password`,
           type: "error",
         },
@@ -83,25 +84,25 @@ export const handler: Handlers<UpdatePassword, State> = {
 
 type UpdatePassword = {
   user: User | null;
-  flash?: { message: string; type: string };
+  info?: InfoProps;
 };
 
 export default function Users(props: PageProps<UpdatePassword>) {
-  const { user, flash } = props.data;
+  const { user, info } = props.data;
   return (
     <div class="flex flex-col gap-8 p-4">
       <h1 class="text-xl font-bold">Password Update</h1>
-      {flash && <p class={`p-2 m-0 p-0 text-${flash.type}`}>{flash.message}</p>}
+      {info && <Info {...info} />}
       <form method="post">
         <div class="flex flex-col text-xs gap-4">
           <h2 class="text-lg font-bold">
-            Update the password for {user?.name}
+            Update the password for {user?.name} - {user?.email}
           </h2>
           <InputField
             label="Password"
             type="password"
             name="password"
-            helperText="must contain a number and a capital letter"
+            helperText="Must contain a number and a capital letter"
           />
           <InputField
             label="Confirm Password"
@@ -111,7 +112,7 @@ export default function Users(props: PageProps<UpdatePassword>) {
           />
           <div>
             <Button type="submit">
-              Create User
+              Update Password
             </Button>
           </div>
         </div>
