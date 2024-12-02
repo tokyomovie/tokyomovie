@@ -1,8 +1,8 @@
 import { FreshContext } from "$fresh/server.ts";
-import { authMiddleware } from "../middleware/auth.ts";
-import { Context, State } from "../types/request.ts";
-import * as apiResponse from "../utils/response/api.ts";
-import * as serverResponse from "../utils/response/server.ts";
+import { authMiddleware, jwtAuthMiddleware } from "#/middleware/auth.ts";
+import { Context, State } from "#/types/request.ts";
+import * as apiResponse from "#/utils/response/api.ts";
+import * as serverResponse from "#/utils/response/server.ts";
 
 export async function handler(
   req: Request,
@@ -10,7 +10,21 @@ export async function handler(
 ) {
   ctx.state.context = Context.instance();
 
-  return await authMiddleware({
+  const jwtResponse = await jwtAuthMiddleware({
+    req,
+    ctx,
+    onError() {
+      return serverResponse.notFound();
+    },
+    onSuccess() {
+      return ctx.next();
+    },
+  });
+  if (jwtResponse) {
+    return jwtResponse;
+  }
+
+  const authResponse = await authMiddleware({
     req,
     ctx,
     onError: (req) => {
@@ -35,4 +49,9 @@ export async function handler(
       }
     },
   });
+  if (authResponse) {
+    return authResponse;
+  }
+
+  return await ctx.next();
 }

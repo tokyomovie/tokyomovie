@@ -14,7 +14,9 @@ function getData(db: Database, userId?: number) {
 
 export const handler = {
   async GET(_req: Request, ctx: FreshContext<State>) {
-    return await ctx.render(getData(ctx.state.context.db, ctx.state.user?.id));
+    return await ctx.render(
+      getData(ctx.state.context.db, ctx.state.context.user?.id),
+    );
   },
 };
 

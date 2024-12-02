@@ -1,22 +1,13 @@
-function reportConfigError(msg: string) {
-  throw new Error(`[ERROR] config: ${msg}`);
+function configEnvVar(name: string): string {
+  const envVar = Deno.env.get(name);
+  if (!envVar) {
+    throw new Error(`[ERROR] config: ${name}`);
+  }
+
+  return envVar;
 }
 
-function reportConfigWarning(msg: string) {
-  throw new Error(`[WARN] config: ${msg}`);
-}
-
-const DB_PATH = Deno.env.get("DB_PATH") as string;
-if (!DB_PATH) {
-  reportConfigError("DB_PATH is required");
-}
-
-const SESSION_TOKEN = Deno.env.get("SESSION_TOKEN") as string ||
-  "master-session-token";
-if (!SESSION_TOKEN) {
-  reportConfigWarning(
-    "SESSION_TOKEN will revert to default. This is unsafe in production.",
-  );
-}
-
-export { DB_PATH, SESSION_TOKEN };
+export const DB_PATH = configEnvVar("DB_PATH");
+export const SESSION_TOKEN = configEnvVar("SESSION_TOKEN");
+export const SENDGRID_API_KEY = configEnvVar("SENDGRID_API_KEY");
+export const ADMIN_EMAIL_ADDRESS = configEnvVar("ADMIN_EMAIL_ADDRESS");
