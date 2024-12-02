@@ -1,16 +1,15 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { updatePassword, User } from "../database/query/user.ts";
-import Button from "./../islands/Button.tsx";
-import { InputField } from "../islands/form/mod.ts";
-import { hashPassword } from "../utils/auth.ts";
 import { z } from "zod";
-import { errorsToString } from "../utils/forms.ts";
-import { State } from "../types/request.ts";
+import { updatePassword, User } from "#/database/query/user.ts";
+import Button from "#/islands/Button.tsx";
+import { InputField } from "#/islands/form/mod.ts";
+import { hashPassword } from "#/utils/auth.ts";
+import { errorsToString } from "#/utils/forms.ts";
+import { State } from "#/types/request.ts";
 
 const updatePasswordSchema = z.object({
   password: z.string().min(8).regex(
     /(?=.*\d)(?=.*[a-z])(?=.*[A-Z])/,
-    "must contain a number and a capital letter",
   ),
 });
 
@@ -98,7 +97,12 @@ export default function Users(props: PageProps<UpdatePassword>) {
           <h2 class="text-lg font-bold">
             Update the password for {user?.name}
           </h2>
-          <InputField label="Password" type="password" name="password" />
+          <InputField
+            label="Password"
+            type="password"
+            name="password"
+            helperText="must contain a number and a capital letter"
+          />
           <InputField
             label="Confirm Password"
             type="password"
