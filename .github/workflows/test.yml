@@ -30,6 +30,8 @@ jobs:
         env:
           DB_PATH: test.db
           SESSION_TOKEN: aGFjayB0aGUgcGxhbmV0Cg==
+          SENDGRID_API_KEY: dummy-key
+          ADMIN_EMAIL_ADDRESS: ask@someone.com
         run: |
           deno run db:migrateAll
           deno run test:ci
