@@ -23,6 +23,8 @@ import Videocam from "../../components/icons/Videocam.tsx";
 import UserCircle from "../../components/icons/UserCircle.tsx";
 import UserGroup from "../../components/icons/UserGroup.tsx";
 import Title from "../../components/Title.tsx";
+import TextArea from "#/components/TextArea.tsx";
+import TextAreaFormField from "#/islands/form/TextAreaFormField.tsx";
 
 const EXAMPLE_FORM_ID = "example-form";
 
@@ -68,7 +70,12 @@ export default function FormIsland() {
       <div class="my-4">
         <SelectField
           name="example-select"
-          label="example select"
+          labelProps={{
+            htmlFor: "example-select",
+            labelText: "example select",
+            required: true,
+            helperText: "below notice the thing that lets you select stuff",
+          }}
           helperText="this text helps"
           error="somethings wrong"
           required
@@ -96,12 +103,32 @@ export default function FormIsland() {
         />
       </div>
       <div class="my-4">
+        <TextAreaFormField
+          name="example-textarea"
+          changeHandler={(event) => {
+            const t = event.target as HTMLTextAreaElement;
+            console.log(t.value);
+          }}
+          labelProps={{
+            labelText: "example text area",
+            htmlFor: "example-textarea",
+            required: true,
+            helperText: "this should help you write a book",
+          }}
+          error="we're going to need a lot more information than that"
+        />
+      </div>
+      <div class="my-4">
         <CheckboxField
           labelText="example check"
           name="example-check"
           helperText="this text also helps"
           error="sorry you cant check it"
           required
+          changeHandler={(event) => {
+            const t = event.target as HTMLInputElement;
+            console.log(t.checked);
+          }}
         />
       </div>
       <Button

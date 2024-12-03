@@ -2,19 +2,19 @@ import { JSX } from "preact/jsx-runtime";
 import { LabelGroup } from "./mod.ts";
 import Select from "../../components/Select.tsx";
 import FormFieldError from "#/islands/form/FormFieldError.tsx";
+import { LabelGroupProps } from "#/islands/form/LabelGroup.tsx";
 
 export default function SelectField({
   name,
-  label,
+  labelProps,
   options,
-  required,
-  helperText,
   error,
   onChange,
   value,
 }: {
   name: string;
-  label: string;
+  labelProps: LabelGroupProps;
+  changeHandler?: () => void;
   options: { value: string; label: string }[];
   required?: boolean;
   helperText?: string;
@@ -25,10 +25,7 @@ export default function SelectField({
   return (
     <div class="flex gap-2 flex-col">
       <LabelGroup
-        htmlFor={name}
-        labelText={label}
-        required={required}
-        helperText={helperText}
+        {...labelProps}
       />
       <Select
         value={value}

@@ -9,7 +9,7 @@ export default function FormFieldError({ errorText }: { errorText?: string }) {
         primaryFill="fill-error"
         secondaryFill="fill-error-2"
       />
-      <div class="text-error leading-[14px]">
+      <div class="text-error leading-tight">
         {errorText}
       </div>
     </div>
