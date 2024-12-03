@@ -29,6 +29,7 @@ import * as $user_index from "./routes/user/index.tsx";
 import * as $user_logout from "./routes/user/logout.tsx";
 import * as $user_movie from "./routes/user/movie.tsx";
 import * as $user_poll from "./routes/user/poll.tsx";
+import * as $user_profile from "./routes/user/profile.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $EventIsland_EventIsland from "./islands/EventIsland/EventIsland.tsx";
@@ -83,6 +84,7 @@ const manifest = {
     "./routes/user/logout.tsx": $user_logout,
     "./routes/user/movie.tsx": $user_movie,
     "./routes/user/poll.tsx": $user_poll,
+    "./routes/user/profile.tsx": $user_profile,
   },
   islands: {
     "./islands/Button.tsx": $Button,

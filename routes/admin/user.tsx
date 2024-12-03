@@ -8,7 +8,7 @@ import { InputField, SelectField } from "#/islands/form/mod.ts";
 import { hashPassword } from "#/utils/auth.ts";
 import { errorsToString } from "#/utils/forms.ts";
 import { State } from "#/types/request.ts";
-import { createJwt } from "#/services/jwt.ts";
+import { startResetPasswordProcess } from "#/services/password.ts";
 
 async function handleResetPassword(form: FormData, ctx: FreshContext<State>) {
   const { db, mail } = ctx.state.context;
@@ -35,19 +35,7 @@ async function handleResetPassword(form: FormData, ctx: FreshContext<State>) {
   }
 
   try {
-    const jwt = await createJwt(userId, {}, 60 * 15);
-    const message = {
-      to: user.email,
-      subject: "Password change request at tokyomovie.group",
-      text:
-        `Hey, someone special from TokyoMovie.Group says you requested to change your password. So go over to http://localhost:8000/reset-password?u=${userId}&j=${jwt} to change it. This request will be invalid in fifteen minutes.
-      
-      If you didn't request this, then their may be an issue and you should probably get in contact with the tokyomovie.group administrator.`,
-      html:
-        `<p>Hey, someone special from TokyoMovie.Group says you requested to change your password. So <a href="http://localhost:8000/reset-password?u=${userId}&j=${jwt}">go over to https://tokyomovie.group</a> to change it. This request will be invalid in fifteen minutes.</p>
-      </p>If you didn't request this, then their may be an issue and you should probably get in contact with the tokyomovie.group administrator.</p>`,
-    };
-    const wasSent = await mail.send(message);
+    const wasSent = await startResetPasswordProcess(mail, user);
     if (!wasSent) {
       return ctx.render({
         flash: {
@@ -68,7 +56,7 @@ async function handleResetPassword(form: FormData, ctx: FreshContext<State>) {
     console.error(e);
     return ctx.render({
       flash: {
-        message: `Error creating user`,
+        message: `Error resetting password`,
         type: "error",
       },
       users: findUsers(db),
