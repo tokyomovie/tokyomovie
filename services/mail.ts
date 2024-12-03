@@ -1,5 +1,5 @@
 import sgMail from "@sendgrid/mail";
-import { ADMIN_EMAIL_ADDRESS, SENDGRID_API_KEY } from "../config.ts";
+import { ADMIN_EMAIL_ADDRESS, SENDGRID_API_KEY } from "#/config.ts";
 
 type EmailMessage = {
   to: string;

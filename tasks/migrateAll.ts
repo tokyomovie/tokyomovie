@@ -1,5 +1,5 @@
 import { load } from "@std/dotenv";
-import * as migrate from "../database/migrate.ts";
+import * as migrate from "#/database/migrate.ts";
 import { Database } from "jsr:@db/sqlite@0.11";
 
 const [path] = Deno.args;

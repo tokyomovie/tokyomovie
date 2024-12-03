@@ -1,23 +1,23 @@
 import { load } from "@std/dotenv";
-import * as migrate from "../database/migrate.ts";
+import * as migrate from "#/database/migrate.ts";
 
 async function runMigrateOne() {
-  const { getConnection } = await import("../database/db.ts");
+  const { getConnection } = await import("#/database/db.ts");
   using connection = getConnection();
   await migrate.migrateOne(connection.db);
 }
 async function runMigrateAll() {
-  const { getConnection } = await import("../database/db.ts");
+  const { getConnection } = await import("#/database/db.ts");
   using connection = getConnection();
   await migrate.migrateAll(connection.db);
 }
 async function runRollbackOne() {
-  const { getConnection } = await import("../database/db.ts");
+  const { getConnection } = await import("#/database/db.ts");
   using connection = getConnection();
   await migrate.rollbackOne(connection.db);
 }
 async function runRollbackAll() {
-  const { getConnection } = await import("../database/db.ts");
+  const { getConnection } = await import("#/database/db.ts");
   using connection = getConnection();
   await migrate.rollbackAll(connection.db);
 }

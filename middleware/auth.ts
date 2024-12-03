@@ -1,11 +1,11 @@
 import { FreshContext } from "$fresh/server.ts";
 import { getCookies } from "$std/http/cookie.ts";
-import { JWT_PROTECTED_ROUTES } from "../constants/routes.ts";
-import { PROTECTED_ROUTES } from "../constants/routes.ts";
-import { findUserById, type User } from "../database/query/user.ts";
-import { verifyJwt } from "../services/jwt.ts";
-import { State } from "../types/request.ts";
-import { decodeSession } from "../utils/session.ts";
+import { JWT_PROTECTED_ROUTES } from "#/constants/routes.ts";
+import { PROTECTED_ROUTES } from "#/constants/routes.ts";
+import { findUserById, type User } from "#/database/query/user.ts";
+import { verifyJwt } from "#/services/jwt.ts";
+import { State } from "#/types/request.ts";
+import { decodeSession } from "#/utils/session.ts";
 
 export async function authMiddleware({
   req,
