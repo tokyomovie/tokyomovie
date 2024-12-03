@@ -1,4 +1,5 @@
 import Checkbox from "../../components/Checkbox.tsx";
+import FormFieldError from "#/islands/form/FormFieldError.tsx";
 
 export interface CheckboxFieldProps {
   labelText: string;
@@ -27,7 +28,7 @@ export default function CheckboxField(props: CheckboxFieldProps) {
         </div>
       </div>
       {helperText && <div class="text-foreground-back mt-2">{helperText}</div>}
-      {error && <p class="text-error">{error}</p>}
+      <FormFieldError errorText={error} />
     </div>
   );
 }

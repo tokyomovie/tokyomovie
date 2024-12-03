@@ -1,6 +1,7 @@
+import { JSX } from "preact/jsx-runtime";
 import { LabelGroup } from "./mod.ts";
 import Select from "../../components/Select.tsx";
-import { JSX } from "preact/jsx-runtime";
+import FormFieldError from "#/islands/form/FormFieldError.tsx";
 
 export default function SelectField({
   name,
@@ -36,7 +37,7 @@ export default function SelectField({
         options={options}
         onChange={onChange}
       />
-      {error && <p class="text-error">{error}</p>}
+      <FormFieldError errorText={error} />
     </div>
   );
 }

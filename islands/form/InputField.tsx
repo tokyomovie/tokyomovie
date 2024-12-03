@@ -1,10 +1,12 @@
 import { JSX } from "preact";
 import { LabelGroup } from "./mod.ts";
 import Input from "../../components/Input.tsx";
+import FormFieldError from "#/islands/form/FormFieldError.tsx";
 
 export default function InputField({
   name,
   label,
+  changeHandler,
   type = "text",
   helperText,
   value,
@@ -14,6 +16,7 @@ export default function InputField({
 }: {
   name: string;
   label: string;
+  changeHandler?: JSX.GenericEventHandler<HTMLInputElement>;
   type?: string;
   helperText?: string;
   value?: string;
@@ -28,8 +31,15 @@ export default function InputField({
         required={required}
         helperText={helperText}
       />
-      <Input {...inputProps} id={name} name={name} type={type} value={value} />
-      {error && <p class="text-error">{error}</p>}
+      <Input
+        onChange={changeHandler}
+        {...inputProps}
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+      />
+      <FormFieldError errorText={error} />
     </div>
   );
 }

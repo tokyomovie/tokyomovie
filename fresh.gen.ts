@@ -38,6 +38,7 @@ import * as $event_Event from "./islands/event/Event.tsx";
 import * as $event_RSVPStatus from "./islands/event/RSVPStatus.tsx";
 import * as $event_StatusLabel from "./islands/event/StatusLabel.tsx";
 import * as $form_CheckboxField from "./islands/form/CheckboxField.tsx";
+import * as $form_FormFieldError from "./islands/form/FormFieldError.tsx";
 import * as $form_InputField from "./islands/form/InputField.tsx";
 import * as $form_LabelGroup from "./islands/form/LabelGroup.tsx";
 import * as $form_SelectField from "./islands/form/SelectField.tsx";
@@ -93,6 +94,7 @@ const manifest = {
     "./islands/event/RSVPStatus.tsx": $event_RSVPStatus,
     "./islands/event/StatusLabel.tsx": $event_StatusLabel,
     "./islands/form/CheckboxField.tsx": $form_CheckboxField,
+    "./islands/form/FormFieldError.tsx": $form_FormFieldError,
     "./islands/form/InputField.tsx": $form_InputField,
     "./islands/form/LabelGroup.tsx": $form_LabelGroup,
     "./islands/form/SelectField.tsx": $form_SelectField,

@@ -41,6 +41,7 @@ export default function FormIsland() {
   const invalid = useSignal(false);
   const showStars = useSignal(false);
   const showInfo = useSignal(true);
+  const inputError = useSignal("");
 
   useSignalEffect(() => {
     showStars.value = false;
@@ -64,28 +65,45 @@ export default function FormIsland() {
       <Title level={2} invert>less Big Ol Title</Title>
       <Title level={3}>even less Big Ol Title</Title>
       <Title level={3} invert>even less Big Ol Title</Title>
-      <SelectField
-        name="example-select"
-        label="example select"
-        helperText="this text helps"
-        error="somethings wrong"
-        required
-        options={exampleSelectData.options}
-      />
-      <InputField
-        name="example-input"
-        label="example input"
-        helperText="this helps a lot"
-        error="no good son"
-        required
-      />
-      <CheckboxField
-        labelText="example check"
-        name="example-check"
-        helperText="this text also helps"
-        error="sorry you cant check it"
-        required
-      />
+      <div class="my-4">
+        <SelectField
+          name="example-select"
+          label="example select"
+          helperText="this text helps"
+          error="somethings wrong"
+          required
+          options={exampleSelectData.options}
+        />
+      </div>
+      <div class="my-4">
+        <InputField
+          name="example-input"
+          label="example input"
+          helperText="text must be at least 8 characters long"
+          error={inputError.value}
+          onChange={(event) => {
+            const t = event.target as HTMLInputElement;
+            if (t) {
+              if (t.value.length < 8) {
+                inputError.value =
+                  "i'll say it again, you must enter at least 8 characters";
+                return;
+              }
+              inputError.value = "";
+            }
+          }}
+          required
+        />
+      </div>
+      <div class="my-4">
+        <CheckboxField
+          labelText="example check"
+          name="example-check"
+          helperText="this text also helps"
+          error="sorry you cant check it"
+          required
+        />
+      </div>
       <Button
         onClick={() => {
           console.log("button clicked");
