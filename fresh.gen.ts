@@ -42,6 +42,7 @@ import * as $form_FormFieldError from "./islands/form/FormFieldError.tsx";
 import * as $form_InputField from "./islands/form/InputField.tsx";
 import * as $form_LabelGroup from "./islands/form/LabelGroup.tsx";
 import * as $form_SelectField from "./islands/form/SelectField.tsx";
+import * as $form_TextAreaFormField from "./islands/form/TextAreaFormField.tsx";
 import * as $form_mod from "./islands/form/mod.ts";
 import * as $movie_Movie from "./islands/movie/Movie.tsx";
 import * as $poll_Poll from "./islands/poll/Poll.tsx";
@@ -98,6 +99,7 @@ const manifest = {
     "./islands/form/InputField.tsx": $form_InputField,
     "./islands/form/LabelGroup.tsx": $form_LabelGroup,
     "./islands/form/SelectField.tsx": $form_SelectField,
+    "./islands/form/TextAreaFormField.tsx": $form_TextAreaFormField,
     "./islands/form/mod.ts": $form_mod,
     "./islands/movie/Movie.tsx": $movie_Movie,
     "./islands/poll/Poll.tsx": $poll_Poll,
