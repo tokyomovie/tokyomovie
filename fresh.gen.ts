@@ -29,10 +29,12 @@ import * as $user_index from "./routes/user/index.tsx";
 import * as $user_logout from "./routes/user/logout.tsx";
 import * as $user_movie from "./routes/user/movie.tsx";
 import * as $user_poll from "./routes/user/poll.tsx";
+import * as $user_profile from "./routes/user/profile.tsx";
 import * as $Button from "./islands/Button.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import * as $EventIsland_EventIsland from "./islands/EventIsland/EventIsland.tsx";
 import * as $FormIsland_FormIsland from "./islands/FormIsland/FormIsland.tsx";
+import * as $Header from "./islands/Header.tsx";
 import * as $MovieIsland_MovieIsland from "./islands/MovieIsland/MovieIsland.tsx";
 import * as $event_Event from "./islands/event/Event.tsx";
 import * as $event_RSVPStatus from "./islands/event/RSVPStatus.tsx";
@@ -82,12 +84,14 @@ const manifest = {
     "./routes/user/logout.tsx": $user_logout,
     "./routes/user/movie.tsx": $user_movie,
     "./routes/user/poll.tsx": $user_poll,
+    "./routes/user/profile.tsx": $user_profile,
   },
   islands: {
     "./islands/Button.tsx": $Button,
     "./islands/Counter.tsx": $Counter,
     "./islands/EventIsland/EventIsland.tsx": $EventIsland_EventIsland,
     "./islands/FormIsland/FormIsland.tsx": $FormIsland_FormIsland,
+    "./islands/Header.tsx": $Header,
     "./islands/MovieIsland/MovieIsland.tsx": $MovieIsland_MovieIsland,
     "./islands/event/Event.tsx": $event_Event,
     "./islands/event/RSVPStatus.tsx": $event_RSVPStatus,

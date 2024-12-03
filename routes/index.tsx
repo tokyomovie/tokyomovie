@@ -1,14 +1,14 @@
-import Header from "../components/Header.tsx";
-import Button from "../islands/Button.tsx";
-import StackCenter from "../components/StackCenter.tsx";
-import Title from "../components/Title.tsx";
+import Header from "#/islands/Header.tsx";
+import Button from "#/islands/Button.tsx";
+import StackCenter from "#/components/StackCenter.tsx";
+import Title from "#/components/Title.tsx";
 import { PageProps } from "$fresh/server.ts";
-import * as serverResponse from "../utils/response/server.ts";
-import SpinningStar from "../components/SpinningStar.tsx";
+import * as serverResponse from "#/utils/response/server.ts";
 
 import { FreshContext } from "$fresh/server.ts";
-import { State } from "../types/request.ts";
-import Info from "../components/Info.tsx";
+import { State } from "#/types/request.ts";
+import Info from "#/components/Info.tsx";
+import { User } from "#/database/query/user.ts";
 
 export const handler = {
   async GET(_req: Request, ctx: FreshContext<State>) {
@@ -18,14 +18,18 @@ export const handler = {
       return serverResponse.redirect("/user/event");
     }
 
-    return await ctx.render();
+    return await ctx.render({ user });
   },
 };
 
-export default function Home(props: PageProps) {
+type HomeData = {
+  user: User | null;
+};
+
+export default function Home(props: PageProps<HomeData>) {
   return (
     <div>
-      <Header />
+      <Header user={props.data.user} />
       <div class="flex justify-center my-2 p-8">
         <StackCenter>
           <Info type="info">
