@@ -1,9 +1,9 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { State } from "../../types/request.ts";
-import { findPolls, Poll as PollType } from "../../database/query/poll.ts";
-import Info from "../../components/Info.tsx";
-import Title from "../../components/Title.tsx";
-import Polls from "../../islands/poll/Polls.tsx";
+import { State } from "#/types/request.ts";
+import { findPolls, Poll as PollType } from "#/database/query/poll.ts";
+import Info from "#/components/Info.tsx";
+import Title from "#/components/Title.tsx";
+import Polls from "#/islands/poll/Polls.tsx";
 
 type PollProps = {
   polls?: PollType[];

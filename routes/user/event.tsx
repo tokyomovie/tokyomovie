@@ -1,9 +1,9 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
-import { State } from "../../types/request.ts";
-import Stars from "../../islands/stars/Stars.tsx";
-import EventIsland from "../../islands/EventIsland/EventIsland.tsx";
-import Title from "../../components/Title.tsx";
-import { type Event, findEvents } from "../../database/query/event.ts";
+import { State } from "#/types/request.ts";
+import Stars from "#/islands/stars/Stars.tsx";
+import EventIsland from "#/islands/EventIsland/EventIsland.tsx";
+import Title from "#/components/Title.tsx";
+import { type Event, findEvents } from "#/database/query/event.ts";
 import { Database } from "jsr:@db/sqlite@0.11";
 
 function getData(db: Database, userId?: number) {

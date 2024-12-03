@@ -1,5 +1,5 @@
 import { FreshContext } from "$fresh/server.ts";
-import * as apiResponse from "../../utils/response/api.ts";
+import * as apiResponse from "#/utils/response/api.ts";
 
 // Jokes courtesy of https://punsandoneliners.com/randomness/programmer-jokes/
 const JOKES = [

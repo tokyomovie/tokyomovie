@@ -1,11 +1,11 @@
 import { Handlers, PageProps } from "$fresh/server.ts";
-import { createMovie, findMovies, Movie } from "../../database/query/movie.ts";
-import Button from "../../islands/Button.tsx";
-import { InputField } from "../../islands/form/mod.ts";
+import { createMovie, findMovies, Movie } from "#/database/query/movie.ts";
+import Button from "#/islands/Button.tsx";
+import { InputField } from "#/islands/form/mod.ts";
 import { z } from "zod";
-import { errorsToString } from "../../utils/forms.ts";
-import { State } from "../../types/request.ts";
-import RowItem from "../../components/admin/RowItem.tsx";
+import { errorsToString } from "#/utils/forms.ts";
+import { State } from "#/types/request.ts";
+import RowItem from "#/components/admin/RowItem.tsx";
 
 const createMovieSchema = z.object({
   name: z.string().min(1),

@@ -1,5 +1,5 @@
-import FormIsland from "../islands/FormIsland/FormIsland.tsx";
-import Header from "../components/Header.tsx";
+import FormIsland from "#/islands/FormIsland/FormIsland.tsx";
+import Header from "#/components/Header.tsx";
 
 export default function () {
   return (

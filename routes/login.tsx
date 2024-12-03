@@ -1,15 +1,15 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
 import { setCookie } from "$std/http/cookie.ts";
-import { findUserByEmail } from "../database/query/user.ts";
-import Button from "../islands/Button.tsx";
-import { InputField } from "../islands/form/mod.ts";
+import { findUserByEmail } from "#/database/query/user.ts";
+import Button from "#/islands/Button.tsx";
+import { InputField } from "#/islands/form/mod.ts";
 import { z } from "zod";
-import { checkPassword } from "../utils/auth.ts";
-import { encodeSession } from "../utils/session.ts";
-import { State } from "../types/request.ts";
-import StackCenter from "../components/StackCenter.tsx";
-import Info from "../components/Info.tsx";
-import Title from "../components/Title.tsx";
+import { checkPassword } from "#/utils/auth.ts";
+import { encodeSession } from "#/utils/session.ts";
+import { State } from "#/types/request.ts";
+import StackCenter from "#/components/StackCenter.tsx";
+import Info from "#/components/Info.tsx";
+import Title from "#/components/Title.tsx";
 
 const loginSchema = z.object({
   email: z.string().email(),
