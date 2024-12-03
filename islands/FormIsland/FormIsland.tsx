@@ -85,8 +85,11 @@ export default function FormIsland() {
       <div class="my-4">
         <InputField
           name="example-input"
-          label="example input"
-          helperText="text must be at least 8 characters long"
+          labelProps={{
+            helperText: "text must be at least 8 characters long",
+            htmlFor: "example-input",
+            labelText: "example input",
+          }}
           error={inputError.value}
           onChange={(event) => {
             const t = event.target as HTMLInputElement;
