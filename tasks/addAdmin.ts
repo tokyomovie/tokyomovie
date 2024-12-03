@@ -1,6 +1,6 @@
-import { getConnection } from "../database/db.ts";
-import * as user from "../database/query/user.ts";
-import { hashPassword } from "../utils/auth.ts";
+import { getConnection } from "#/database/db.ts";
+import * as user from "#/database/query/user.ts";
+import { hashPassword } from "#/utils/auth.ts";
 
 let confirmed = false;
 const userData = {

@@ -3,7 +3,7 @@ import {
   createSessionKeyAndIv,
   decodeSession,
   encodeSession,
-} from "./session.ts";
+} from "#/utils/session.ts";
 
 Deno.test("encoding and decoding of sessions", async (t) => {
   const mySession = { userId: 165 };

@@ -1,10 +1,7 @@
 import { Handlers } from "$fresh/server.ts";
-import {
-  addVoteToPoll,
-  removeVoteFromPoll,
-} from "../../../../database/query/poll.ts";
-import { State } from "../../../../types/request.ts";
-import * as apiResponse from "../../../../utils/response/api.ts";
+import { addVoteToPoll, removeVoteFromPoll } from "#/database/query/poll.ts";
+import { State } from "#/types/request.ts";
+import * as apiResponse from "#/utils/response/api.ts";
 
 export const handler: Handlers<{ pollId: string }, State> = {
   async POST(req, ctx) {

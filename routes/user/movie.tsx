@@ -1,8 +1,8 @@
 import { FreshContext, PageProps } from "$fresh/server.ts";
-import { State } from "../../types/request.ts";
-import Stars from "../../islands/stars/Stars.tsx";
-import MovieIsland from "../../islands/MovieIsland/MovieIsland.tsx";
-import Title from "../../components/Title.tsx";
+import { State } from "#/types/request.ts";
+import Stars from "#/islands/stars/Stars.tsx";
+import MovieIsland from "#/islands/MovieIsland/MovieIsland.tsx";
+import Title from "#/components/Title.tsx";
 
 export const handler = {
   GET(_req: Request, ctx: FreshContext<State>) {

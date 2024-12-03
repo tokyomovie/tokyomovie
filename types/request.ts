@@ -1,9 +1,9 @@
-import { User } from "../database/query/user.ts";
-import { createSessionKeyAndIv, SessionKeyAndIv } from "../utils/session.ts";
-import { SESSION_TOKEN } from "../config.ts";
+import { User } from "#/database/query/user.ts";
+import { createSessionKeyAndIv, SessionKeyAndIv } from "#/utils/session.ts";
+import { SESSION_TOKEN } from "#/config.ts";
 import { Database } from "jsr:@db/sqlite@0.11";
-import { getDb } from "../database/db.ts";
-import { createMailClient, type MailClient } from "../services/mail.ts";
+import { getDb } from "#/database/db.ts";
+import { createMailClient, type MailClient } from "#/services/mail.ts";
 
 let sessionKeyAndIv: SessionKeyAndIv;
 

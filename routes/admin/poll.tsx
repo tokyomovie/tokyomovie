@@ -4,14 +4,14 @@ import {
   createPoll,
   findPolls,
   Poll,
-} from "../../database/query/poll.ts";
-import { findMovies, Movie } from "../../database/query/movie.ts";
-import Button from "../../islands/Button.tsx";
-import { InputField, SelectField } from "../../islands/form/mod.ts";
+} from "#/database/query/poll.ts";
+import { findMovies, Movie } from "#/database/query/movie.ts";
+import Button from "#/islands/Button.tsx";
+import { InputField, SelectField } from "#/islands/form/mod.ts";
 import { z } from "zod";
-import { errorsToString } from "../../utils/forms.ts";
+import { errorsToString } from "#/utils/forms.ts";
 import { Database } from "jsr:@db/sqlite@0.11";
-import { State } from "../../types/request.ts";
+import { State } from "#/types/request.ts";
 
 const createPollSchema = z.object({
   name: z.string().min(1),
