@@ -2,11 +2,12 @@ import { JSX } from "preact";
 import { LabelGroup } from "./mod.ts";
 import Input from "../../components/Input.tsx";
 import FormFieldError from "#/islands/form/FormFieldError.tsx";
-import { LabelGroupProps } from "#/islands/form/LabelGroup.tsx";
 
 export default function InputField({
   name,
-  labelProps,
+  label,
+  helperText,
+  required,
   changeHandler,
   type = "text",
   value,
@@ -14,7 +15,9 @@ export default function InputField({
   ...inputProps
 }: {
   name: string;
-  labelProps: LabelGroupProps;
+  label: string;
+  required?: boolean;
+  helperText?: string;
   changeHandler?: JSX.GenericEventHandler<HTMLInputElement>;
   type?: string;
   value?: string;
@@ -23,7 +26,10 @@ export default function InputField({
   return (
     <div class="flex gap-2 flex-col w-full">
       <LabelGroup
-        {...labelProps}
+        labelText={label}
+        htmlFor={name}
+        helperText={helperText}
+        required={required}
       />
       <Input
         onChange={changeHandler}
@@ -32,6 +38,8 @@ export default function InputField({
         name={name}
         type={type}
         value={value}
+        required={required}
+        aria-required={required}
       />
       <FormFieldError errorText={error} />
     </div>

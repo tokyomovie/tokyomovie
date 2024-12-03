@@ -70,12 +70,7 @@ export default function FormIsland() {
       <div class="my-4">
         <SelectField
           name="example-select"
-          labelProps={{
-            htmlFor: "example-select",
-            labelText: "example select",
-            required: true,
-            helperText: "below notice the thing that lets you select stuff",
-          }}
+          label="example select"
           helperText="this text helps"
           error="somethings wrong"
           required
@@ -85,11 +80,8 @@ export default function FormIsland() {
       <div class="my-4">
         <InputField
           name="example-input"
-          labelProps={{
-            helperText: "text must be at least 8 characters long",
-            htmlFor: "example-input",
-            labelText: "example input",
-          }}
+          label="example input"
+          helperText="text must be at least 8 characters long"
           error={inputError.value}
           onChange={(event) => {
             const t = event.target as HTMLInputElement;
@@ -112,13 +104,10 @@ export default function FormIsland() {
             const t = event.target as HTMLTextAreaElement;
             console.log(t.value);
           }}
-          labelProps={{
-            labelText: "example text area",
-            htmlFor: "example-textarea",
-            required: true,
-            helperText: "this should help you write a book",
-          }}
+          label="example text area"
+          helperText="this should help you write a book"
           error="we're going to need a lot more information than that"
+          required
         />
       </div>
       <div class="my-4">
