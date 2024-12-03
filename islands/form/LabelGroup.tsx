@@ -1,4 +1,4 @@
-interface LabelGroupProps {
+export interface LabelGroupProps {
   labelText: string;
   htmlFor: string;
   required?: boolean;

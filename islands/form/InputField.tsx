@@ -1,35 +1,47 @@
 import { JSX } from "preact";
 import { LabelGroup } from "./mod.ts";
 import Input from "../../components/Input.tsx";
+import FormFieldError from "#/islands/form/FormFieldError.tsx";
 
 export default function InputField({
   name,
   label,
-  type = "text",
   helperText,
+  required,
+  changeHandler,
+  type = "text",
   value,
   error,
-  required,
   ...inputProps
 }: {
   name: string;
   label: string;
-  type?: string;
+  required?: boolean;
   helperText?: string;
+  changeHandler?: JSX.GenericEventHandler<HTMLInputElement>;
+  type?: string;
   value?: string;
   error?: string;
-  required?: boolean;
 } & JSX.HTMLAttributes<HTMLInputElement>) {
   return (
     <div class="flex gap-2 flex-col w-full">
       <LabelGroup
-        htmlFor={name}
         labelText={label}
-        required={required}
+        htmlFor={name}
         helperText={helperText}
+        required={required}
       />
-      <Input {...inputProps} id={name} name={name} type={type} value={value} />
-      {error && <p class="text-error">{error}</p>}
+      <Input
+        onChange={changeHandler}
+        {...inputProps}
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        required={required}
+        aria-required={required}
+      />
+      <FormFieldError errorText={error} />
     </div>
   );
 }

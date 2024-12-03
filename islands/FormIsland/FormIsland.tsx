@@ -23,6 +23,8 @@ import Videocam from "../../components/icons/Videocam.tsx";
 import UserCircle from "../../components/icons/UserCircle.tsx";
 import UserGroup from "../../components/icons/UserGroup.tsx";
 import Title from "../../components/Title.tsx";
+import TextArea from "#/components/TextArea.tsx";
+import TextAreaFormField from "#/islands/form/TextAreaFormField.tsx";
 
 const EXAMPLE_FORM_ID = "example-form";
 
@@ -41,6 +43,7 @@ export default function FormIsland() {
   const invalid = useSignal(false);
   const showStars = useSignal(false);
   const showInfo = useSignal(true);
+  const inputError = useSignal("");
 
   useSignalEffect(() => {
     showStars.value = false;
@@ -64,28 +67,62 @@ export default function FormIsland() {
       <Title level={2} invert>less Big Ol Title</Title>
       <Title level={3}>even less Big Ol Title</Title>
       <Title level={3} invert>even less Big Ol Title</Title>
-      <SelectField
-        name="example-select"
-        label="example select"
-        helperText="this text helps"
-        error="somethings wrong"
-        required
-        options={exampleSelectData.options}
-      />
-      <InputField
-        name="example-input"
-        label="example input"
-        helperText="this helps a lot"
-        error="no good son"
-        required
-      />
-      <CheckboxField
-        labelText="example check"
-        name="example-check"
-        helperText="this text also helps"
-        error="sorry you cant check it"
-        required
-      />
+      <div class="my-4">
+        <SelectField
+          name="example-select"
+          label="example select"
+          helperText="this text helps"
+          error="somethings wrong"
+          required
+          options={exampleSelectData.options}
+        />
+      </div>
+      <div class="my-4">
+        <InputField
+          name="example-input"
+          label="example input"
+          helperText="text must be at least 8 characters long"
+          error={inputError.value}
+          onChange={(event) => {
+            const t = event.target as HTMLInputElement;
+            if (t) {
+              if (t.value.length < 8) {
+                inputError.value =
+                  "i'll say it again, you must enter at least 8 characters";
+                return;
+              }
+              inputError.value = "";
+            }
+          }}
+          required
+        />
+      </div>
+      <div class="my-4">
+        <TextAreaFormField
+          name="example-textarea"
+          changeHandler={(event) => {
+            const t = event.target as HTMLTextAreaElement;
+            console.log(t.value);
+          }}
+          label="example text area"
+          helperText="this should help you write a book"
+          error="we're going to need a lot more information than that"
+          required
+        />
+      </div>
+      <div class="my-4">
+        <CheckboxField
+          labelText="example check"
+          name="example-check"
+          helperText="this text also helps"
+          error="sorry you cant check it"
+          required
+          changeHandler={(event) => {
+            const t = event.target as HTMLInputElement;
+            console.log(t.checked);
+          }}
+        />
+      </div>
       <Button
         onClick={() => {
           console.log("button clicked");
